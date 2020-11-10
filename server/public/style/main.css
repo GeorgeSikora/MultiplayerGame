@@ -5,11 +5,15 @@ body {
     background-color: #121212;
 }
 
-table {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
+.center {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  text-align: center;
+}
 
+table {
+    margin-top: 100px;
     color: #ffffcc;
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -17,7 +21,7 @@ table {
 
 input {
     background-color: #440044;
-    color: #dddddd;
+    color: #eeffff;
     border: none;
     outline: none;
 
@@ -36,3 +40,16 @@ th.name {
 th.value {
     padding: 0px;
 }
+
+.button {
+    background-color: #770077;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }

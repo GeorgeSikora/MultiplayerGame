@@ -13,6 +13,7 @@ class MyPlayer {
       this.h = 64;
 
       this.hp = 100;
+      this.kills = 0;
       
       this.col = col;
 
@@ -48,6 +49,7 @@ class MyPlayer {
         translate(this.w, 0);
         scale(-1.0,1.0);
       }
+      tint(this.col);
       image(img_player,0,0, this.w, this.h);
       pop();
     

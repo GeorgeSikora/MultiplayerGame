@@ -26,7 +26,7 @@ GameObject = require('./GameObject');
 const {getPlayer} = require('./test.js');
 
 const Collision = require('./collisions/functions.js');
-const constants = require('./constants.js');
+var constants = require('./constants.js');
 
 Player = require('./utils/player.js');
 
@@ -76,10 +76,40 @@ io.sockets.on('connection', function (socket) {
         players.splice(removeIndex, 1);
     });
 
-    socket.on('get_constants', (access) => {
+    /* FOR SERVER ADMIN */
+
+    socket.on('get_constants', access => {
         if(access.user == 'admin' && access.password == 's8j2m6x4n1') {
             console.log(constants);
             socket.emit('constants', constants);
+        } else {
+            console.log('SERVER ACCESS denied!');
+        }
+    });
+    socket.on('set_constants', data => {
+        if(data.access.user == 'admin' && data.access.password == 's8j2m6x4n1') {
+            console.log(data.constants);
+
+            for(var i = 0; i < data.constants.length; i++) {
+                constants[data.constants[i].name] = data.constants[i].value;
+                console.log(constants[data.constants[i].name]);
+            }
+
+            /*
+            for (var i in constants) {
+                if (constants.hasOwnProperty(i)) {
+                    console.log(i, constants[i]);
+                    constants[i] = constants[i];
+                }
+            }
+            */
+           /*
+            for (var i in data.constants) {
+                if (data.constants.hasOwnProperty(i)) {
+                    console.log(i, data.constants[i]);
+                }
+            }*/
+
         } else {
             console.log('SERVER ACCESS denied!');
         }
@@ -130,13 +160,14 @@ function getMillis(){
 }
 
 class Block extends GameObject {
-    constructor(x, y, w, h){
-        super(x, y, w, h);
+    constructor(x, y){
+        super(x, y, 64, 64);
     }
 }
 
-objects.push(new Block(100,-100,120,190));
-objects.push(new Block(-100,290,12,44));
+objects.push(new Block(320,-64));
+objects.push(new Block(320,0));
+objects.push(new Block(320,64));
 
 /*** BULLET CLASS ***/
 class Bullet {

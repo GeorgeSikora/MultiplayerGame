@@ -1,7 +1,6 @@
 
 
-
-let socket = io.connect('192.168.0.108:3031');
+let socket = io.connect('localhost:3031');
 
 socket.on('constants', loadConstants);
 
@@ -13,8 +12,9 @@ const access = {
 socket.emit('get_constants', access);
 
 function loadConstants(constants) {
+    console.log(constants);
     var html = '';
-    html += '<table>';
+    html += '<table id="settings-table">';
 
     for (var i in constants) {
         if (constants.hasOwnProperty(i)) {
@@ -24,7 +24,7 @@ function loadConstants(constants) {
 
     html += '</table>';
 
-    document.body.innerHTML = html;
+    document.getElementById("settings").innerHTML = html;
 }
 
 function addConstant(name, value){
@@ -32,4 +32,22 @@ function addConstant(name, value){
     '<input type="text" value="'+ value + '">'
         
     +'</th></tr>';
+}
+
+function uploadSettings(){
+    var rows = document.getElementById("settings-table").rows.length;
+    var constants = [];
+
+    console.log(rows);
+
+    for(var i = 0; i < rows; i++){
+        var cell = document.getElementById("settings-table").rows[i].cells;
+        var name = cell[0].innerHTML;
+        var value = cell[1].getElementsByTagName("input")[0].value;
+
+        constants.push({name: name,value: parseInt(value)});
+    }
+    console.log(constants);
+
+    socket.emit('set_constants', {access: access, constants: constants});
 }

@@ -12,12 +12,11 @@ class Player {
       this.w = 64;
       this.h = 64;
 
-      this.hp = 100;
+      this.hp = 0;
       
       this.col = col;
 
       /* EXTRA VALUES */
-      
       this.target = {x:x, y:y};
     }
   
@@ -29,6 +28,7 @@ class Player {
     draw() {
       //fill(this.col);
       //rect(this.pos.x -this.w/2, this.pos.y -this.h/2, this.w, this.h);
+      tint(this.col);
       image(img_player, this.pos.x-this.w/2, this.pos.y-this.h/2, this.w, this.h);
     
       fill(255);

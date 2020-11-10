@@ -1,14 +1,13 @@
 
 
 class Block extends GameObject {
-    constructor(x, y, w, h){
-        super(x, y, w, h);
+    constructor(x, y){
+        super(x, y, 64, 64);
     }
     update(){
         
     }
     draw(){
-        fill(0,100,100);
-        rect(this.pos.x, this.pos.y, this.w, this.h);
+        image(img_block, this.pos.x, this.pos.y);
     }
 }

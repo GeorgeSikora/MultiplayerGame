@@ -16,9 +16,8 @@ class Player {
       this.kills = 0;
     }
     update() {
-        
         io.to(this.id).emit('hp', this.hp);
-        io.emit('refPlayer', {id: this.id ,x: this.pos.x, y: this.pos.y, hp: this.hp});
+        io.emit('refPlayer', {id: this.id ,x: this.pos.x, y: this.pos.y, hp: this.hp, kills: this.kills});
     }
 }
 

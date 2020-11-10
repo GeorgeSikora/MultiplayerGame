@@ -37,7 +37,8 @@ class Multiplayer {
     socket.on('shot',     shot); // some player disconnected
 
     socket.on('respawn',  () => {player.pos = {x:0, y:0}}); // some player disconnected
-    socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp
+
+    //socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp, kills
   }
 
   connected() {
@@ -69,7 +70,7 @@ class Multiplayer {
 }
 
 setInterval(function(){
-  fps = int(frameRate());
+  fps = parseInt(frameRate());
 }, 500);
 
 /********* SOCKET IO EVENTS *********/
@@ -96,7 +97,7 @@ function initGame(data) {
   const objectsLoad = data.objects;
   for (var i = 0; i < objectsLoad.length; i++) {
     const obj = objectsLoad[i];
-    objects.push(new Block(obj.pos.x, obj.pos.y, obj.w, obj.h));
+    objects.push(new Block(obj.pos.x, obj.pos.y));
   }
 
   gameLoaded = true;
@@ -119,7 +120,11 @@ function remPlayer(id) {
 // Refresh player data
 function refPlayer(p) {
   if(!gameLoaded) return;
-  if(p.id == player.id) { return; }
+  if(p.id == player.id) { 
+    player.hp = p.hp;
+    player.kills = p.kills;
+    return; 
+  }
   var index = objectIndexOf(players, p.id, 'id'); // get index by id
   if(index == -1) { console.log("%c ERROR: pos index not found", 'color: black; background-color: red'); console.log(p.id,player.id); return; }
   players[index].target = {x: p.x, y: p.y};

@@ -12,6 +12,9 @@
   <script src="libraries/p5.min.js"></script>
   <script src="libraries/socket.io.js"></script>
 
+  <!-- IMPORT ASSETS -->
+  <script src="assets/assets.js"></script>
+
   <!-- IMPORT COLLISION SYSTEM -->
   <script src="collisions/functions.js"></script>
 
@@ -33,6 +36,6 @@
   <style> body { padding: 0; margin: 0; background-color: black; } </style>
 </head>
 
-<body>
+<body oncontextmenu="return false;">
 </body>
 </html>

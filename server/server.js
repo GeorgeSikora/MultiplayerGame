@@ -12,9 +12,11 @@ console.log('Socket.io server started');
 
 /********* HTML PAGE *********/
 app.use(express.static('public'));
+/*
 app.use((req, res, next) => {
     res.status(404).send('page not found :( ' + req.url);
 })
+*/
 app.listen(port, () => {
     console.log('App listener on port ' + port)
 })

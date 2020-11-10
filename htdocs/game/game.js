@@ -1,4 +1,6 @@
 
+const SERVER_URL = '192.168.0.110:3031';
+
 /*** MAIN SETUP ***/
 function setup() {
   /* create as monitor screen size */
@@ -11,7 +13,7 @@ function setup() {
   player = new MyPlayer(0, name, 0, 0, color);
   cam = new Camera(player);
   /* connect to the multiplayer server */
-  multiplayer = new Multiplayer('185.221.124.205:3031');
+  multiplayer = new Multiplayer(SERVER_URL);
 }
 
 /*** MAIN LOOP ***/

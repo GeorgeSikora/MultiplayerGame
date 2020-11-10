@@ -1,13 +1,18 @@
 # MultiplayerGame
 
 This is 2D JavaScript Multiplayer game, where you can shoot and move on the map with other players.
+
 We use:
 - [Node.js](https://nodejs.org/en/) for server run.
 - [JavaScript](https://www.javascript.com/) and [p5.js](https://p5js.org/) for client side game.
 - and also [Socket.io](https://socket.io/) for the networking between server and clients.
 
 ## New Features!
-I added some screenshots of game and server
+
+The game already has working Multiplayer engine, so you can play and test the game with more players in one map.
+
+I added some screenshots of game and server:
+
 ### Menu for selecting cube color and name
 ![Menu image](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/menu.png)
 
@@ -17,9 +22,11 @@ I added some screenshots of game and server
 ### Also i created server settings page for easy control with constant variables
 ![Game image](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/server.png)
 
-The game already has working Multiplayer engine, so you can play and test the game with more players in one map.
+### Why "Wisteria" ?
 
-### TODO list
+I just like this tree, called Wisteria and also it has very nice name. So far, it's just such a temporary name, I don't have a fancy name yet.
+
+## TODO list
 >- Player move ✔
 >- Map loading ✔
 >- Multiplayer ✔

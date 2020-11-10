@@ -7,8 +7,17 @@ We use:
 - and also [Socket.io](https://socket.io/) for the networking between server and clients.
 
 ## New Features!
+I added some screenshots of game and server
+### Menu for selecting cube color and name
+![Menu image](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/menu.png)
 
-The game already have working Multiplayer engine, so you can play and test the game with more players in one map.
+### In the game, there is safe zone, where people cannot shoot and cannot be eliminated
+![Game image](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/game.png)
+
+### Also i created server settings page for easy control with constant variables
+![Game image](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/server.png)
+
+The game already has working Multiplayer engine, so you can play and test the game with more players in one map.
 
 ### TODO list
 >- Player move ✔

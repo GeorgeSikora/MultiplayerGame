@@ -1,8 +1,6 @@
 
 /* HERE PUT YOUR SERVER IP OR URL WITH PORT*/
-const SERVER_URL = '192.168.0.101:3031';
-
-let grid;
+const SERVER_URL = '185.221.124.205:3031';
 
 /*** MAIN SETUP ***/
 function setup() {
@@ -18,6 +16,8 @@ function setup() {
   /* connect to the multiplayer server */
   multiplayer = new Multiplayer(SERVER_URL);
 }
+
+let grid;
 
 /*** MAIN LOOP ***/
 function draw() {
@@ -39,13 +39,14 @@ function draw() {
   /* background color */
   background(19);
 
-  /* draw Safe Zone */
+  /* draw Safe Zone s*/
   drawSavezone();
 
   /* update and draw objects */
   for (var i = 0; i < objects.length; i++) {
     var obj = objects[i];
     obj.update();
+    if(objects[i] == null) continue;
     /* draw only when it is on screen */
     if(rectRect(obj.pos.x-obj.center.x, obj.pos.y-obj.center.y, obj.w, obj.h, cam.pos.x-width/cam.scale/2, cam.pos.y-height/cam.scale/2, width/cam.scale, height/cam.scale)){
       obj.draw();
@@ -73,14 +74,13 @@ function draw() {
   /* informations corner */
   push();
   fill(255);
-  textSize(24.4);
+  textSize(18);
   textAlign(LEFT, TOP);
-  //text("dhjqF83R9R3sef sefsef 85 UF 835fsd fs", 5, 5);
   text('connected: '+socket.connected+'\nping: ' + multiplayer.ping + 'ms\nFPS: ' + fps + '\nkills: ' + player.kills + '\nx: ' + Math.round(player.pos.x) + ' y: ' + Math.round(player.pos.y) + "\nPlayers online: " + (players.length+1) + "\nObjects: " + objects.length, 5, 5);
   pop();
 
   /* INFINITY SHOOTING EXPERIMENTS */
-  
+  /*
   if(mouseIsPressed && mouseButton == RIGHT && (player.pos.x < -serverConst.SAFE_ZONE || player.pos.y < -serverConst.SAFE_ZONE || player.pos.x > serverConst.SAFE_ZONE || player.pos.y > serverConst.SAFE_ZONE)) {
     socket.emit('shot', {x: player.pos.x, y: player.pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2)});
     const angle = atan2(mouseY - height / 2, mouseX - width / 2) + PI;
@@ -90,7 +90,7 @@ function draw() {
     var randomSpeed = random(-0.8, 0.8);
     player.speed.x += cos(angle+PI/2) * randomSpeed;
     player.speed.y += sin(angle+PI/2) * randomSpeed;
-  }
+  }*/
 }
 
 function getGrid(pos, gridSize) {
@@ -138,6 +138,19 @@ function mousePressed(){
   
   if(mouseButton == LEFT) player.shoting();
   //if(mouseButton == RIGHT) player.shoting();
+}
+let scoolTimer = 0;
+function mouseWheel(event) {
+  if(scoolTimer < millis()) {
+    if(event.delta < 0) {
+      player.selectedGun--;
+      if(player.selectedGun < 0) player.selectedGun = player.guns.length-1;
+    } else {
+      player.selectedGun++;
+      if(player.selectedGun > player.guns.length-1) player.selectedGun = 0;
+    }
+    scoolTimer = millis() + 120;
+  }
 }
 
 /*** OTHER STUFF ***/

@@ -49,6 +49,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('pos', pos => {
         var id = getPlayer(socket.id);
         if(id == -1) return;
+        if(players[id].respawning) return;
 
         const playerPos = {x: players[id].pos.x, y: players[id].pos.y};
         const delta = {x: Math.abs(playerPos.x - pos.x), y: Math.abs(playerPos.y - pos.y)};
@@ -58,7 +59,15 @@ io.sockets.on('connection', function (socket) {
         }
 
         players[id].pos = {x: pos.x, y: pos.y};
+        players[id].gunRotation = pos.gunRotation;
         //socket.broadcast.emit('refPlayer', {id: socket.id ,x: pos.x, y: pos.y, hp: players[id].hp});
+    });
+
+    
+    socket.on('respawned', () => {
+        var id = getPlayer(socket.id);
+        if(id == -1) return;
+        players[id].respawning = false;
     });
 
     socket.on('shot', data => {
@@ -129,13 +138,11 @@ const MAGENTA = "\x1b[35m";
 const CYAN =    "\x1b[36m";
 const WHITE =   "\x1b[37m";
 
+const SERVER_INTERVAL_REFRESH = 80;
 setInterval(() => {
     var time = getMillis();
     deltaTime = time - lastTime;
     lastTime = time;
-
-    // \x1b[36m%s\x1b[0m   
-    // \x1b[31m
 
     console.log(MAGENTA+'players: '+YELLOW+'%s'+
                 MAGENTA+' objects: '+YELLOW+'%s'+
@@ -151,8 +158,9 @@ setInterval(() => {
     }
     for(var i = 0; i < players.length; i++){
         players[i].update();
+        if(players[i].respawning) console.log(players[i].name + ' respawning...');
     }
-}, 100);
+}, SERVER_INTERVAL_REFRESH);
 
 function getMillis(){
     const hrTime = process.hrtime();
@@ -166,7 +174,6 @@ class Block extends GameObject {
 }
 
 const fs = require('fs');
-const { exit } = require('process');
 
 try {  
     const data = fs.readFileSync('map.txt', 'utf8');
@@ -202,6 +209,15 @@ class Bullet extends GameObject {
         move.x = Math.cos(this.dir) * this.speed * deltaTime;
         move.y = Math.sin(this.dir) * this.speed * deltaTime;
 
+        for(var i = 0; i < objects.length; i++){
+            var obj = objects[i];
+            if(obj.constructor.name == 'Bullet') continue;
+            if(Collision.lineRect(this.pos.x, this.pos.y, this.pos.x+move.x, this.pos.y+move.y, obj.pos.x-obj.w/2, obj.pos.y-obj.h/2, obj.w, obj.h)){
+                removeObject(this);
+                return;
+            }
+        }
+
         for(var i = 0; i < players.length; i++){
             const p = players[i];
 
@@ -213,24 +229,17 @@ class Bullet extends GameObject {
 
                 if(p.hp <= 0) {
                     io.to(p.id).emit('respawn');
+                    p.respawning = true;
                     p.pos = {x:0, y:0};
                     p.hp = constants.PLAYER_HP;
                     
                     const killer = players[getPlayer(this.shooterID)];
                     if(killer != null) killer.kills++;
                 }
-
                }
                removeObject(this);
                console.log(p.name,'get hit');
-            }
-        }
-
-        for(var i = 0; i < objects.length; i++){
-            var obj = objects[i];
-            if(obj.constructor.name == 'Bullet') continue;
-            if(Collision.lineRect(this.pos.x, this.pos.y, this.pos.x+move.x, this.pos.y+move.y, obj.pos.x-obj.w/2, obj.pos.y-obj.h/2, obj.w, obj.h)){
-                removeObject(this);
+               return;
             }
         }
 

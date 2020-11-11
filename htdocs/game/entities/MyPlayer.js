@@ -4,23 +4,21 @@ let player; // my player
 /* my single player entity */
 class MyPlayer extends GameObject{
     constructor(id, name, x, y, col) {
-      
       super(x,y,64,64);
 
       this.collision = addCol(new Collision(this));
       this.center = {x: this.w/2, y: this.h/2};
 
       this.id = id;
-
       this.name = name;
-
       this.hp = 0;
       this.kills = 0;
-      
       this.col = col;
+      
+      this.gun;
+      this.rotation = 0;
 
       /* EXTRA VALUES */
-
       this.maxSpeed = 15;
       this.speed = {x:0, y:0};
       this.targetSpeed = {x:0, y:0};
@@ -32,48 +30,40 @@ class MyPlayer extends GameObject{
     }
   
     refresh() { 
-      if(!focused) this.stopMove();
-  
+      /* control */
       this.targetSpeed.x = (this.right - this.left) * this.maxSpeed;
       this.targetSpeed.y = (this.down - this.up)    * this.maxSpeed;
-      
+      /* move easing */
       this.speed.x += (this.targetSpeed.x*(deltaTime / 50) - this.speed.x) *0.35 *(deltaTime / 50);
       this.speed.y += (this.targetSpeed.y*(deltaTime / 50) - this.speed.y) *0.35 *(deltaTime / 50);
-    
+      /* position move */
       this.pos.x += this.speed.x;
       this.pos.y += this.speed.y;
+      /* player rotation */
+      this.rotation = atan2(mouseY - height / 2, mouseX - width / 2);
+      /* gun automatic shoot */
+      if(mouseIsPressed) {
+        if(this.guns[this.selectedGun].AUTOMATIC) this.guns[this.selectedGun].shoot(this);
+      }
     }
   
     draw() {
+      /* player */
       push();
       translate(this.pos.x-this.w/2, this.pos.y-this.h/2);
-      if(mouseX > width/2) {
-        translate(this.w, 0);
-        scale(-1.0,1.0);
-      }
       tint(this.col);
       image(img_player,0,0, this.w, this.h);
       pop();
-      
+      /* gun */
+      this.guns[this.selectedGun].draw(this);
+      /* name & hp */ 
       fill(255,255,0);
       textAlign(CENTER, BOTTOM);
       text(this.name +'\n' +this.hp +'hp', this.pos.x, this.pos.y-5 -this.h/2);
     }
 
-    shootInterval = 0;
     shoting() {
-      if(this.shootInterval < millis()){
-        const SHOTS = 10;
-        const SPREAD = PI/5;
-
-        for(var i = 0; i < SHOTS; i++) {
-          socket.emit('shot', {x: player.pos.x, y: player.pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2) + (i-SHOTS/2) * SPREAD/SHOTS});
-        }
-        /*
-        socket.emit('shot', {x: player.pos.x, y: player.pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2)});
-        this.shootInterval = millis() + serverConst.PLAYER_MIN_SHOOT_GAP;
-        */
-      }
+      if(!this.guns[this.selectedGun].AUTOMATIC) this.guns[this.selectedGun].shoot(this);
     }
   
     keyPressed(){

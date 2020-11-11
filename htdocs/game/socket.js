@@ -36,7 +36,7 @@ class Multiplayer {
 
     socket.on('shot',     shot); // some player disconnected
 
-    socket.on('respawn',  () => {player.pos.x = 0; player.pos.y = 0;}); // some player disconnected
+    socket.on('respawn',  () => {player.pos.x = 0; player.pos.y = 0; socket.emit('respawned');}); // some player disconnected
 
     //socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp, kills
   }
@@ -57,7 +57,7 @@ class Multiplayer {
   // refresh every frame
   refresh() {
     if(this.sendTimer < millis()) {
-      socket.emit('pos', {x: player.pos.x, y: player.pos.y});
+      socket.emit('pos', {x: player.pos.x, y: player.pos.y, gunRotation: player.gunRotation});
       this.sendTimer = millis() + SEND_GAP;
     }
   }
@@ -97,7 +97,7 @@ function initGame(data) {
   const objectsLoad = data.objects;
   for (var i = 0; i < objectsLoad.length; i++) {
     const obj = objectsLoad[i];
-    objects.push(new Block(obj.pos.x, obj.pos.y));
+    if(obj.name == 'Block') objects.push(new Block(obj.pos.x, obj.pos.y));
   }
 
   gameLoaded = true;
@@ -129,10 +129,8 @@ function refPlayer(p) {
   if(index == -1) { console.log("%c ERROR: pos index not found", 'color: black; background-color: red'); console.log(p.id,player.id); return; }
   players[index].target = {x: p.x, y: p.y};
   players[index].hp = p.hp;
+  players[index].targetGunRotation = p.gunRotation;
 }
-
-const REFRESH_PERIOD = 20; // = 1000/FPS
-const SERVER_INTERVAL_REFRESH = 100;
 
 /*** SHOOT ***/
 function shot(data){

@@ -19,11 +19,12 @@
   <script src="collisions/functions.js"></script>
   <script src="collisions/main.js"></script>
 
-  <!-- IMPORT ENTITIES -->
+  <!-- IMPORT ENTITIES AND OBJECTS -->
   <script src="entities/GameObject.js"></script>
   <script src="entities/MyPlayer.js"></script>
   <script src="entities/Player.js"></script>
   <script src="entities/Block.js"></script>
+  <script src="entities/Gun.js"></script>
   <script src="entities/Bullet.js"></script>
 
   <!-- IMPORT OTHER SKETCHES -->

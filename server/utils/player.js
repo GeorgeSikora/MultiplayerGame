@@ -1,5 +1,5 @@
-/*** PLAYER CLASS ***/
 
+/*** PLAYER CLASS ***/
 class Player {
     constructor(id, name, x, y, col) {
       this.id = id;
@@ -9,7 +9,8 @@ class Player {
       this.w = 64;
       this.h = 64;
 
-      this.gunRotation = 0;
+      this.selectedGun = 0;
+      this.rotation = 0;
       
       this.hp = constants.PLAYER_HP;
 
@@ -20,8 +21,7 @@ class Player {
       this.respawning = false;
     }
     update() {
-        //io.to(this.id).emit('hp', this.hp);
-        io.emit('refPlayer', {id: this.id ,x: this.pos.x, y: this.pos.y, hp: this.hp, kills: this.kills, gunRotation: this.gunRotation});
+        io.emit('refPlayer', {id: this.id ,x: this.pos.x, y: this.pos.y, hp: this.hp, kills: this.kills, rotation: this.rotation, selectedGun: this.selectedGun});
     }
 }
 

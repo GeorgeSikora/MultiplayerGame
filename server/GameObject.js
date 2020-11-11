@@ -12,7 +12,7 @@ class GameObject {
         // Basicly nothing
     }
     draw(){
-        // Basicly nothing
+        // Basicly nothingremovee
     }
 }
 

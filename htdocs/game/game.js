@@ -76,7 +76,8 @@ function draw() {
   fill(255);
   textSize(18);
   textAlign(LEFT, TOP);
-  text('connected: '+socket.connected+'\nping: ' + multiplayer.ping + 'ms\nFPS: ' + fps + '\nkills: ' + player.kills + '\nx: ' + Math.round(player.pos.x) + ' y: ' + Math.round(player.pos.y) + "\nPlayers online: " + (players.length+1) + "\nObjects: " + objects.length, 5, 5);
+  text('connected: '+socket.connected+'\nping: ' + multiplayer.ping + 'ms\nFPS: ' + fps + '\nkills: ' + player.kills + '\nx: ' + Math.round(player.pos.x) + ' y: ' + Math.round(player.pos.y) + "\nPlayers online: " + (players.length+1) + "\nObjects: " + objects.length,
+   5, 5);
   pop();
 
   /* INFINITY SHOOTING EXPERIMENTS */

@@ -15,7 +15,8 @@ class MyPlayer extends GameObject{
       this.kills = 0;
       this.col = col;
       
-      this.gun;
+      this.guns = [new Knife(), new Rifle(), new Shotgun()];
+      this.selectedGun = 0;
       this.rotation = 0;
 
       /* EXTRA VALUES */

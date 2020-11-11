@@ -10,6 +10,8 @@
 
   <!-- IMPORT LIBRARIES -->
   <script src="libraries/p5.min.js"></script>
+  <!--<script src="libraries/p5.sound.min.js"></script>-->
+  <script src="libraries/howler.core.js"></script>
   <script src="libraries/socket.io.js"></script>
 
   <!-- IMPORT ASSETS -->

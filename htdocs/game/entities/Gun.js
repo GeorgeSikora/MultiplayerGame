@@ -3,7 +3,6 @@ class Gun {
     constructor(name, img){
         this.name = name;
         this.img = img;
-
         this.shootInterval = 0;
         this.AUTOMATIC = false;
         this.SHOTS_INTERVAL = 0;
@@ -21,7 +20,6 @@ class Gun {
       image(this.img,0,0);
       pop();
     }
-
     getGunHead(obj) {
         const shift = (obj.rotation < -PI/2 || obj.rotation > PI/2) ? PI : 0;
         return {
@@ -29,37 +27,69 @@ class Gun {
             y: obj.pos.y + sin(obj.rotation)*this.img.width/2 + cos(obj.rotation + shift)*12
         }
     }
+    shoot(obj) {}
+} 
+
+class Knife extends Gun {
+    constructor(){
+        super('knife', img_knife);
+
+        this.shake = {x: 0, y: 0};
+    }
+    draw(obj) {
+        push();
+
+        this.shake.x += (0-this.shake.x) * 0.16;
+        this.shake.y += (0-this.shake.y) * 0.16;
+
+        translate(obj.pos.x + this.shake.x, obj.pos.y + this.shake.y);
+        rotate(obj.rotation);
+        translate(-this.img.width/2, -12);
+        if(obj.rotation < -PI/2 || obj.rotation > PI/2) {
+          translate(0, this.img.height/2);
+          scale(1.0,-1.0);
+        }
+        tint(255);
+        image(this.img,0,0);
+        pop();
+    }
 
     shoot(obj) {
+        sound_knife.play();
 
+        this.shake.x = cos(obj.rotation)*42;
+        this.shake.y = sin(obj.rotation)*42;
+
+        player.speed.x += cos(obj.rotation)*5;
+        player.speed.y += sin(obj.rotation)*5;
+        /*
         const pos = this.getGunHead(obj);
 
         if(this.shootInterval < millis()){
-            const SHOTS = 10;
-            const SPREAD = PI/5;
-            for(var i = 0; i < SHOTS; i++) {
-              socket.emit('shot', {x: pos.x, y: pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2) + (i-SHOTS/2) * SPREAD/SHOTS});
-            }
-            /*
-            socket.emit('shot', {x: player.pos.x, y: player.pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2)});
-            */
-           this.shootInterval = millis() + this.SHOTS_INTERVAL;
+            sound_rifle.play();
+            socket.emit('shot', {x: pos.x, y: pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2)});
+            this.shootInterval = millis() + this.SHOTS_INTERVAL;
           }
+          */
     }
-} 
+}
 
 class Rifle extends Gun {
     constructor(){
         super('rifle', img_rifle);
 
         this.AUTOMATIC = true;
-        this.SHOTS_INTERVAL = 100;
+        this.SHOTS_INTERVAL = 85;
     }
     shoot(obj) {
 
-        const pos = this.getGunHead(obj);
-
         if(this.shootInterval < millis()){
+            const pos = this.getGunHead(obj);
+            
+            player.speed.x += cos(obj.rotation+PI)*1.7;
+            player.speed.y += sin(obj.rotation+PI)*1.7;
+
+            sound_rifle.play();
             socket.emit('shot', {x: pos.x, y: pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2)});
             this.shootInterval = millis() + this.SHOTS_INTERVAL;
           }
@@ -77,8 +107,15 @@ class Shotgun extends Gun {
         this.SPREAD = PI/5;
     }
     shoot(obj) {
-        const pos = this.getGunHead(obj);
         if(this.shootInterval < millis()){
+
+            const pos = this.getGunHead(obj);
+
+            sound_shotgun.play();
+
+            player.speed.x += cos(obj.rotation+PI)*15.0;
+            player.speed.y += sin(obj.rotation+PI)*15.0;
+
             for(var i = 0; i < this.SHOTS; i++) {
                 socket.emit('shot', {
                     x: pos.x,

@@ -57,7 +57,7 @@ class Multiplayer {
   // refresh every frame
   refresh() {
     if(this.sendTimer < millis()) {
-      socket.emit('pos', {x: player.pos.x, y: player.pos.y, gunRotation: player.gunRotation});
+      socket.emit('pos', {x: player.pos.x, y: player.pos.y, rotation: player.rotation, selectedGun: player.selectedGun});
       this.sendTimer = millis() + SEND_GAP;
     }
   }
@@ -79,7 +79,6 @@ setInterval(function(){
 function initGame(data) {
 
   /* INIT GAME SETTINGS */
-
   serverConst = data.constants;
   console.log(serverConst);
 
@@ -99,7 +98,6 @@ function initGame(data) {
     const obj = objectsLoad[i];
     if(obj.name == 'Block') objects.push(new Block(obj.pos.x, obj.pos.y));
   }
-
   gameLoaded = true;
 }
 
@@ -129,10 +127,12 @@ function refPlayer(p) {
   if(index == -1) { console.log("%c ERROR: pos index not found", 'color: black; background-color: red'); console.log(p.id,player.id); return; }
   players[index].target = {x: p.x, y: p.y};
   players[index].hp = p.hp;
-  players[index].targetGunRotation = p.gunRotation;
+  players[index].targetRotation = p.rotation;
+  players[index].selectedGun = p.selectedGun;
 }
 
 /*** SHOOT ***/
 function shot(data){
+  if(data.shooterID != player.id) sound_rifle.play();
   objects.push(new Bullet(data.shooterID, data.pos, data.speed));
 }

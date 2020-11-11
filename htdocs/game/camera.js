@@ -1,11 +1,3 @@
-/*
-    CAMERA
-
-    last: 3.11.2020
-    version: 0.1
-    todo: DONE!
-
-*/
 
 let cam;
 
@@ -16,6 +8,8 @@ class Camera {
         this.scale = 1.0;
         this.pos = {x: 0, y: 0};
         this.easing = 0.1;
+        
+        this.mouse = {x: 0, y: 0};
 
     }
     
@@ -30,6 +24,9 @@ class Camera {
         const right  =  width  / (this.scale*2);
         const bottom = -height / (this.scale*2);
         const top    =  height / (this.scale*2);
+        
+        this.mouse.x = map(mouseX, 0.0, width, left+this.pos.x, right+this.pos.x);
+        this.mouse.y = map(mouseY, 0.0, height, bottom+this.pos.y, top+this.pos.y);
 
         ortho(left + this.pos.x, right + this.pos.x, bottom - this.pos.y, top - this.pos.y);
     }

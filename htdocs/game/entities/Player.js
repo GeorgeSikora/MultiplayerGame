@@ -2,15 +2,13 @@
 let players = []; // other players
 
 /* other players */
-class Player {
+class Player extends GameObject{
     constructor(id, name, x, y, col) {
+      super(x, y, 64, 64)
+
       this.id = id;
   
       this.name = name;
-  
-      this.pos = {x:x, y:y};
-      this.w = 64;
-      this.h = 64;
 
       this.hp = 0;
       

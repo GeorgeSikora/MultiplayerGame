@@ -21,7 +21,13 @@ I added some screenshots of game and server:
 ![Game image](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/game.png)
 
 ### Also i created server settings page for easy control with constant variables
-![Game image](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/server.png)
+![Server image](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/server.png)
+
+### Map update!
+![Game map](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/map.png)
+
+### Also with collisions system
+![newest Game image](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/game2.png)
 
 ### Why "Wisteria" ?
 

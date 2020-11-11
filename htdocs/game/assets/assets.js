@@ -8,10 +8,10 @@ function loadAssets() {
   img_block = loadImage('assets/images/block.png');
 
   /* fonts */
-  font_default = loadFont('assets/fonts/OpenSans-Regular.ttf');
+  //font_default = loadFont('assets/fonts/OpenSans-Regular.ttf');
+  font_default = loadFont('assets/fonts/ColabReg.otf');
 
   /* some default stuff */
   textFont(font_default);
-  textSize(14);
   noStroke();
 }

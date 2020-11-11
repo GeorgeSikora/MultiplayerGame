@@ -20,9 +20,6 @@ function draw() {
   /* FPS drop check */
   if(frameRate() < 15) return;
 
-  /* background color */
-  background(19);
-
   /* calc player move */
   player.refresh();
 
@@ -31,6 +28,9 @@ function draw() {
 
   /* cam ortho */
   cam.ortho();
+
+  /* background color */
+  background(19);
 
   /* draw Safe Zone */
   drawSavezone();
@@ -58,10 +58,14 @@ function draw() {
   ortho(0, width, -height, 0);
 
   /* informations corner */
+  push();
   fill(255);
+  textSize(24.4);
   textAlign(LEFT, TOP);
-  text('connected: '+socket.connected+'\nping: ' + multiplayer.ping + 'ms\nFPS: ' + fps + '\nkills: ' + player.kills + '\nx: ' + Math.round(player.pos.x) + ' y: ' + Math.round(player.pos.y) + "\nPlayers online: " + (players.length+1) + "\nObjects: " + objects.length, 10,10);
-  
+  //text("dhjqF83R9R3sef sefsef 85 UF 835fsd fs", 5, 5);
+  text('connected: '+socket.connected+'\nping: ' + multiplayer.ping + 'ms\nFPS: ' + fps + '\nkills: ' + player.kills + '\nx: ' + Math.round(player.pos.x) + ' y: ' + Math.round(player.pos.y) + "\nPlayers online: " + (players.length+1) + "\nObjects: " + objects.length, 5, 5);
+  pop();
+
   /* INFINITY SHOOTING EXPERIMENTS */
   //if(mouseIsPressed) socket.emit('shot', {x: player.pos.x, y: player.pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2)});
   /*
@@ -110,6 +114,6 @@ function drawSavezone(){
   textSize(32);
   textAlign(CENTER, TOP);
   fill(200);
-  text("SAFE ZONE", 0, -serverConst.SAFE_ZONE+10);
+  text("SAFE ZONE\n", 0, -serverConst.SAFE_ZONE+10);
   pop();
 }

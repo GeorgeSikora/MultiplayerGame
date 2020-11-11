@@ -52,7 +52,7 @@ class MyPlayer {
       tint(this.col);
       image(img_player,0,0, this.w, this.h);
       pop();
-    
+      
       fill(255,255,0);
       textAlign(CENTER, BOTTOM);
       text(this.name +'\n' +this.hp +'hp', this.pos.x, this.pos.y-5 -this.h/2);

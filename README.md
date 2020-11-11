@@ -45,5 +45,5 @@ I just like this tree, called Wisteria and also it has very nice name. So far, i
 >- Map editor ✖
 >- Player build ✖
 >- Registration and login ✖
->- Collision ✖
->- Server configurations ✖
+>- Collision ✔
+>- Server configurations ✔

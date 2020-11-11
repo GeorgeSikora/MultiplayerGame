@@ -1,4 +1,5 @@
 
+/* HERE PUT YOUR SERVER IP OR URL WITH PORT*/
 const SERVER_URL = '192.168.0.110:3031';
 
 let grid;
@@ -46,7 +47,7 @@ function draw() {
     var obj = objects[i];
     obj.update();
     /* draw only when it is on screen */
-    if(rectRect(obj.pos.x-obj.center.x, obj.pos.y-obj.center.y, obj.w, obj.h, cam.pos.x-width/2, cam.pos.y-height/2, width, height)){
+    if(rectRect(obj.pos.x-obj.center.x, obj.pos.y-obj.center.y, obj.w, obj.h, cam.pos.x-width/cam.scale/2, cam.pos.y-height/cam.scale/2, width/cam.scale, height/cam.scale)){
       obj.draw();
     }
   }

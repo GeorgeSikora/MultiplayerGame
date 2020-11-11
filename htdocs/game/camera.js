@@ -1,11 +1,3 @@
-/*
-    CAMERA
-
-    last: 3.11.2020
-    version: 0.1
-    todo: DONE!
-
-*/
 
 let cam;
 

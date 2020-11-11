@@ -2,7 +2,7 @@
 /*** BULLET CLASS ***/
 class Bullet extends GameObject {
     constructor(shooterID, x, y, dir){
-        super(x,y,10,10);
+        super(x,y,6,6);
         this.shooterID = shooterID;
 
         this.dir = dir;

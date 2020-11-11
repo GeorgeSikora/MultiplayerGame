@@ -56,7 +56,7 @@ class Knife extends Gun {
 
     shoot(obj) {
         var id = sound_knife.play();
-        sound_knife.pos(map(mouseX,0,width,-1,1),map(mouseY,0,height,-1,1), -1.0, id);
+        sound_knife.pos(map(mouseX,0,width,-1,1),map(mouseY,0,height,-1,1), -0.5, id);
 
         this.shake.x = cos(obj.rotation)*42;
         this.shake.y = sin(obj.rotation)*42;
@@ -90,7 +90,9 @@ class Rifle extends Gun {
             player.speed.x += cos(obj.rotation+PI)*1.7;
             player.speed.y += sin(obj.rotation+PI)*1.7;
 
-            sound_rifle.play();
+            var id = sound_rifle.play();
+            sound_rifle.pos(map(mouseX,0,width,-20,20),map(mouseY,0,height,-20,20), random(-0.4,-0.6), id);
+
             socket.emit('shot', {x: pos.x, y: pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2)});
             this.shootInterval = millis() + this.SHOTS_INTERVAL;
           }
@@ -113,6 +115,7 @@ class Shotgun extends Gun {
             const pos = this.getGunHead(obj);
 
             var id = sound_shotgun.play();
+            sound_shotgun.pos(map(mouseX,0,width,-1,1),map(mouseY,0,height,-1,1), -0.5, id);
             //sound_shotgun.volume(1, id);
             //sound_shotgun.pos(map(mouseX,0,width,-1,1),map(mouseY,0,height,-1,1), -0.5, id);
             //sound_shotgun.stereo(0, id);

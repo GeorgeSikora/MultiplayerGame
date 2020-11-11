@@ -8,6 +8,7 @@ class GameObject {
         this.pos = {x:x, y:y};
         this.w = w;
         this.h = h;
+        this.center = {x:0,y:0};
     }
     update(){
         // Basicly nothing
@@ -41,5 +42,8 @@ function removeObjectByID(id){
 }
   
 function removeObject(object){
+
+    if(object.collision != null) col.splice(col.indexOf(object.collision), 1);
+
     objects.splice(objects.indexOf(object), 1);
 }

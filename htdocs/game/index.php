@@ -17,6 +17,7 @@
 
   <!-- IMPORT COLLISION SYSTEM -->
   <script src="collisions/functions.js"></script>
+  <script src="collisions/main.js"></script>
 
   <!-- IMPORT ENTITIES -->
   <script src="entities/GameObject.js"></script>

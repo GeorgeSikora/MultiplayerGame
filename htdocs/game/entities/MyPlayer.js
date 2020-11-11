@@ -2,17 +2,19 @@
 let player; // my player
 
 /* my single player entity */
-class MyPlayer {
+class MyPlayer extends GameObject{
     constructor(id, name, x, y, col) {
+      
+      super(x,y,64,64);
+
+      this.collision = addCol(new Collision(this));
+      this.center = {x: this.w/2, y: this.h/2};
+
       this.id = id;
 
       this.name = name;
-  
-      this.pos = {x:x, y:y};
-      this.w = 64;
-      this.h = 64;
 
-      this.hp = 100;
+      this.hp = 0;
       this.kills = 0;
       
       this.col = col;

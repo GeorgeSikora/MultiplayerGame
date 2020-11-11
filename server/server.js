@@ -12,11 +12,9 @@ console.log('Socket.io server started');
 
 /********* HTML PAGE *********/
 app.use(express.static('public'));
-/*
 app.use((req, res, next) => {
     res.status(404).send('page not found :( ' + req.url);
 })
-*/
 app.listen(port, () => {
     console.log('App listener on port ' + port)
 })
@@ -167,9 +165,23 @@ class Block extends GameObject {
     }
 }
 
-objects.push(new Block(320,-64));
-objects.push(new Block(320,0));
-objects.push(new Block(320,64));
+const fs = require('fs');
+const { exit } = require('process');
+
+try {  
+    const data = fs.readFileSync('map.txt', 'utf8');
+    const lines = data.split(/\r?\n/);
+
+    for(var i = 0; i < lines.length; i++){
+        const param = lines[i].split(" ");
+        const x = parseInt(param[0]);
+        const y = parseInt(param[1]);
+        objects.push(new Block(x,y));
+    }
+
+} catch(e) {
+    console.log('Error:', e.stack);
+}
 
 /*** BULLET CLASS ***/
 class Bullet {

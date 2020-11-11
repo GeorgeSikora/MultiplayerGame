@@ -12,7 +12,7 @@ class Player extends GameObject{
       this.col = col;
 
       
-      this.guns = [new Rifle(), new Shotgun()];
+      this.guns = [new Knife(), new Rifle(), new Shotgun()];
       this.rotation = 0;
       this.targetRotation = 0;
       this.selectedGun = 0;

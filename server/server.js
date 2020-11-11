@@ -184,11 +184,11 @@ try {
 }
 
 /*** BULLET CLASS ***/
-class Bullet {
+class Bullet extends GameObject {
     constructor(shooterID, x, y, dir){
+        super(x,y,10,10);
         this.shooterID = shooterID;
 
-        this.pos = {x:x, y:y};
         this.dir = dir;
         this.speed = 1;
 
@@ -226,13 +226,23 @@ class Bullet {
             }
         }
 
+        for(var i = 0; i < objects.length; i++){
+            var obj = objects[i];
+            if(obj.constructor.name == 'Bullet') continue;
+            if(Collision.lineRect(this.pos.x, this.pos.y, this.pos.x+move.x, this.pos.y+move.y, obj.pos.x-obj.w/2, obj.pos.y-obj.h/2, obj.w, obj.h)){
+                removeObject(this);
+            }
+        }
+
         this.pos.x += move.x;
         this.pos.y += move.y;
     }
 }
 
-function removeObject(object){
-    objects.splice(objects.indexOf(object), 1);
+function removeObject(obj){
+    var index = objects.indexOf(obj);
+    if(index == -1) return;
+    objects.splice(index, 1);
 }
 
 function getObject(id) {

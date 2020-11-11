@@ -1,6 +1,6 @@
 
 /* HERE PUT YOUR SERVER IP OR URL WITH PORT*/
-const SERVER_URL = '192.168.0.110:3031';
+const SERVER_URL = '192.168.0.101:3031';
 
 let grid;
 
@@ -80,21 +80,17 @@ function draw() {
   pop();
 
   /* INFINITY SHOOTING EXPERIMENTS */
-  /*
-  if(mouseIsPressed) {
+  
+  if(mouseIsPressed && mouseButton == RIGHT && (player.pos.x < -serverConst.SAFE_ZONE || player.pos.y < -serverConst.SAFE_ZONE || player.pos.x > serverConst.SAFE_ZONE || player.pos.y > serverConst.SAFE_ZONE)) {
     socket.emit('shot', {x: player.pos.x, y: player.pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2)});
     const angle = atan2(mouseY - height / 2, mouseX - width / 2) + PI;
     player.speed.x += cos(angle) * 0.6;
     player.speed.y += sin(angle) * 0.6;
-  }*/
-  /*
-  if(mouseIsPressed) {
-    if(shootInterval < millis()){
-      socket.emit('shot', {x: player.pos.x, y: player.pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2)});
-      shootInterval = millis()+200;
-    }
-  })
-  */
+
+    var randomSpeed = random(-0.8, 0.8);
+    player.speed.x += cos(angle+PI/2) * randomSpeed;
+    player.speed.y += sin(angle+PI/2) * randomSpeed;
+  }
 }
 
 function getGrid(pos, gridSize) {

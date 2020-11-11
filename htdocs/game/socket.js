@@ -36,7 +36,7 @@ class Multiplayer {
 
     socket.on('shot',     shot); // some player disconnected
 
-    socket.on('respawn',  () => {player.pos = {x:0, y:0}}); // some player disconnected
+    socket.on('respawn',  () => {player.pos.x = 0; player.pos.y = 0;}); // some player disconnected
 
     //socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp, kills
   }

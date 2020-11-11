@@ -63,8 +63,16 @@ class MyPlayer extends GameObject{
     shootInterval = 0;
     shoting() {
       if(this.shootInterval < millis()){
+        const SHOTS = 10;
+        const SPREAD = PI/5;
+
+        for(var i = 0; i < SHOTS; i++) {
+          socket.emit('shot', {x: player.pos.x, y: player.pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2) + (i-SHOTS/2) * SPREAD/SHOTS});
+        }
+        /*
         socket.emit('shot', {x: player.pos.x, y: player.pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2)});
         this.shootInterval = millis() + serverConst.PLAYER_MIN_SHOOT_GAP;
+        */
       }
     }
   

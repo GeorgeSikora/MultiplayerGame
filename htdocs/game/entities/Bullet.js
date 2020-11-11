@@ -31,7 +31,7 @@ class Bullet extends GameObject {
                 removeObject(this);
             }
         }
-        /*
+        
         for(var i = 0; i < objects.length; i++){
             var obj = objects[i];
             if(obj.constructor.name == 'Bullet') continue;
@@ -39,7 +39,6 @@ class Bullet extends GameObject {
                 removeObject(this);
             }
         }
-        */
 
         this.pos.x += move.x;
         this.pos.y += move.y;

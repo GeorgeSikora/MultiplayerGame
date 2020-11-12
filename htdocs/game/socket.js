@@ -133,6 +133,15 @@ function refPlayer(p) {
 
 /*** SHOOT ***/
 function shot(data){
-  if(data.shooterID != player.id) sound_rifle.play();
+  if(data.shooterID != player.id) {
+    var id = sound_rifle.play();
+    sound_rifle.pos(
+    (data.pos.x -player.pos.x)/200.0,
+    (data.pos.y -player.pos.y)/200.0, 
+    dist(data.pos.x, data.pos.y, player.pos.x, player.pos.y)/200.0, 
+    id);
+
+    
+  }
   objects.push(new Bullet(data.shooterID, data.pos, data.speed));
 }

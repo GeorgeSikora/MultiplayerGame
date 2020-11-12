@@ -43,7 +43,7 @@ class MyPlayer extends GameObject{
       /* player rotation */
       this.rotation = atan2(mouseY - height / 2, mouseX - width / 2);
       /* gun automatic shoot */
-      if(mouseIsPressed) {
+      if(!menuOpened && mouseIsPressed) {
         if(this.guns[this.selectedGun].AUTOMATIC) this.guns[this.selectedGun].shoot(this);
       }
     }

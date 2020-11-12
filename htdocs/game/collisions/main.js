@@ -1,21 +1,23 @@
 
+/* COLLISION */
+
 let col = [];
 
 class Collision {
-    constructor(obj){
-        this.obj = obj;
+  constructor(obj){
 
-        this.pos = obj.pos;
-        this.w = obj.w;
-        this.h = obj.h;
+   this.obj = obj;
 
-        this.collidedX = false;
-        this.collidedY = false;
+    this.pos = obj.pos;
+    this.w = obj.w;
+    this.h = obj.h;
 
-        this.enable = true;
+    this.collidedX = false;
+    this.collidedY = false;
 
-        this.static = false;
-    }
+    this.enable = true;
+    this.static = false;
+  }
 }
 
 function addCol(c) {
@@ -54,12 +56,12 @@ function checkCollisions() {
 
         if (abs(deltaX) > abs(deltaY)) {
             shift.y = deltaY;
-            //if(colider1.obj.speed != null) colider1.obj.speed.y = constrain(deltaY, -1, 1) * 80; // JELLLY
+            if(colider1.obj.speed != null) colider1.obj.speed.y = constrain(deltaY, -1, 1) * 80; // JELLLY
             if(colider1.obj.speed != null) colider1.obj.speed.y = 0;
             colider1.colidedY = true;
         } else {
             shift.x = deltaX; 
-            //if(colider1.obj.speed != null) colider1.obj.speed.x = constrain(deltaX, -1, 1) * 80; // JELLY
+            if(colider1.obj.speed != null) colider1.obj.speed.x = constrain(deltaX, -1, 1) * 80; // JELLY
             if(colider1.obj.speed != null) colider1.obj.speed.x = 0;
             colider1.colidedX = true;
         }
@@ -71,11 +73,11 @@ function checkCollisions() {
 }
 
 class Direction {
-    constructor(){
-        this.UP     = 1;
-        this.DOWN   = 2;
-        this.LEFT   = 3;
-        this.RIGHT  = 4;
-        this.NONE   = 0;
-    }
+  constructor(){
+    this.UP     = 1;
+    this.DOWN   = 2;
+    this.LEFT   = 3;
+    this.RIGHT  = 4;
+    this.NONE   = 0;
+  }
 }

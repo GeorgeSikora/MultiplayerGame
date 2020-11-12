@@ -1,5 +1,5 @@
 
-/* HERE PUT YOUR SERVER IP OR URL WITH PORT*/
+/* HERE PUT YOUR SERVER IP OR URL WITH PORT */
 const SERVER_URL = '185.221.124.205:3031';
 
 /*** MAIN SETUP ***/
@@ -8,20 +8,24 @@ function setup() {
   createCanvas(window.screen.width, window.screen.height, WEBGL);
   /* resize to the browser window */
   windowResized();
-  /* load assets (images, fonts, sounds) */
-  loadAssets();
+  /* set some default stuff */
+  textFont(font_default);
+  noStroke();
   /* create necessary game objects */
-  player = new MyPlayer(0, name, 0, 0, color);
+  player = new MyPlayer(0, post.name, 0, 0, post.color);
   cam = new Camera(player);
   /* connect to the multiplayer server */
   multiplayer = new Multiplayer(SERVER_URL);
+  /* set default volume at 30% */
+  Howler.volume(0.3);
 }
 
+let menuOpened = false;
+let muted = false;
 let grid;
 
 /*** MAIN LOOP ***/
 function draw() {
-
   /* FPS drop check */
   if(frameRate() < 15) return;
 
@@ -30,7 +34,8 @@ function draw() {
 
   /* send vars and etc. to server */
   multiplayer.refresh();
-  
+
+  /* chceck and repair positions of coliding objects */
   checkCollisions();
 
   /* cam ortho */
@@ -39,7 +44,7 @@ function draw() {
   /* background color */
   background(19);
 
-  /* draw Safe Zone s*/
+  /* draw Safe Zone */
   drawSavezone();
 
   /* update and draw objects */
@@ -67,18 +72,19 @@ function draw() {
   tint(255, 100);
   image(img_block, grid.x-64/2, grid.y-64/2);
   pop();
-*/
+  */
   /* set left top corner ortho pos x0 y0 */
   ortho(0, width, -height, 0);
 
   /* informations corner */
-  push();
-  fill(255);
-  textSize(18);
-  textAlign(LEFT, TOP);
-  text('connected: '+socket.connected+'\nping: ' + multiplayer.ping + 'ms\nFPS: ' + fps + '\nkills: ' + player.kills + '\nx: ' + Math.round(player.pos.x) + ' y: ' + Math.round(player.pos.y) + "\nPlayers online: " + (players.length+1) + "\nObjects: " + objects.length,
-   5, 5);
-  pop();
+  drawInfo();
+
+  tint(255);
+  if(muted) {
+    image(ico_sounds_off, width-32, 0);
+  }else{
+    image(ico_sounds_on, width-32, 0);
+  }
 
   /* INFINITY SHOOTING EXPERIMENTS */
   /*
@@ -94,17 +100,19 @@ function draw() {
   }*/
 }
 
-function getGrid(pos, gridSize) {
-  var out = {x: pos.x+gridSize/2, y: pos.y+gridSize/2};
-  out.x = out.x - out.x%gridSize;
-  out.y = out.y - out.y%gridSize;
-  out.x -= pos.x<-gridSize/2 ? gridSize:0;
-  out.y -= pos.y<-gridSize/2 ? gridSize:0;
-  return out;
-}
-
 /*** CONTROL EVENTS ***/
 function keyPressed(){
+  if(keyCode == 27){ // Esc
+    var x = document.getElementById("menu");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      menuOpened = true;
+    } else {
+      x.style.display = "none";
+      menuOpened = false;
+    }
+  }
+  if(menuOpened) return;
   /*
   if(keyCode == 70){
     var output = [];
@@ -122,6 +130,12 @@ function keyReleased(){
   player.keyReleased();
 }
 function mousePressed(){
+  if(menuOpened) return;
+
+  if(mouseX > width-32 && mouseX < width && mouseY < 32 && mouseY > 0){
+    muted = !muted;
+    Howler.mute(muted);
+  }
   /*
   var searched = false;
   for(var i = 0; i < objects.length; i++) {
@@ -136,10 +150,10 @@ function mousePressed(){
     objects.push(new Block(grid.x, grid.y));
   }
   */
-  
   if(mouseButton == LEFT) player.shoting();
   //if(mouseButton == RIGHT) player.shoting();
 }
+
 let scoolTimer = 0;
 function mouseWheel(event) {
   if(scoolTimer < millis()) {
@@ -152,32 +166,4 @@ function mouseWheel(event) {
     }
     scoolTimer = millis() + 120;
   }
-}
-
-/*** OTHER STUFF ***/
-
-/* window automatic resize */
-function windowResized() {
-  if(window.screen.width < window.innerWidth || window.screen.height < window.innerHeight) {
-    return;
-  }
-  resizeCanvas(window.innerWidth, window.innerHeight);
-}
-
-/* draw safe zone */
-function drawSavezone(){
-  push();
-  /* set to bottom layer */
-  translate(0,0,-1);
-  /* draw rectangle with border */
-  fill(0);
-  strokeWeight(7);
-  stroke(127, 0, 0);
-  rect(-serverConst.SAFE_ZONE,-serverConst.SAFE_ZONE,serverConst.SAFE_ZONE*2,serverConst.SAFE_ZONE*2);
-  /* draw text */
-  textSize(32);
-  textAlign(CENTER, TOP);
-  fill(200);
-  text("SAFE ZONE\n", 0, -serverConst.SAFE_ZONE+10);
-  pop();
 }

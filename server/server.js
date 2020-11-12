@@ -54,6 +54,11 @@ io.sockets.on('connection', function (socket) {
 
         if(delta.x > 100 || delta.y > 100) {
             console.log("Anticheat detected speed hack!");
+
+            /* TODO: Tell the player he must return to the last position */ 
+
+            //socket.disconnect();
+            //return;
         }
 
         players[id].pos = {x: pos.x, y: pos.y};

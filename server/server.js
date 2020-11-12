@@ -1,10 +1,14 @@
 
-global.constants = require.main.require('./constants');
+global.constants = require('./constants');
+const{BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE} = require('./colors.js');
+
+/* Server config */
+const SERVICE_PORT = 8088; // server service port
+const TICK_DURATION = 15; // ms
 
 const path = require('path');
 const express = require('express');
 const app = express();
-const port = 8088;
 
 var server = app.listen(process.env.PORT || 3031);
 global.io = require('socket.io')(server, {pingInterval: 3000});
@@ -14,20 +18,16 @@ console.log('Socket.io server started');
 app.use(express.static('public'));
 app.use((req, res, next) => {
     res.status(404).send('page not found :( ' + req.url);
-})
-app.listen(port, () => {
-    console.log('App listener on port ' + port)
-})
+});
+app.listen(SERVICE_PORT, () => {
+    console.log('Server service on port ' + SERVICE_PORT)
+});
 
 /********* MY FUNCTIONS *********/
-GameObject = require('./GameObject');
-
-Collision = require('./collisions/functions.js');
-var constants = require('./constants.js');
-
-Player = require('./utils/player.js');
-
-ObjManager = require('./manager.js');
+GameObject  = require('./GameObject');
+Collision   = require('./collisions/functions.js');
+Player      = require('./utils/player.js');
+ObjManager  = require('./manager.js');
 
 global.players = [];
 global.objects = [];
@@ -85,7 +85,7 @@ io.sockets.on('connection', function (socket) {
         players.splice(removeIndex, 1);
     });
 
-    /* FOR SERVER ADMIN */
+    /*** FOR SERVER ADMIN ***/
     socket.on('get_constants', access => {
         if(access.user == 'admin' && access.password == 's8j2m6x4n1') {
             console.log(constants);
@@ -105,12 +105,9 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
-const{BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE}=require('./colors.js');
-
 var lastTime = getMillis();
 global.deltaTime = 1;
 
-const SERVER_INTERVAL_REFRESH = 80;
 setInterval(() => {
     var time = getMillis();
     deltaTime = time - lastTime;
@@ -129,10 +126,10 @@ setInterval(() => {
         objects[i].update();
     }
     for(var i = 0; i < players.length; i++){
-        players[i].update();
         if(players[i].respawning) console.log(players[i].name + ' respawning...');
+        players[i].update();
     }
-}, SERVER_INTERVAL_REFRESH);
+}, TICK_DURATION);
 
 function getMillis(){
     const hrTime = process.hrtime();

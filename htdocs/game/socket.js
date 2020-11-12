@@ -77,6 +77,7 @@ setInterval(function(){
 
 // Init game and entities
 function initGame(data) {
+  var startTime = millis();
 
   /* INIT GAME SETTINGS */
   serverConst = data.constants;
@@ -99,6 +100,8 @@ function initGame(data) {
     if(obj.name == 'Block') objects.push(new Block(obj.pos.x, obj.pos.y));
   }
   gameLoaded = true;
+
+  console.log('Game loaded', millis() - startTime);
 }
 
 // When new player is connected

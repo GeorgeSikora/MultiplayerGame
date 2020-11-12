@@ -1,5 +1,6 @@
 
 /*** BULLET CLASS ***/
+
 class Bullet extends GameObject {
     constructor(shooterID, x, y, dir){
         super(x,y,6,6);
@@ -56,4 +57,5 @@ class Bullet extends GameObject {
         this.pos.y += move.y;
     }
 }
+
 module.exports = Bullet;

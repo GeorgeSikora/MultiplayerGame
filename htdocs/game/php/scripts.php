@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 
 <!-- IMPORT LIBRARIES -->
 <script src="libraries/p5.min.js"></script>

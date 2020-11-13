@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <?php
     if(isset($_POST['name']) && isset($_POST['color'])) { ?>
 

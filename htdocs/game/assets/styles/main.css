@@ -1,15 +1,42 @@
 body { 
-    padding: 0; 
-    margin: 0; 
-    background-color: black; 
-    position: fixed;
-  } 
-  #menu {
-    display: none;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: #000000cc;
+  padding: 0; 
+  margin: 0; 
+  background-color: black; 
+  position: fixed;
+} 
 
-    text-align: center;
-  }
+#menu {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #000000cc;
+  text-align: center;
+}
+
+.content {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+h1 {
+  color: white;
+  margin: 0px;
+}
+
+.slider {
+  width: 20%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.slider input {
+  width: 100%;
+}
+
+.slider p {
+  float: left;
+  color: white;
+}

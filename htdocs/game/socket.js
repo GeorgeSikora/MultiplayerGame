@@ -1,8 +1,8 @@
 /*
-    SOCKET
+  SOCKET
 
-    last: 6.11.2020
-    version: 0.1
+  last: 6.11.2020
+  version: 0.1
 */
 
 var gameLoaded = false;
@@ -139,12 +139,10 @@ function shot(data){
   if(data.shooterID != player.id) {
     var id = sound_rifle.play();
     sound_rifle.pos(
-    (data.pos.x -player.pos.x)/200.0,
-    (data.pos.y -player.pos.y)/200.0, 
-    dist(data.pos.x, data.pos.y, player.pos.x, player.pos.y)/200.0, 
+      (data.pos.x -player.pos.x)/200.0, // X
+      (data.pos.y -player.pos.y)/200.0, // Y
+      -dist(data.pos.x, data.pos.y, player.pos.x, player.pos.y)/100.0 - 1, //Z
     id);
-
-    
   }
   objects.push(new Bullet(data.shooterID, data.pos, data.speed));
 }

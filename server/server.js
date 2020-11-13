@@ -4,7 +4,7 @@ const{BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE} = require('./colors.js');
 
 /* Server config */
 const SERVICE_PORT = 8088; // server service port
-const TICK_DURATION = 15; // ms
+const TICK_DURATION = 50; // ms
 
 const path = require('path');
 const express = require('express');
@@ -23,18 +23,25 @@ app.listen(SERVICE_PORT, () => {
     console.log('Server service on port ' + SERVICE_PORT)
 });
 
-/********* MY FUNCTIONS *********/
-GameObject  = require('./GameObject');
+/********* FUNCTIONS *********/
 Collision   = require('./collisions/functions.js');
+
+/********* OBJECTS *********/
+GameObject  = require('./GameObject');
 Player      = require('./utils/player.js');
+Block       = require('./utils/Block.js');
+Bullet      = require('./utils/Bullet.js');
 ObjManager  = require('./manager.js');
 
+/********* GLOBAL ARRAYS *********/
 global.players = [];
 global.objects = [];
 
-/********* SOCKET IO *********/
-io.sockets.on('connection', function (socket) {
+/********* LOAD MAP *********/
+require('./map/load.js');
 
+/********* SOCKET IO *********/
+io.on('connection', socket => {
     console.log('new connection');
 
     socket.on('initReq', data => { // init request
@@ -79,13 +86,16 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('disconnect', (reason) => {
-        io.emit('remPlayer', socket.id);
         var removeIndex = ObjManager.getPlayer(socket.id);
+
+        if(removeIndex == -1) return;
+        
+        io.emit('remPlayer', socket.id);
         console.log('removing index: ' + removeIndex + ' size is: ' + players.length);
         players.splice(removeIndex, 1);
     });
 
-    /*** FOR SERVER ADMIN ***/
+    /********* SERVER ADMIN *********/
     socket.on('get_constants', access => {
         if(access.user == 'admin' && access.password == 's8j2m6x4n1') {
             console.log(constants);
@@ -105,6 +115,24 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
+const adminNamespace = io.of('/admin');
+
+adminNamespace.use((socket, next) => {
+  // ensure the user has sufficient rights
+  //console.log(socket);
+  //new Error('thou shall not pass');
+  var sHeaders = socket.handshake.headers;
+  console.info('[%s:%s] CONNECT', sHeaders['x-forwarded-for'], sHeaders['x-forwarded-port']);
+    next();
+});
+
+adminNamespace.on('connection', socket => {
+
+  socket.on('delete user', () => {
+    // ...
+  });
+});
+
 var lastTime = getMillis();
 global.deltaTime = 1;
 
@@ -115,7 +143,7 @@ setInterval(() => {
 
     console.log(MAGENTA+'players: '+YELLOW+'%s'+
                 MAGENTA+' objects: '+YELLOW+'%s'+
-                MAGENTA+' time: '+YELLOW+'%s ms',
+                MAGENTA+' delta: '+YELLOW+'%s ms',
                 
                 players.length.toString().padStart(2),
                 objects.length.toString().padStart(4),
@@ -135,28 +163,3 @@ function getMillis(){
     const hrTime = process.hrtime();
     return (hrTime[0] * 1000 + hrTime[1]/1000000);
 }
-
-class Block extends GameObject {
-    constructor(x, y){
-        super(x, y, 64, 64);
-    }
-}
-
-const fs = require('fs');
-
-try {  
-    const data = fs.readFileSync('map.txt', 'utf8');
-    const lines = data.split(/\r?\n/);
-
-    for(var i = 0; i < lines.length; i++){
-        const param = lines[i].split(" ");
-        const x = parseInt(param[0]);
-        const y = parseInt(param[1]);
-        objects.push(new Block(x,y));
-    }
-
-} catch(e) {
-    console.log('Error:', e.stack);
-}
-
-const Bullet = require('./utils/Bullet.js');

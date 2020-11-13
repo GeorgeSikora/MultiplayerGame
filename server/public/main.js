@@ -1,6 +1,6 @@
 
 
-let socket = io.connect('localhost:3031');
+let socket = io.connect('localhost:3031/admin?user=admin&password=chuj');
 
 socket.on('constants', loadConstants);
 

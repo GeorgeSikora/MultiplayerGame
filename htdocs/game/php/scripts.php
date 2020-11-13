@@ -29,6 +29,7 @@
 <script src="functions.js"></script>
 <script src="camera.js"></script>
 <script src="socket.js"></script>
+<script src="Chat.js"></script>
 
 <!-- IMPORT MAIN SKETCH -->
 <script src="game.js"></script>

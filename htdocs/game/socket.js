@@ -17,7 +17,7 @@ let serverConst = []; // server constants
 class Multiplayer {
   constructor(url) {
     // main vals
-    this.ping = 0;
+    this.latency = 0;
     this.sendTimer = 0;
     // connect to server
     socket = io.connect(url);
@@ -28,23 +28,33 @@ class Multiplayer {
     socket.on('disconnected', () => {
       console.log('%c Disconnected','background-color: red; color: black');
     });
-    socket.on('pong',          this.pong);
+    socket.on('pong',          pong);
     // own events
     socket.on('refPlayer',     refPlayer); // refresh player values, pos, hp
     socket.on('newPlayer',     newPlayer); // new player connected
     socket.on('remPlayer',     remPlayer); // some player disconnected
 
     socket.on('shot',     shot); // some player disconnected
+    
+    socket.on('exception', (err) => {
+      console.error('ERROR ' + err.id + ' ' + err.message);
+      window.location.replace("/?error="+err.id+"&message="+err.message);
+    }); // some player disconnected
 
     socket.on('respawn',  () => {player.pos.x = 0; player.pos.y = 0; socket.emit('respawned');}); // some player disconnected
 
+    socket.on('chat-message', msg => {
+      console.log(msg);
+      chat.add(msg);
+    });
+    
     //socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp, kills
   }
 
   connected() {
     gameLoaded = false;
     console.log('%c Connected, your id: %c'+socket.id,'color: lime','color: aqua');
-    player.id = socket.id;
+    player.id = '/client#' + socket.id;
     // If connected, send initRequest with initial data
     socket.emit('initReq', {
       name:      player.name, 
@@ -64,9 +74,10 @@ class Multiplayer {
   connect_error() {
     console.log('%c Connection Failed', 'color: lime');
   }
-  pong(latency) {
-    this.ping = latency;
-  }
+}
+
+function pong(latency) {
+  multiplayer.latency = latency;
 }
 
 setInterval(function(){

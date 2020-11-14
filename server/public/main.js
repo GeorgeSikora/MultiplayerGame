@@ -1,15 +1,19 @@
 
 
-let socket = io.connect('localhost:3031/admin?user=admin&password=chuj');
+let socket = io.connect('localhost:3031/admin', {
+    query: {
+        user: 'admin',
+        pass: 's8j2m6x4n1'
+    }
+});
+
+socket.on('error', (err) => {
+    console.error(err);
+});
 
 socket.on('constants', loadConstants);
 
-const access = {
-    user: 'admin',
-    password: 's8j2m6x4n1'
-}
-
-socket.emit('get_constants', access);
+socket.emit('get_constants');
 
 function loadConstants(constants) {
     console.log(constants);
@@ -49,5 +53,5 @@ function uploadSettings(){
     }
     console.log(constants);
 
-    socket.emit('set_constants', {access: access, constants: constants});
+    socket.emit('set_constants', constants);
 }

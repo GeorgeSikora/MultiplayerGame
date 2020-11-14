@@ -1,6 +1,6 @@
 
 /* HERE PUT YOUR SERVER IP OR URL WITH PORT */
-const SERVER_URL = '192.168.0.101:3031';
+const SERVER_URL = '185.221.124.205:3031/client';
 
 /*** MAIN SETUP ***/
 function setup() {
@@ -12,7 +12,7 @@ function setup() {
   textFont(font_default);
   noStroke();
   /* create necessary game objects */
-  player = new MyPlayer(0, post.name, 0, 0, post.color);
+  player = new MyPlayer(0, post.name, 0, 0, post.colorID);
   cam = new Camera(player);
   chat = new Chat();
   /* connect to the multiplayer server */

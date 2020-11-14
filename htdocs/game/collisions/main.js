@@ -56,12 +56,12 @@ function checkCollisions() {
 
         if (abs(deltaX) > abs(deltaY)) {
             shift.y = deltaY;
-            if(colider1.obj.speed != null) colider1.obj.speed.y = constrain(deltaY, -1, 1) * 80; // JELLLY
+            //if(colider1.obj.speed != null) colider1.obj.speed.y = constrain(deltaY, -1, 1) * 80; // JELLLY
             if(colider1.obj.speed != null) colider1.obj.speed.y = 0;
             colider1.colidedY = true;
         } else {
             shift.x = deltaX; 
-            if(colider1.obj.speed != null) colider1.obj.speed.x = constrain(deltaX, -1, 1) * 80; // JELLY
+            //if(colider1.obj.speed != null) colider1.obj.speed.x = constrain(deltaX, -1, 1) * 80; // JELLY
             if(colider1.obj.speed != null) colider1.obj.speed.x = 0;
             colider1.colidedX = true;
         }

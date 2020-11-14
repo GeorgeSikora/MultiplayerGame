@@ -3,7 +3,7 @@ let player; // my player
 
 /* my single player entity */
 class MyPlayer extends GameObject{
-  constructor(id, name, x, y, col) {
+  constructor(id, name, x, y, colorID) {
     super(x,y,64,64);
 
     this.collision = addCol(new Collision(this));
@@ -13,7 +13,8 @@ class MyPlayer extends GameObject{
     this.name = name;
     this.hp = 0;
     this.kills = 0;
-    this.col = col;
+    this.colorID = colorID;
+    this.col = getColor(colorID);
       
     this.guns = [new Knife(), new Rifle(), new Shotgun()];
     this.selectedGun = 0;

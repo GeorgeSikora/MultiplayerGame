@@ -6,6 +6,8 @@
 <script src="libraries/howler.spatial.js"></script>
 <script src="libraries/socket.io.js"></script>
 
+<script src="colors.js"></script>
+
 <!-- IMPORT ASSETS -->
 <script src="assets/load.js"></script>
 
@@ -28,8 +30,8 @@
 <!-- IMPORT OTHER SKETCHES -->
 <script src="functions.js"></script>
 <script src="camera.js"></script>
-<script src="socket.js"></script>
 <script src="Chat.js"></script>
+<script src="socket.js"></script>
 
 <!-- IMPORT MAIN SKETCH -->
 <script src="game.js"></script>

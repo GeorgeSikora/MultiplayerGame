@@ -9,7 +9,7 @@ class Bullet extends GameObject {
         this.dir = dir;
         this.speed = 1;
 
-        io.emit('shot', {shooterID: this.shooterID, pos: this.pos, speed: {x: Math.cos(this.dir) * this.speed, y: Math.sin(this.dir) * this.speed}});
+        ioClient.emit('shot', {shooterID: this.shooterID, pos: this.pos, speed: {x: Math.cos(this.dir) * this.speed, y: Math.sin(this.dir) * this.speed}});
     }
     update(){
         if(this.pos.x < -10000 || this.pos.x > 10000 || this.pos.y < -10000 || this.pos.y > 10000) {
@@ -30,7 +30,6 @@ class Bullet extends GameObject {
 
         for(var i = 0; i < players.length; i++){
             const p = players[i];
-
             if(p.id == this.shooterID) continue;
 
             if(Collision.lineRect(this.pos.x, this.pos.y, this.pos.x+move.x, this.pos.y+move.y, p.pos.x-p.w/2, p.pos.y-p.h/2, p.w, p.h)){
@@ -38,21 +37,22 @@ class Bullet extends GameObject {
                 p.hp -= constants.PLAYER_DAMAGE;
 
                 if(p.hp <= 0) {
-                    io.to(p.id).emit('respawn');
+                    ioClient.to(p.id).emit('respawn');
                     p.respawning = true;
                     p.pos = {x:0, y:0};
                     p.hp = constants.PLAYER_HP;
                     
                     const killer = players[ObjManager.getPlayer(this.shooterID)];
-                    if(killer != null) killer.kills++;
+                    if(killer != null){
+                        ioClient.emit('chat-message', new Message('hráč '+killer.name+' zabil hráče '+p.name));
+                        killer.kills++;
+                    }
                 }
                }
                ObjManager.remove(this);
-               console.log(p.name,'get hit');
                return;
             }
         }
-
         this.pos.x += move.x;
         this.pos.y += move.y;
     }

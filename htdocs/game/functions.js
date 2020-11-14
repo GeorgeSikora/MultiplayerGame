@@ -44,7 +44,7 @@ function drawInfo(){
     textAlign(LEFT, TOP);
     text(
       'connected: '         + socket.connected
-    + '\nping: '            + multiplayer.ping + 'ms'
+    + '\nping: '            + multiplayer.latency + 'ms'
     + '\nFPS: '             + fps
     + '\nkills: '           + player.kills 
     + '\nx: '               + round(player.pos.x) + ' y: ' + round(player.pos.y) 

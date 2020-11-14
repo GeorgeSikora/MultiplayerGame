@@ -2,16 +2,17 @@
 global.constants = require('./constants');
 const{BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE} = require('./colors.js');
 
-/* Server config */
-const SERVICE_PORT = 8088; // server service port
-const TICK_DURATION = 50; // ms
+/********* SERVER CONFIG *********/
+const SERVER_PORT = 3031; // main socket.io server port
+const SERVICE_PORT = 8088; // server admin service port
+const TICK_DURATION = 120; // ms
+const PING_INTERVAL = 3000; // ping interval
 
-const path = require('path');
 const express = require('express');
 const app = express();
-
-var server = app.listen(process.env.PORT || 3031);
-global.io = require('socket.io')(server, {pingInterval: 3000});
+console.log(process.env.PORT);
+var server = app.listen(process.env.PORT || SERVER_PORT); // set PORT=3216 && node server.js
+global.io = require('socket.io')(server, {pingInterval: PING_INTERVAL});
 console.log('Socket.io server started');
 
 /********* HTML PAGE *********/
@@ -31,6 +32,7 @@ GameObject  = require('./GameObject');
 Player      = require('./utils/player.js');
 Block       = require('./utils/Block.js');
 Bullet      = require('./utils/Bullet.js');
+Message     = require('./Message.js');
 ObjManager  = require('./manager.js');
 
 /********* GLOBAL ARRAYS *********/
@@ -41,96 +43,18 @@ global.objects = [];
 require('./map/load.js');
 
 /********* SOCKET IO *********/
-io.on('connection', socket => {
-    console.log('new connection');
+ioClient = require('./Client.js');
+ioAdmin  = require('./Admin.js');
 
-    socket.on('initReq', data => { // init request
-        console.log(socket.id, data);
-        socket.emit('init', {constants: constants, players: players, objects: objects});
-        players.push(new Player(socket.id, data.name, data.x, data.y, data.col));
-        socket.broadcast.emit('newPlayer', players[players.length-1]);
-    });
-
-    socket.on('pos', pos => {
-        var id = ObjManager.getPlayer(socket.id);
-        if(id == -1) return;
-        if(players[id].respawning) return;
-
-        const playerPos = {x: players[id].pos.x, y: players[id].pos.y};
-        const delta = {x: Math.abs(playerPos.x - pos.x), y: Math.abs(playerPos.y - pos.y)};
-
-        if(delta.x > 100 || delta.y > 100) {
-            console.log("Anticheat detected speed hack!");
-
-            /* TODO: Tell the player he must return to the last position */ 
-
-            //socket.disconnect();
-            //return;
-        }
-
-        players[id].pos = {x: pos.x, y: pos.y};
-        players[id].rotation = pos.rotation;
-        players[id].selectedGun = pos.selectedGun;
-    });
-
-    socket.on('respawned', () => {
-        var id = ObjManager.getPlayer(socket.id);
-        if(id == -1) return;
-        players[id].respawning = false;
-    });
-
-    socket.on('shot', data => {
-        if(data.x < -constants.SAFE_ZONE || data.x > constants.SAFE_ZONE || data.y < -constants.SAFE_ZONE || data.y > constants.SAFE_ZONE) {
-            objects.push(new Bullet(socket.id, data.x, data.y, data.dir));
-        }
-    });
-
-    socket.on('disconnect', (reason) => {
-        var removeIndex = ObjManager.getPlayer(socket.id);
-
-        if(removeIndex == -1) return;
-        
-        io.emit('remPlayer', socket.id);
-        console.log('removing index: ' + removeIndex + ' size is: ' + players.length);
-        players.splice(removeIndex, 1);
-    });
-
-    /********* SERVER ADMIN *********/
-    socket.on('get_constants', access => {
-        if(access.user == 'admin' && access.password == 's8j2m6x4n1') {
-            console.log(constants);
-            socket.emit('constants', constants);
-        } else {
-            console.log('SERVER ACCESS denied!');
-        }
-    });
-    socket.on('set_constants', data => {
-        if(data.access.user == 'admin' && data.access.password == 's8j2m6x4n1') {
-            for(var i = 0; i < data.constants.length; i++) {
-                constants[data.constants[i].name] = data.constants[i].value;
-            }
-        } else {
-            console.log('SERVER ACCESS denied!');
-        }
-    });
-});
-
-const adminNamespace = io.of('/admin');
-
-adminNamespace.use((socket, next) => {
-  // ensure the user has sufficient rights
-  //console.log(socket);
-  //new Error('thou shall not pass');
-  var sHeaders = socket.handshake.headers;
-  console.info('[%s:%s] CONNECT', sHeaders['x-forwarded-for'], sHeaders['x-forwarded-port']);
-    next();
-});
-
-adminNamespace.on('connection', socket => {
-
-  socket.on('delete user', () => {
-    // ...
-  });
+// middleware
+ioClient.use((socket, next) => {
+    const query = socket.handshake.query;
+    const user = query.user;
+    const pass = query.pass;
+    if (true) {
+        return next();
+    }
+    return next(new Error('Authentication error'));
 });
 
 var lastTime = getMillis();

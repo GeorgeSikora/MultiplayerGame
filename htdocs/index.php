@@ -1,22 +1,19 @@
 <!DOCTYPE html>
-
 <html>
 <head>
-
+    
     <title>Wisteria</title>
     <link rel="stylesheet" href="style/main.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/validateForm.js"></script>
+
 </head>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script src="js/validateForm.js"></script>
 
 <body>
 <div class="center">
 
     <h1>Multiplayer cube</h1>
-
     <span>Select color of your cube:</span>
 
     <div class="colorselect" style="text-align: center;">
@@ -32,7 +29,6 @@
     <br>
 
     <span>and type your name:</span>
-
     <form class="input-play" name="play-form" action="/game/" onsubmit="return validateForm()" method="post">
 		<input type="text" id="name" name="name" placeholder="jméno nebo přezdívka" autocomplete="off"></input>
         <input type="hidden" id="selected-color" name="color"></input>
@@ -40,37 +36,16 @@
 		<button class="play" type="submit">Play</button>
     </form>
     
-	<p id="error" class="error-message"></p>
-
+    <p id="error" class="error-message"></p>
+    
 </div>
 </body>
 </html>
 
-<script>
+<script src="js/colorSelect.js"></script>
 
-const colors = [
-    {name: 'Red'    ,val: '#DF0000'},
-    {name: 'Orange' ,val: '#FF8000'},
-    {name: 'Yellow' ,val: '#FFFF00'},
-    {name: 'Green'  ,val: '#00FF00'},
-    {name: 'Aqua'   ,val: '#00D4D4'},
-    {name: 'Blue'   ,val: '#0000FF'},
-    {name: 'Purple' ,val: '#50007F'}
-];
-
-var outlineDefault = 'none';
-var outlineSelected = '5px auto -webkit-focus-ring-color';
-
-let selectedID = 0;
-selectColor(selectedID);
-
-function selectColor(id) {
-    document.getElementById('color' + selectedID).style.outline = outlineDefault;
-    document.getElementById('color' + id).style.outline = outlineSelected;
-
-    selectedID = id;
-    console.log(colors[selectedID].name);
-    document.getElementById('selected-color').value = colors[selectedID].val;
-} 
-
-</script>
+<?php if(isset($_GET['error'])){ ?>
+    <script>
+        $('#error').html('<?php echo($_GET["message"]."<br>Error: ".$_GET["error"]); ?>');
+    </script>
+<?php } ?>

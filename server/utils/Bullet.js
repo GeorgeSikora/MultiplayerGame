@@ -44,7 +44,7 @@ class Bullet extends GameObject {
                     
                     const killer = players[ObjManager.getPlayer(this.shooterID)];
                     if(killer != null){
-                        ioClient.emit('chat-message', new Message('hráč '+killer.name+' zabil hráče '+p.name));
+                        ioClient.emit('chat-message', new Message('&a'+killer.name+' zabil hráče '+p.name));
                         killer.kills++;
                     }
                 }

@@ -7,7 +7,7 @@ ioClient.on('connection', socket => {
     socket.on('initReq', data => { // init request
         console.log(socket.id, data);
         socket.emit('init', {constants: constants, players: players, objects: objects});
-        players.push(new Player(socket.id, data.name, data.x, data.y, data.col));
+        players.push(new Player(socket.id, data.name, data.x, data.y, data.colorID, data.col));
         socket.broadcast.emit('newPlayer', players[players.length-1]);
     });
 
@@ -58,7 +58,7 @@ ioClient.on('connection', socket => {
     socket.on('chat-message', msg => {
         var id = ObjManager.getPlayer(socket.id);
         if(id == -1) return;
-        socket.broadcast.emit('chat-message', new Message(msg, players[id].name));
+        socket.broadcast.emit('chat-message', new Message(msg, players[id]));
     });
 });
 

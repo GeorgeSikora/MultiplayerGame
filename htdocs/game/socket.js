@@ -61,6 +61,7 @@ class Multiplayer {
       password:  'heslo',
       x:         player.pos.x,
       y:         player.pos.y,
+      colorID:   player.colorID,
       col:       player.col
     });
   }

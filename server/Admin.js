@@ -18,9 +18,10 @@ ioAdmin.on('connection', socket => {
     socket.on('get_constants', () => {
         socket.emit('constants', constants);
     });
-    socket.on('set_constants', constants => {
-        for(var i = 0; i < constants.length; i++) {
-           constants[constants[i].name] = constants[i].value;
+    socket.on('set_constants', receivedConst => {
+        console.log(receivedConst);
+        for(var i = 0; i < receivedConst.length; i++) {
+           constants[receivedConst[i].name] = receivedConst[i].value;
         }
     });
 

@@ -14,25 +14,27 @@ ioClient.on('connection', socket => {
     socket.on('pos', pos => {
         var id = ObjManager.getPlayer(socket.id);
         if(id == -1) return;
-        if(players[id].respawning) return;
+        const p = players[id];
+        if(p.respawning) return;
 
-        const playerPos = {x: players[id].pos.x, y: players[id].pos.y};
+        const playerPos = {x: p.pos.x, y: p.pos.y};
         const delta = {x: Math.abs(playerPos.x - pos.x), y: Math.abs(playerPos.y - pos.y)};
 
         if(delta.x > 100 || delta.y > 100) {
             console.log("Anticheat detected speed hack!");
-            players[id].hackingCounter++;
+            p.hackingCounter++;
             /* TODO: Tell the player he must return to the last position */ 
-            if(players[id].hackingCounter > 3){
+            if(p.hackingCounter > 3){
+                ioClient.emit('chat-message', new Message('&2Hráč '+p.name+' byl vyhozen za speed hack'));
                 socket.emit('exception', {id: 600, message: 'Anticheat detected speed hack!'});
                 socket.disconnect();
                 return;
             }
         }
 
-        players[id].pos = {x: pos.x, y: pos.y};
-        players[id].rotation = pos.rotation;
-        players[id].selectedGun = pos.selectedGun;
+        p.pos = {x: pos.x, y: pos.y};
+        p.rotation = pos.rotation;
+        p.selectedGun = pos.selectedGun;
     });
 
     socket.on('respawned', () => {

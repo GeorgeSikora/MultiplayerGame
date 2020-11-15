@@ -15,13 +15,13 @@ class MyPlayer extends GameObject{
     this.kills = 0;
     this.colorID = colorID;
     this.col = getColor(colorID);
-      
+
     this.guns = [new Knife(), new Rifle(), new Shotgun()];
     this.selectedGun = 0;
     this.rotation = 0;
 
     /* EXTRA VALUES */
-    this.maxSpeed = 15;
+    this.maxSpeed = 30;
     this.speed = {x:0, y:0};
     this.targetSpeed = {x:0, y:0};
   
@@ -55,6 +55,11 @@ class MyPlayer extends GameObject{
     translate(this.pos.x-this.w/2, this.pos.y-this.h/2);
     tint(this.col);
     image(img_player,0,0, this.w, this.h);
+    
+    //translate(this.speed.x, this.speed.y);
+    //stroke(255,0,255);
+    //noFill();
+    //rect(0,0, this.w, this.h);
     pop();
     /* gun */
     this.guns[this.selectedGun].draw(this);

@@ -5,7 +5,7 @@ const{BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE} = require('./colors.js');
 /********* SERVER CONFIG *********/
 const SERVER_PORT = 3031; // main socket.io server port
 const SERVICE_PORT = 8088; // server admin service port
-const TICK_DURATION = 120; // ms
+const TICK_DURATION = 50; // ms
 const PING_INTERVAL = 3000; // ping interval
 
 const express = require('express');

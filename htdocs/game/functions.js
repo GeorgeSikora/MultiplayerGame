@@ -46,6 +46,7 @@ function drawInfo(){
       'connected: '         + socket.connected
     + '\nping: '            + multiplayer.latency + 'ms'
     + '\nFPS: '             + fps
+    + '\nloop time: '       + finalDrawTime + '/' + (1000/60).toFixed(2) + ' ms'
     + '\nkills: '           + player.kills 
     + '\nx: '               + round(player.pos.x) + ' y: ' + round(player.pos.y) 
     + "\nPlayers online: "  + (players.length+1) 

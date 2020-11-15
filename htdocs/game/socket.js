@@ -29,7 +29,7 @@ class Multiplayer {
       console.log('%c Disconnected','background-color: red; color: black');
     });
     socket.on('pong',          pong);
-    // own events
+    // Player events
     socket.on('refPlayer',     refPlayer); // refresh player values, pos, hp
     socket.on('newPlayer',     newPlayer); // new player connected
     socket.on('remPlayer',     remPlayer); // some player disconnected
@@ -39,13 +39,18 @@ class Multiplayer {
     socket.on('exception', (err) => {
       console.error('ERROR ' + err.id + ' ' + err.message);
       window.location.replace("/?error="+err.id+"&message="+err.message);
-    }); // some player disconnected
+    });
 
     socket.on('respawn',  () => {player.pos.x = 0; player.pos.y = 0; socket.emit('respawned');}); // some player disconnected
 
     socket.on('chat-message', msg => {
-      console.log(msg);
-      chat.add(msg);
+      var newMsg = new Message();
+      newMsg.str = msg.str;
+      newMsg.timeout = millis() + CHAT_MESSAGE_DURATION;
+      newMsg.opacity = 255;
+      newMsg.buildImage();
+
+      chat.add(newMsg);
     });
     
     //socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp, kills

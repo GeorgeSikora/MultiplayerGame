@@ -24,11 +24,15 @@ function setup() {
 let menuOpened = false;
 let muted = false;
 let grid;
+let finalDrawTime = 0;
 
 /*** MAIN LOOP ***/
 function draw() {
+
   /* FPS drop check */
   if(frameRate() < 15) return;
+  
+  var drawTime = millis();
 
   /* calc player move */
   player.refresh();
@@ -38,6 +42,13 @@ function draw() {
 
   /* chceck and repair positions of coliding objects */
   checkCollisions();
+  /*
+  for(var i = 0; i < objects.length; i++){
+    if(objects[i].constructor.name === 'Block'){
+      player.collision.collideRect(objects[i]);
+    }
+  }
+  */
 
   /* cam ortho */
   cam.ortho();
@@ -89,6 +100,7 @@ function draw() {
 
   chat.draw(10,height-10);
 
+  if(frameCount%50 == 0) finalDrawTime = (millis() - drawTime).toFixed(2);
 }
 
 /*** CONTROL EVENTS ***/

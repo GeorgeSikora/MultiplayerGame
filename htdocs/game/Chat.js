@@ -1,97 +1,185 @@
 
 let chat;
-/*
-const CHAT_LINES = 10;
-const CHAT_LINE_HEIGHT = 32;
-const CHAT_TEXT_SIZE = 32;
-*/
+
+const CHAT_MESSAGE_DURATION = 9000; // ms
 
 class Chat {
     constructor() {
-        this.LINES = 10;
-        this.LINE_HEIGHT = 18;
-        this.TEXT_SIZE = 16;
+        /* settings */
+        this.LINES = 12; // maximum lines of chat
 
+        /* dimensions px */
+        this.LINE_HEIGHT    = 18;
+        this.TEXT_SIZE      = 16;
+        this.INPUT_PADDING  =  4;
+
+        /* easing */
+        this.TEXT_MOVE_EASING               = 0.10;
+        this.INPUT_OPACITY_EASING           = 0.05;
+        this.LINE_TIMEOUT_OPACITY_EASING    = 0.08;
+
+        /* global */
         this.open = false;
         this.lines = [];
-
         this.textInput = '';
 
+        /* easing variables */
         this.chatTargetY = 0;
         this.chatPosY = 0;
-
         this.inputTargetOpacity = 0;
         this.inputOpacity = 0;
     }
-    add(msg) {
-        if(!this.open){
-            this.chatPosY = (this.LINE_HEIGHT+3);
-            this.chatTargetY = 0;
-        } else {
-            this.chatPosY = 0;
-            this.chatTargetY = -(this.LINE_HEIGHT+3);
-        }
-        this.lines.unshift(msg);
-        this.lines.splice(this.LINES);
-    }
-    draw(x,y){
+
+    draw(x, y){
         push();
         
-        this.chatPosY += (this.chatTargetY - this.chatPosY) * 0.5;
-        translate(x,y+this.chatPosY,100);
+        this.chatPosY += (this.chatTargetY - this.chatPosY) * this.TEXT_MOVE_EASING;
+        translate(x, int(y +this.chatPosY), 0);
     
         textAlign(LEFT, BOTTOM);
         textSize(this.TEXT_SIZE);
 
         for(var i = 0; i < this.lines.length; i++){
+            const line = this.lines[i];
 
-            if(this.lines[i].timeout < millis()) {
-                
-                this.lines[i].opacity -= this.lines[i].opacity*0.08;
-                if(this.lines[i].opacity < 1){
-                    this.lines.splice(this.lines.length-1,1);
-                    continue;
+            if(line.timeout < millis()) {
+                line.opacity -= line.opacity * this.LINE_TIMEOUT_OPACITY_EASING;
+                if(line.opacity < 1){
+                    //this.lines.splice(this.lines.length-1,1);
+                    //continue;
+                    if(!this.open) continue;
                 }
             }
-
-            push();
-            fill(WHITE);
-            var token = {color: WHITE};
-            for (var k = 0; k < this.lines[i].str.length; k++) {
-                while(this.lines[i].str[k] === '&' && k < this.lines[i].str.length){
-                    token = this.useToken(this.lines[i].str[k=k+1], token);
-                    k++;
-                }
-                var c = this.lines[i].str[k];
-                if(token.crazyText) c = char(random(256));
-                const col = color(token.color);
-                fill(red(col), green(col), blue(col), this.lines[i].opacity);
-                text(c, 0, 0);
-                translate(textWidth(c),0);
+            
+            if(line.img != null) {
+                imageMode(CORNER);
+                image(line.img,0,-this.LINE_HEIGHT);
+            } else {
+                console.error('Message img is null!');
             }
-            pop();
+
             translate(0,-this.LINE_HEIGHT);
         }
         pop();
 
         push();
-        translate(x, y, 100);
+        translate(x, y, 0);
         
         textAlign(LEFT, BOTTOM);
         textSize(this.TEXT_SIZE);
 
-        this.inputOpacity += (this.inputTargetOpacity - this.inputOpacity) * 0.05;
-        this.inputPosY += (this.inputTargetY - this.inputPosY) * 0.1;
+        this.inputOpacity += (this.inputTargetOpacity - this.inputOpacity) * this.INPUT_OPACITY_EASING;
 
         if(this.open){
             fill(0, this.inputOpacity);
-            rect(0,-this.LINE_HEIGHT -3, 300, this.LINE_HEIGHT +6);
+            rect(0,-this.LINE_HEIGHT -this.INPUT_PADDING, 300, this.LINE_HEIGHT +2*this.INPUT_PADDING);
 
             fill(255);
-            text(this.textInput + ((millis()%1000 < 500) ? '' : '|'), 6, 0);
+            text(this.textInput + ((millis()%1000 < 500) ? '' : '|'), 2*this.INPUT_PADDING, 0);
         }
         pop();
     }
+    
+    add(msg) {
+        if(!this.open){
+            this.chatPosY = (this.LINE_HEIGHT+this.INPUT_PADDING);
+            this.chatTargetY = 0;
+        } else {
+            this.chatPosY = 0;
+            this.chatTargetY = -(this.LINE_HEIGHT+this.INPUT_PADDING);
+        }
+        this.lines.unshift(msg);
+        this.lines.splice(this.LINES);
+    }
+
+    keyPressed(){
+        if(key === 'Enter') this.enter();
+        if(key === 'Backspace') this.backspace();
+
+        if(!this.open || key.length != 1) return;
+        const k = key.charAt(0);
+
+        if(this.isCharValid(k)){
+            this.textInput += k;
+        }
+    }
+
+    keyReleased(){
+    }
+
+    enter(){
+        if(this.open){
+            this.open = false; /* CLOSING */
+
+            if(this.isValid(this.textInput)) {
+                this.textInput = this.clearRepeatingSpecialChars(this.textInput);
+                socket.emit("chat-message", this.textInput);
+                this.add(new Message(this.textInput));
+            }
+            this.textInput = '';
+            
+            /* chat pos MOVE DOWN */
+            this.chatPosY = -(this.LINE_HEIGHT+2*this.INPUT_PADDING);
+            this.chatTargetY = 0;
+
+        } else {
+            this.open = true; /* OPENING */
+
+            /* chat pos MOVE UP */
+            this.chatTargetY = -(this.LINE_HEIGHT+2*this.INPUT_PADDING);
+
+            /* input box opacity FADE IN */
+            this.inputTargetOpacity = 220;
+            this.inputOpacity = 0;
+        }
+        
+    }
+
+    backspace(){
+        this.textInput = this.textInput.slice(0, -1); 
+    }
+
+    isValid(input) {
+        var validsCount = 0;
+
+        for(var i = 0; i < input.length; i++){
+            const k = input[i];
+            if(k !== ' ' && k !== '&' && k !== '_') {
+                validsCount++;
+            }
+        }
+        return (input !== '' && validsCount != 0);
+    }
+
+    isCharValid(k) {
+
+        if((k >= 'a' && k <= 'z') || (k >= 'A' && k <= 'Z') || (k >= '0' && k <= '9')) return true;
+
+        const ALLOWED_SPECIAL_CHARS = ' _,.:+-=/?!()"\'#&@ěščřžýáíéúůĚŠČŘŽÝÁÍÉÚŮ';
+
+        for(var i = 0; i < ALLOWED_SPECIAL_CHARS.length; i++){
+            if(k === ALLOWED_SPECIAL_CHARS[i]) return true;
+        }
+
+        return false;
+    }
+
+    clearRepeatingSpecialChars(input) {
+        var output = '';
+        for(var i = 0; i < input.length; i++){
+            const k = input[i];
+            const k_last = input[i-1];
+
+            if(k === ' ' || k === '_') {
+                if(i == 0) continue;
+                if(k !== k_last) output += k;
+            } else {
+                output += k;
+            }
+        }
+        return output;
+    }
+    
     useToken(param, token){
         switch(param){
             case '0':token.color = BLACK;   break;
@@ -114,53 +202,53 @@ class Chat {
             case 'r':token = {color: WHITE};break;
         } return token;
     }
-    keyPressed(){
-        if(key === 'Enter') this.enter();
-        if(key === 'Backspace') this.backspace();
-
-        if(!this.open || key.length != 1) return;
-        const k = key.charAt(0);
-
-        if((k >= 'a' && k <= 'z') || (k >= 'A' && k <= 'Z') || (k >= '0' && k <= '9') || k == ' ' || k == '(' || k == ')' || k == ':' || k == '&' || k == '?' || k == '!' || k == '#' || k == '_' || k == '+' || k == '-' || k == '.' || k == ','){
-            this.textInput += k;
-        }
-    }
-    keyReleased(){
-
-    }
-    enter(){
-        this.open = !this.open;
-
-        if(!this.open){
-            if(this.textInput !== ''){
-            socket.emit("chat-message", this.textInput);
-            this.add(new Message(this.textInput));
-            this.textInput = '';
-        }
-            
-            // closing
-            this.chatPosY = -(this.LINE_HEIGHT+6);
-            this.chatTargetY = 0;
-        } else {
-            // opening
-            this.chatTargetY = -(this.LINE_HEIGHT+6);
-
-            this.inputTargetOpacity = 220;
-            this.inputOpacity = 0;
-        }
-    }
-    backspace(){
-        this.textInput = this.textInput.slice(0, -1); 
-    }
 }
 
 class Message {
     constructor(message){
+        if(message == null) return;
         this.str = '&9[' + this.getTime() + '] &' + getColorToken(player.colorID) + player.name + '&1 ' + message;
-        this.timeout = millis() + 5000;
+        this.timeout = millis() + CHAT_MESSAGE_DURATION;
         this.opacity = 255;
+        this.buildImage();
     }
     getTime(){
         return hour().toString().padStart(2,'0') + ':' + minute().toString().padStart(2,'0');
+    }
+    buildImage(){
+
+        textSize(chat.TEXT_SIZE);
+        var strWidth = 0;
+        for(var i = 0; i < this.str.length; i++){
+            if(this.str[i] != '&') {
+                strWidth += textWidth(this.str[i]);
+            } else {
+                i++;
+            }
+        }
+
+        var img = createGraphics(strWidth, chat.LINE_HEIGHT);
+        
+        img.textAlign(LEFT, TOP);
+        img.textSize(chat.TEXT_SIZE);
+
+            var token = {color: WHITE};
+            for (var k = 0; k < this.str.length; k++) {
+                while(this.str.charAt(k) === '&' && k < this.str.length){
+                    token = chat.useToken(this.str.charAt(k=k+1), token);
+                    k++;
+                }
+                var c = this.str.charAt(k);
+                if(token.crazyText) c = char(random(256));
+
+                img.fill(token.color);
+                img.stroke(0);
+                img.strokeWeight(2);
+                img.text(c, 0, 0);
+                img.translate(img.textWidth(c),0);
+            }
+
+        //saveCanvas(img);
+        this.img = img;
     }
 }

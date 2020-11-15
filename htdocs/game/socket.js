@@ -153,6 +153,7 @@ function refPlayer(p) {
 
 /*** SHOOT ***/
 function shot(data){
+  if(!focused) return;
   if(data.shooterID != player.id) {
     var id = sound_rifle.play();
     sound_rifle.pos(

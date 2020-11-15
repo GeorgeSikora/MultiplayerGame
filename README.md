@@ -49,3 +49,6 @@ I just like this tree, called Wisteria and also it has very nice name. So far, i
 >- Registration and login ✖
 >- Collision ✔
 >- Server configurations ✔
+
+## Bugs to fix
+>- When a player moves on according to blocks placed next to each other, he stops

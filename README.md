@@ -6,7 +6,7 @@ This is 2D JavaScript Multiplayer game, where you can shoot and move on the map 
 
 What I use:
 - [Node.js](https://nodejs.org/en/) for server run.
-- [JavaScript](https://www.javascript.com/) and [p5.js](https://p5js.org/) for client side game.
+- [JavaScript](https://www.javascript.com/) and [p5.js](https://p5js.org/) for client side game and [Howler.js](https://howlerjs.com/) library for 3D sounds.
 - [Socket.io](https://socket.io/) for the networking between server and clients.
 - and also [Apache](http://www.apache.org/) server, or [Xampp](https://www.apachefriends.org/index.html), for running web server.
 

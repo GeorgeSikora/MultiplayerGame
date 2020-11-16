@@ -19,6 +19,10 @@ I added some screenshots of game and server:
 ### Menu for selecting cube color and name
 ![Menu image](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/menu.png)
 
+
+### Chat update!
+![Chat](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/chat.png)
+
 ### In the game, there is safe zone, where people cannot shoot and cannot be eliminated
 ![Game image](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/game.png)
 
@@ -41,7 +45,7 @@ I just like this tree, called Wisteria and also it has very nice name. So far, i
 >- Multiplayer ✔
 >- Textures ✔
 >- Menu ✔
->- Chat ✖
+>- Chat ✔
 >- Animated player move ✖
 >- Chat commands ✖
 >- Map editor ✖

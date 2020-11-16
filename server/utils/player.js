@@ -11,7 +11,7 @@ class Player {
 
     this.selectedGun = 0;
     this.rotation = 0;
-      
+  
     this.hp = constants.PLAYER_HP;
 
     this.colorID = colorID;
@@ -19,9 +19,9 @@ class Player {
 
     this.kills = 0;
 
-    this.respawning = false;
-
+    /* Only server variables */
     this.hackingCounter = 0;
+    this.respawning = false;
   }
   update() {
     ioClient.emit('refPlayer', {

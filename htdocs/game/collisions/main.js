@@ -42,7 +42,7 @@ class Collision {
 
           this.collidedY = true;
           entity.collidedY = true;
-          this.obj.speed.y = 0;
+         // this.obj.speed.y = 0;
 
           if (dy > 0) {
             //this.collision = Direction.UP;
@@ -54,7 +54,8 @@ class Collision {
         } else {
           this.collidedX = true;
           entity.collidedX = true;
-        
+          //this.obj.speed.x = 0;
+
           this.obj.speed.x = 0;
           if (dx > 0) {
             //this.collision = Direction.LEFT;
@@ -76,7 +77,6 @@ class Collision {
     }
     return false;
   }
-  
 }
 
 function addCol(c) {
@@ -94,7 +94,6 @@ function checkCollisions() {
     var shift = {x: 0, y: 0};
     colider1.colidedX = false;
     colider1.colidedY = false;
-
   
     for (var j = 0; j < col.length; j++) {
       var colider2 = col[j];
@@ -122,6 +121,7 @@ function checkCollisions() {
             //if(colider1.obj.speed != null) colider1.obj.speed.y = constrain(deltaY, -1, 1) * 80; // JELLLY
             if(colider1.obj.speed != null){ 
               colider1.obj.speed.y = 0;
+              colider1.obj.targetSpeed.y = 0;
             }
             colider1.colidedY = true;
         } else {
@@ -131,6 +131,7 @@ function checkCollisions() {
             //if(colider1.obj.speed != null) colider1.obj.speed.x = constrain(deltaX, -1, 1) * 80; // JELLY
             if(colider1.obj.speed != null) {
               colider1.obj.speed.x = 0;
+              colider1.obj.targetSpeed.y = 0;
             }
             colider1.colidedX = true;
         }

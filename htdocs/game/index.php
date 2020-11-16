@@ -11,7 +11,6 @@
   <?php require('php/scripts.php') ?>
 
   <link rel="stylesheet" href="assets/styles/main.css">
-
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

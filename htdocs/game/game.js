@@ -1,6 +1,6 @@
 
 /* HERE PUT YOUR SERVER IP OR URL WITH PORT */
-const SERVER_URL = '185.221.124.205:3031/client';
+const SERVER_URL = 'localhost:3031/client';
 
 /*** MAIN SETUP ***/
 function setup() {
@@ -31,7 +31,7 @@ function draw() {
 
   /* FPS drop check */
   if(frameRate() < 15){
-    chat.add("fps drop " + frameRate() + " fps");
+    //chat.add("fps drop " + frameRate() + " fps");
     return;
   }
   

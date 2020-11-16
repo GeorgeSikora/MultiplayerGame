@@ -34,26 +34,14 @@ objects = [];
 /********* LOAD MAP *********/
 require('./map/load.js');
 
-/********* SOCKET IO *********/
+/********* NAMESPACES *********/
 ioClient = require('./Client.js');
 ioAdmin  = require('./Admin.js');
 
-/********* middleware CLIENT GATE *********/
-ioClient.use((socket, next) => {
-    const query = socket.handshake.query;
-    const user = query.user;
-    const pass = query.pass;
-    if (true) {
-        return next();
-    }
-    return next(new Error('Authentication error'));
-});
+/********* NAMESPACES *********/
 
-var lastTime = getMillis();
 deltaTime = 1;
-
-setInterval(refresh, TICK_DURATION);
-
+var lastTime = getMillis();
 function refresh(){
     var time = getMillis();
     deltaTime = time - lastTime;
@@ -69,6 +57,7 @@ function refresh(){
         players[i].update();
     }
 }
+setInterval(refresh, TICK_DURATION);
 
 function logInfo() {
     console.log(

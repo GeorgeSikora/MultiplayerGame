@@ -20,6 +20,7 @@ function getGrid(pos, gridSize) {
 
 /* safe zone at the spawn */
 function drawSavezone(){
+    if(serverConst.SAFE_ZONE==0)return;
     push();
     /* set to bottom layer */
     translate(0,0,-1);

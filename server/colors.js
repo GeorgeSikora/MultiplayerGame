@@ -1,4 +1,5 @@
 
+const RESET = "\x1b[0m"
 const BLACK =   "\x1b[30m";
 const RED =     "\x1b[31m";
 const GREEN =   "\x1b[32m";
@@ -8,4 +9,4 @@ const MAGENTA = "\x1b[35m";
 const CYAN =    "\x1b[36m";
 const WHITE =   "\x1b[37m";
 
-module.exports = {BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE};
+module.exports = {RESET,BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE};

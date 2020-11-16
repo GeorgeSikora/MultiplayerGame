@@ -6,6 +6,10 @@
 <script src="libraries/howler.spatial.js"></script>
 <script src="libraries/socket.io.js"></script>
 
+<!-- IMPORT LIBRARIES -->
+<script src="control/keyboard.js"></script>
+<script src="control/mouse.js"></script>
+
 <script src="colors.js"></script>
 
 <!-- IMPORT ASSETS -->

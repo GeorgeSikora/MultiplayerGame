@@ -33,7 +33,7 @@ class Bullet extends GameObject {
             if(p.id == this.shooterID) continue;
 
             if(Collision.lineRect(this.pos.x, this.pos.y, this.pos.x+move.x, this.pos.y+move.y, p.pos.x-p.w/2, p.pos.y-p.h/2, p.w, p.h)){
-               if(p.pos.x < -constants.SAFE_ZONE || p.pos.x > constants.SAFE_ZONE || p.pos.y < -constants.SAFE_ZONE || p.pos.y > constants.SAFE_ZONE) {
+               if(p.pos.x <= -constants.SAFE_ZONE || p.pos.x >= constants.SAFE_ZONE || p.pos.y <= -constants.SAFE_ZONE || p.pos.y >= constants.SAFE_ZONE) {
                 p.hp -= constants.PLAYER_DAMAGE;
 
                 if(p.hp <= 0) {

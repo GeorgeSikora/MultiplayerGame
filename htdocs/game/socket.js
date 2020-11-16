@@ -34,14 +34,23 @@ class Multiplayer {
     socket.on('newPlayer',     newPlayer); // new player connected
     socket.on('remPlayer',     remPlayer); // some player disconnected
 
-    socket.on('shot',     shot); // some player disconnected
+    socket.on('shot',     shot);
     
     socket.on('exception', (err) => {
       console.error('ERROR ' + err.id + ' ' + err.message);
       window.location.replace("/?error="+err.id+"&message="+err.message);
     });
 
-    socket.on('respawn',  () => {player.pos.x = 0; player.pos.y = 0; socket.emit('respawned');}); // some player disconnected
+    socket.on('respawn', ()=> {
+      player.pos.x = 0; 
+      player.pos.y = 0; 
+      socket.emit('respawned');
+    });
+
+    socket.on('setPos', (pos)=> {
+      player.pos.x = pos.x;
+      player.pos.y = pos.y;
+    });
 
     socket.on('chat-message', msg => {
       var newMsg = new Message();
@@ -153,7 +162,8 @@ function refPlayer(p) {
 
 /*** SHOOT ***/
 function shot(data){
-  if(!focused) return;
+  //if(!focused) return;
+
   if(data.shooterID != player.id) {
     var id = sound_rifle.play();
     sound_rifle.pos(

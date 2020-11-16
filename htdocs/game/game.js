@@ -30,7 +30,10 @@ let finalDrawTime = 0;
 function draw() {
 
   /* FPS drop check */
-  if(frameRate() < 15) return;
+  if(frameRate() < 15){
+    chat.add("fps drop " + frameRate() + " fps");
+    return;
+  }
   
   var drawTime = millis();
 
@@ -101,81 +104,4 @@ function draw() {
   chat.draw(10,height-10);
 
   if(frameCount%50 == 0) finalDrawTime = (millis() - drawTime).toFixed(2);
-}
-
-/*** CONTROL EVENTS ***/
-function keyPressed(){
-  if(keyCode == 27) { // Esc
-    var x = document.getElementById("menu");
-    if (x.style.display === "none") {
-      x.style.display = "block";
-      menuOpened = true;
-    } else {
-      x.style.display = "none";
-      menuOpened = false;
-    }
-  }
-  if(menuOpened) return;
-
-  if(keyCode == 70){
-    chat.draw();
-  }
-
-  /*
-  if(keyCode == 70){
-    var output = [];
-
-    for(var i = 0; i < objects.length; i++){
-      var obj = objects[i];
-      if(obj.constructor.name != 'Block') continue;
-      output.push(obj.pos.x + ' ' + obj.pos.y);
-    }
-    saveStrings(output,'map.txt');
-  }*/
-  chat.keyPressed();
-  if(chat.open) return;
-
-  player.keyPressed();
-}
-function keyReleased(){
-  player.keyReleased();
-  chat.keyReleased();
-}
-function mousePressed(){
-  if(menuOpened) return;
-  if(chat.open) return;
-
-  if(mouseX > width-32 && mouseX < width && mouseY < 32 && mouseY > 0){
-    muted = !muted;
-    Howler.mute(muted);
-  }
-  /*
-  var searched = false;
-  for(var i = 0; i < objects.length; i++) {
-    var obj = objects[i];
-    if(grid.x == obj.pos.x && grid.y == obj.pos.y) {
-      removeObject(obj);
-      searched = true;
-      break;
-    }
-  }
-  if(!searched) {
-    objects.push(new Block(grid.x, grid.y));
-  }
-  */
-  player.shoting();
-}
-
-let scoolTimer = 0;
-function mouseWheel(event) {
-  if(scoolTimer < millis()) {
-    if(event.delta < 0) {
-      player.selectedGun--;
-      if(player.selectedGun < 0) player.selectedGun = player.guns.length-1;
-    } else {
-      player.selectedGun++;
-      if(player.selectedGun > player.guns.length-1) player.selectedGun = 0;
-    }
-    scoolTimer = millis() + 120;
-  }
 }

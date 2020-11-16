@@ -55,7 +55,7 @@ class Chat {
                 imageMode(CORNER);
                 image(line.img,0,-this.LINE_HEIGHT);
             } else {
-                console.error('Message img is null!');
+                //console.error('Message img is null!');
             }
 
             translate(0,-this.LINE_HEIGHT);
@@ -81,6 +81,13 @@ class Chat {
     }
     
     add(msg) {
+        if(msg.constructor.name === 'String'){
+            this.lines.unshift(new Message().time().message(msg).build());
+            this.lines.splice(this.LINES);
+            return;
+        }
+
+
         if(!this.open){
             this.chatPosY = (this.LINE_HEIGHT+this.INPUT_PADDING);
             this.chatTargetY = 0;
@@ -114,7 +121,7 @@ class Chat {
             if(this.isValid(this.textInput)) {
                 this.textInput = this.clearRepeatingSpecialChars(this.textInput);
                 socket.emit("chat-message", this.textInput);
-                this.add(new Message(this.textInput));
+                this.add(new Message().time().name().message(this.textInput).build());
             }
             this.textInput = '';
             
@@ -132,7 +139,6 @@ class Chat {
             this.inputTargetOpacity = 220;
             this.inputOpacity = 0;
         }
-        
     }
 
     backspace(){
@@ -205,12 +211,26 @@ class Chat {
 }
 
 class Message {
-    constructor(message){
-        if(message == null) return;
-        this.str = '&9[' + this.getTime() + '] &' + getColorToken(player.colorID) + player.name + '&1 ' + message;
+    constructor(){
+        this.str = '';
         this.timeout = millis() + CHAT_MESSAGE_DURATION;
         this.opacity = 255;
-        this.buildImage();
+    }
+    name(){
+        this.str += '&' + getColorToken(player.colorID) + player.name + ' &r';
+        return this;
+    }
+    time(){
+        this.str +='&9[' + this.getTime() + '] &r';
+        return this;
+    }
+    message(text){
+        this.str += text;
+        return this;
+    }
+    build(){
+        this.buildImage(); 
+        return this;
     }
     getTime(){
         return hour().toString().padStart(2,'0') + ':' + minute().toString().padStart(2,'0');

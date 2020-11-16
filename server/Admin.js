@@ -6,10 +6,12 @@ ioAdmin.use((socket, next) => {
     const query = socket.handshake.query;
     const user = query.user;
     const pass = query.pass;
+
     if (user === 'admin' && pass === 's8j2m6x4n1') {
         return next();
     }
     return next(new Error('Authentication error'));
+    console.log('!!! Někdo se snažil přihlásit jako admin !!!');
 });
 
 ioAdmin.on('connection', socket => {

@@ -1,10 +1,9 @@
-
 constants = require('./constants');
-const{BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE} = require('./colors.js');
+const {RESET,BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE} = require('./colors.js');
 
 /********* SERVER CONFIG *********/
 const SERVER_PORT = 3031; // main socket.io server port
-const TICK_DURATION = 50; // ms
+const TICK_DURATION = 60; // ms
 const PING_INTERVAL = 3000; // ping interval
 
 express = require('express');
@@ -39,7 +38,7 @@ require('./map/load.js');
 ioClient = require('./Client.js');
 ioAdmin  = require('./Admin.js');
 
-// middleware
+/********* middleware CLIENT GATE *********/
 ioClient.use((socket, next) => {
     const query = socket.handshake.query;
     const user = query.user;
@@ -60,14 +59,7 @@ function refresh(){
     deltaTime = time - lastTime;
     lastTime = time;
 
-    console.log(MAGENTA+'players: '+YELLOW+'%s'+
-                MAGENTA+' objects: '+YELLOW+'%s'+
-                MAGENTA+' delta: '+YELLOW+'%s ms',
-                
-                players.length.toString().padStart(2),
-                objects.length.toString().padStart(4),
-                deltaTime.toFixed(1).padStart(5)
-    );
+    logInfo();
 
     for(var i = 0; i < objects.length; i++){
         objects[i].update();
@@ -78,7 +70,17 @@ function refresh(){
     }
 }
 
-function getMillis(){
+function logInfo() {
+    console.log(
+         MAGENTA +'players: '   +YELLOW +players.length.toString().padStart(2)
+        +MAGENTA +' objects: '  +YELLOW +objects.length.toString().padStart(4)
+        +MAGENTA +' delta: '    +YELLOW +deltaTime.toFixed(1).padStart(5)           +' ms'
+    );
+}
+
+/********* SERVER OWN FUNCTIONS *********/
+
+function getMillis() {
     const hrTime = process.hrtime();
     return (hrTime[0] * 1000 + hrTime[1]/1000000);
 }

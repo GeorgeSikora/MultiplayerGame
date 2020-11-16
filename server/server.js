@@ -1,28 +1,21 @@
 
-global.constants = require('./constants');
+constants = require('./constants');
 const{BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE} = require('./colors.js');
 
 /********* SERVER CONFIG *********/
 const SERVER_PORT = 3031; // main socket.io server port
-const SERVICE_PORT = 8088; // server admin service port
 const TICK_DURATION = 50; // ms
 const PING_INTERVAL = 3000; // ping interval
 
-const express = require('express');
-const app = express();
-console.log(process.env.PORT);
+express = require('express');
+app = express();
+
 var server = app.listen(process.env.PORT || SERVER_PORT); // set PORT=3216 && node server.js
-global.io = require('socket.io')(server, {pingInterval: PING_INTERVAL});
+io = require('socket.io')(server, {pingInterval: PING_INTERVAL});
 console.log('Socket.io server started');
 
-/********* HTML PAGE *********/
-app.use(express.static('public'));
-app.use((req, res, next) => {
-    res.status(404).send('page not found :( ' + req.url);
-});
-app.listen(SERVICE_PORT, () => {
-    console.log('Server service on port ' + SERVICE_PORT)
-});
+/********* SERVICE HTML PAGE *********/
+require('./service/app.js');
 
 /********* FUNCTIONS *********/
 Collision   = require('./collisions/functions.js');
@@ -36,8 +29,8 @@ Message     = require('./Message.js');
 ObjManager  = require('./manager.js');
 
 /********* GLOBAL ARRAYS *********/
-global.players = [];
-global.objects = [];
+players = [];
+objects = [];
 
 /********* LOAD MAP *********/
 require('./map/load.js');
@@ -58,9 +51,11 @@ ioClient.use((socket, next) => {
 });
 
 var lastTime = getMillis();
-global.deltaTime = 1;
+deltaTime = 1;
 
-setInterval(() => {
+setInterval(refresh, TICK_DURATION);
+
+function refresh(){
     var time = getMillis();
     deltaTime = time - lastTime;
     lastTime = time;
@@ -81,7 +76,7 @@ setInterval(() => {
         if(players[i].respawning) console.log(players[i].name + ' respawning...');
         players[i].update();
     }
-}, TICK_DURATION);
+}
 
 function getMillis(){
     const hrTime = process.hrtime();

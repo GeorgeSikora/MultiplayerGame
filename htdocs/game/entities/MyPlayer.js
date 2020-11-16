@@ -21,7 +21,7 @@ class MyPlayer extends GameObject{
     this.rotation = 0;
 
     /* EXTRA VALUES */
-    this.maxSpeed = 30;
+    this.maxSpeed = 15;
     this.speed = {x:0, y:0};
     this.targetSpeed = {x:0, y:0};
   

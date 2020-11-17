@@ -21,7 +21,7 @@ I added some screenshots of game and server:
 
 
 ### Chat update!
-![Chat](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/chat.png)
+![Chat](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/chat.gif)
 
 ### In the game, there is safe zone, where people cannot shoot and cannot be eliminated
 ![Game image](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/game.png)

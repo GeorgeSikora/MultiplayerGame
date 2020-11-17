@@ -31,7 +31,7 @@ class Player {
       hp: this.hp, 
       kills: this.kills, 
       rotation: this.rotation, 
-      selectedGun: this.selectedGun
+      selected: this.selectedGun
     });
   }
 }

@@ -6,6 +6,7 @@ class Shotgun extends Equipment {
         super('shotgun', img_shotgun);
         /* GLOBAL */
         this.SHOTS_INTERVAL = 500;
+        this.BUTTON_USE = LEFT;
         /* SPECIAL */
         this.SHOTS = 10;
         this.SPREAD = PI/5;

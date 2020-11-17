@@ -19,11 +19,12 @@ function setup() {
   multiplayer = new Multiplayer(SERVER_URL);
   /* set default volume at 30% */
   Howler.volume(0.3);
+  
+  objects.push(new Flag(0,0));
 }
 
 let menuOpened = false;
 let muted = false;
-let grid;
 let buildingEnable = false;
 let finalDrawTime = 0;
 

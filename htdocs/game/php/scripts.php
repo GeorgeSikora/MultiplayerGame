@@ -25,6 +25,7 @@
 <script src="entities/Player.js"></script>
 <script src="entities/Block.js"></script>
 <script src="entities/Bullet.js"></script>
+<script src="entities/Flag.js"></script>
 <!-- equipments -->
 <script src="entities/Equipment.js"></script>
 <script src="entities/equipments/Build.js"></script>
@@ -37,6 +38,7 @@
 <script src="camera.js"></script>
 <script src="Chat.js"></script>
 <script src="Message.js"></script>
+<script src="commands.js"></script>
 <script src="socket.js"></script>
 
 <!-- IMPORT MAIN SKETCH -->

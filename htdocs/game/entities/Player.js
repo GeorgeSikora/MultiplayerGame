@@ -12,7 +12,11 @@ class Player extends GameObject{
     this.col = col;
 
     this.guns = [new Knife(), new Rifle(), new Shotgun()];
+
     this.selectedGun = 0;
+
+    
+    this.selectedEquipment = 'Knife';
 
     this.rotation = 0;
     this.targetRotation = 0;
@@ -29,11 +33,17 @@ class Player extends GameObject{
   draw() {
     tint(this.col);
     image(img_player, this.pos.x-this.w/2, this.pos.y-this.h/2, this.w, this.h);
-
-    if(this.guns[this.selectedGun] != null) {
-    const gun = this.guns[this.selectedGun].img;
-
     this.rotation += (this.targetRotation - this.rotation) * 0.2;
+
+    if(this.selectedEquipment != 0){
+    var myObject = eval("new " + this.selectedEquipment + "()");
+    myObject.draw(this);
+    }
+
+    /*
+    if(this.guns[this.selectedGun] != null) {
+    const gun = (new Build).img;
+
     push();
     translate(this.pos.x, this.pos.y);
     rotate(this.rotation);
@@ -46,6 +56,7 @@ class Player extends GameObject{
     image(gun,0,0);
     pop();
   }
+  */
     
     fill(255);
     textAlign(CENTER, BOTTOM);

@@ -35,21 +35,23 @@ ioClient.on('connection', socket => {
         const playerPos = {x: p.pos.x, y: p.pos.y};
         const delta = {x: Math.abs(playerPos.x - pos.x), y: Math.abs(playerPos.y - pos.y)};
 
-        if(delta.x > 100 || delta.y > 100) {
-            console.log("Anticheat detected speed hack!");
-            p.hackingCounter++;
-            /* TODO: Tell the player he must return to the last position */ 
-            if(p.hackingCounter > 3){
-                ioClient.emit('chat-message', new Message('&2Hráč '+p.name+' byl vyhozen za speed hack'));
-                socket.emit('exception', {id: 600, message: 'Anticheat detected speed hack!'});
-                socket.disconnect();
-                return;
+        if(constants.ANTICHEAT_ENABLE){
+            if(delta.x > 100 || delta.y > 100) {
+                console.log("Anticheat detected speed hack!");
+                p.hackingCounter++;
+                /* TODO: Tell the player he must return to the last position */ 
+                if(p.hackingCounter > 3){
+                    ioClient.emit('chat-message', new Message('&2Hráč '+p.name+' byl vyhozen za speed hack'));
+                    socket.emit('exception', {id: 600, message: 'Anticheat detected speed hack!'});
+                    socket.disconnect();
+                    return;
+                }
             }
         }
 
         p.pos = {x: pos.x, y: pos.y};
         p.rotation = pos.rotation;
-        p.selectedGun = pos.selectedGun;
+        p.selectedGun = pos.selected;
     });
 
     socket.on('respawned', () => {
@@ -70,6 +72,33 @@ ioClient.on('connection', socket => {
         ioClient.emit('remPlayer', socket.id);
         players.splice(removeIndex, 1);
         console.log('removing index: ' + removeIndex + ' now size is: ' + players.length);
+    });
+
+    socket.on('block-add', pos => {
+        
+        for(var i = 0; i < objects.length; i++) {
+          var obj = objects[i];
+          if(pos.x == obj.pos.x && pos.y == obj.pos.y) {
+            //ioClient.emit('block-rem', pos);
+            //ObjManager.remove(obj);
+            return;
+          }
+        }
+        
+        ioClient.emit('block-add', pos);
+        objects.push(new Block(pos.x, pos.y));
+        
+    });
+    
+    socket.on('block-rem', pos => {
+        for(var i = 0; i < objects.length; i++) {
+            var obj = objects[i];
+            if(pos.x == obj.pos.x && pos.y == obj.pos.y) {
+              ioClient.emit('block-rem', pos);
+              ObjManager.remove(obj);
+              return;
+            }
+          }
     });
 
     socket.on('chat-message', msg => {

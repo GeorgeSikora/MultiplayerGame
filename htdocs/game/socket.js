@@ -20,7 +20,9 @@ class Multiplayer {
     this.latency = 0;
     this.sendTimer = 0;
     // connect to server
-    socket = io.connect(url);
+    socket = io.connect(url, {
+      reconnectionDelay: 1000
+    });
     socket.on('init',          initGame);  // send players and map
     // built-in events
     socket.on('connect',       this.connected);
@@ -62,6 +64,21 @@ class Multiplayer {
       chat.add(newMsg);
     });
     
+    socket.on('block-add', pos => {
+      sound_place.play();
+      objects.push(new Block(pos.x, pos.y));
+    });
+
+    socket.on('block-rem', pos => {
+      for(var i = 0; i < objects.length; i++) {
+        var obj = objects[i];
+        if(pos.x == obj.pos.x && pos.y == obj.pos.y) {
+          sound_pop.play();
+          removeObject(obj);
+          return;
+        }
+      }
+    });
     //socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp, kills
   }
 
@@ -82,10 +99,19 @@ class Multiplayer {
   // refresh every frame
   refresh() {
     if(this.sendTimer < millis()) {
-      socket.emit('pos', {x: player.pos.x, y: player.pos.y, rotation: player.rotation, selectedGun: player.selectedGun});
+
+      var sel = player.equipment[player.selectedEquipment].constructor.name;
+
+      socket.emit('pos', {
+        x: player.pos.x, 
+        y: player.pos.y, 
+        rotation: player.rotation, 
+        selected: sel,
+      });
       this.sendTimer = millis() + SEND_GAP;
     }
   }
+
   connect_error() {
     console.log('%c Connection Failed', 'color: lime');
   }
@@ -157,7 +183,8 @@ function refPlayer(p) {
   players[index].target = {x: p.x, y: p.y};
   players[index].hp = p.hp;
   players[index].targetRotation = p.rotation;
-  players[index].selectedGun = p.selectedGun;
+  console.log(p.selected);
+  players[index].selectedEquipment = p.selected;
 }
 
 /*** SHOOT ***/

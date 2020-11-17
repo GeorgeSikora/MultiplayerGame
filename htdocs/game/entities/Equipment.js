@@ -4,7 +4,10 @@ class Equipment {
         this.name = name;
         this.img = img;
         this.shootInterval = 0;
-        this.AUTOMATIC = false;
+
+        this.HOLDING_USE = false;
+        this.BUTTON_USE = 0;
+
         this.SHOTS_INTERVAL = 0;
     }
     draw(obj) {

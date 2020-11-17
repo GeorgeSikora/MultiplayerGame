@@ -41,6 +41,7 @@ ioAdmin  = require('./Admin.js');
 /********* NAMESPACES *********/
 
 deltaTime = 1;
+var lapseTime = 0;
 var lastTime = getMillis();
 function refresh(){
     var time = getMillis();
@@ -56,6 +57,7 @@ function refresh(){
         if(players[i].respawning) console.log(players[i].name + ' respawning...');
         players[i].update();
     }
+    lapseTime = getMillis() - time;
 }
 setInterval(refresh, TICK_DURATION);
 
@@ -63,6 +65,7 @@ function logInfo() {
     console.log(
          MAGENTA +'players: '   +YELLOW +players.length.toString().padStart(2)
         +MAGENTA +' objects: '  +YELLOW +objects.length.toString().padStart(4)
+        +MAGENTA +' lapse: '    +YELLOW +lapseTime.toFixed(2).padStart(8)           +' ms'
         +MAGENTA +' delta: '    +YELLOW +deltaTime.toFixed(1).padStart(5)           +' ms'
     );
 }

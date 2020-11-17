@@ -4,6 +4,8 @@
 class Knife extends Equipment {
     constructor(){
         super('knife', img_knife);
+        
+        this.BUTTON_USE = LEFT;
 
         this.shake = {x: 0, y: 0};
     }

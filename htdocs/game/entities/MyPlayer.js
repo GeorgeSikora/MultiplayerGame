@@ -47,7 +47,10 @@ class MyPlayer extends GameObject{
     /* player rotation */
     this.rotation = atan2(mouseY - height / 2, mouseX - width / 2);
     /* gun automatic shoot */
-    if(!menuOpened && mouseIsPressed && this.equipment[this.selectedEquipment].HOLDING_USE) {
+    if(!menuOpened && 
+        mouseIsPressed && 
+        this.equipment[this.selectedEquipment].HOLDING_USE
+      ){
       this.equipmentUsage();
     }
   }
@@ -73,7 +76,7 @@ class MyPlayer extends GameObject{
   }
 
   equipmentUsage() {
-    if(mouseButton == LEFT) this.equipment[this.selectedEquipment].use(this);
+    if(this.equipment[this.selectedEquipment].BUTTON_USE == 0 || this.equipment[this.selectedEquipment].BUTTON_USE == mouseButton) this.equipment[this.selectedEquipment].use(this);
   }
 
   mousePressed(){

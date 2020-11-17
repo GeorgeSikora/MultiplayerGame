@@ -6,6 +6,8 @@ class Rifle extends Equipment {
         super('rifle', img_rifle);
 
         this.HOLDING_USE = true;
+        this.BUTTON_USE = LEFT;
+
         this.SHOTS_INTERVAL = 85;
     }
     use(obj) {

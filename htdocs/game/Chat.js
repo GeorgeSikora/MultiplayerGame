@@ -213,22 +213,3 @@ class Chat {
         } return token;
     }
 }
-
-function command(cmd) {
-    switch(cmd){
-        case 'build':
-
-            buildingEnable = !buildingEnable;
-
-            player.selectedEquipment = 0;
-            if(buildingEnable)
-                player.equipment = player.tools;
-            else
-                player.equipment = player.weapons;
-
-            chat.add(new Message().message('building enable = ' + buildingEnable).build());
-
-            break;
-
-    }
-}

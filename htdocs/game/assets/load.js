@@ -1,21 +1,4 @@
 
-let 
-  img_player, 
-  img_block, 
-  img_knife, 
-  img_rifle, 
-  img_shotgun,
-
-  ico_sounds_on,
-  ico_sounds_off,
-
-  sound_rifle, 
-  sound_shotgun, 
-  sound_knife,
-
-  font_default
-;
-
 function preload() {
 
   /* Images and Textures */
@@ -25,6 +8,9 @@ function preload() {
   img_knife = loadImage('assets/images/knife.png');
   img_rifle = loadImage('assets/images/rifle.png');
   img_shotgun = loadImage('assets/images/shotgun.png');
+
+  img_flag = loadImage('assets/images/flag-red.png');
+  //img_flag = get(0,0,img_flag.width/2,height);
 
   /* Icons */
   ico_sounds_on = loadImage('assets/images/sounds_on.png');

@@ -30,6 +30,7 @@ class Player extends GameObject{
     tint(this.col);
     image(img_player, this.pos.x-this.w/2, this.pos.y-this.h/2, this.w, this.h);
 
+    if(this.guns[this.selectedGun] != null) {
     const gun = this.guns[this.selectedGun].img;
 
     this.rotation += (this.targetRotation - this.rotation) * 0.2;
@@ -44,6 +45,7 @@ class Player extends GameObject{
     }
     image(gun,0,0);
     pop();
+  }
     
     fill(255);
     textAlign(CENTER, BOTTOM);

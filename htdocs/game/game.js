@@ -1,6 +1,6 @@
 
 /* HERE PUT YOUR SERVER IP OR URL WITH PORT */
-const SERVER_URL = 'localhost:3031/client';
+const SERVER_URL = '185.221.124.205:3031/client';
 
 /*** MAIN SETUP ***/
 function setup() {
@@ -24,6 +24,7 @@ function setup() {
 let menuOpened = false;
 let muted = false;
 let grid;
+let buildingEnable = false;
 let finalDrawTime = 0;
 
 /*** MAIN LOOP ***/
@@ -34,7 +35,7 @@ function draw() {
     //chat.add("fps drop " + frameRate() + " fps");
     return;
   }
-  
+
   var drawTime = millis();
 
   /* calc player move */
@@ -81,13 +82,7 @@ function draw() {
 
   /* draw my player */
   player.draw();
-  /*
-  grid = getGrid(cam.mouse, 64);
-  push();
-  tint(255, 100);
-  image(img_block, grid.x-64/2, grid.y-64/2);
-  pop();
-  */
+  
   /* set left top corner ortho pos x0 y0 */
   ortho(0, width, -height, 0);
 

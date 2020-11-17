@@ -5,10 +5,10 @@ class Rifle extends Equipment {
     constructor(){
         super('rifle', img_rifle);
 
-        this.AUTOMATIC = true;
+        this.HOLDING_USE = true;
         this.SHOTS_INTERVAL = 85;
     }
-    shoot(obj) {
+    use(obj) {
         if(this.shootInterval < millis()){
             const pos = this.getGunHead(obj);
             

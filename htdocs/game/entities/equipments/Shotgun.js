@@ -5,13 +5,12 @@ class Shotgun extends Equipment {
     constructor(){
         super('shotgun', img_shotgun);
         /* GLOBAL */
-        this.AUTOMATIC = false;
         this.SHOTS_INTERVAL = 500;
         /* SPECIAL */
         this.SHOTS = 10;
         this.SPREAD = PI/5;
     }
-    shoot(obj) {
+    use(obj) {
         if(this.shootInterval < millis()){
 
             const pos = this.getGunHead(obj);

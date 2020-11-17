@@ -119,9 +119,13 @@ class Chat {
             this.open = false; /* CLOSING */
 
             if(this.isValid(this.textInput)) {
-                this.textInput = this.clearRepeatingSpecialChars(this.textInput);
-                socket.emit("chat-message", this.textInput);
-                this.add(new Message().time().name().message(this.textInput).build());
+                if(this.textInput[0] === '/'){
+                    command(this.textInput.split('/')[1]);
+                } else {
+                    this.textInput = this.clearRepeatingSpecialChars(this.textInput);
+                    socket.emit("chat-message", this.textInput);
+                    this.add(new Message().time().name().message(this.textInput).build());
+                }
             }
             this.textInput = '';
             
@@ -210,65 +214,21 @@ class Chat {
     }
 }
 
-class Message {
-    constructor(){
-        this.str = '';
-        this.timeout = millis() + CHAT_MESSAGE_DURATION;
-        this.opacity = 255;
-    }
-    name(){
-        this.str += '&' + getColorToken(player.colorID) + player.name + ' &r';
-        return this;
-    }
-    time(){
-        this.str +='&9[' + this.getTime() + '] &r';
-        return this;
-    }
-    message(text){
-        this.str += text;
-        return this;
-    }
-    build(){
-        this.buildImage(); 
-        return this;
-    }
-    getTime(){
-        return hour().toString().padStart(2,'0') + ':' + minute().toString().padStart(2,'0');
-    }
-    buildImage(){
+function command(cmd) {
+    switch(cmd){
+        case 'build':
 
-        textSize(chat.TEXT_SIZE);
-        var strWidth = 0;
-        for(var i = 0; i < this.str.length; i++){
-            if(this.str[i] != '&') {
-                strWidth += textWidth(this.str[i]);
-            } else {
-                i++;
-            }
-        }
+            buildingEnable = !buildingEnable;
 
-        var img = createGraphics(strWidth, chat.LINE_HEIGHT);
-        
-        img.textAlign(LEFT, TOP);
-        img.textSize(chat.TEXT_SIZE);
+            player.selectedEquipment = 0;
+            if(buildingEnable)
+                player.equipment = player.tools;
+            else
+                player.equipment = player.weapons;
 
-            var token = {color: WHITE};
-            for (var k = 0; k < this.str.length; k++) {
-                while(this.str.charAt(k) === '&' && k < this.str.length){
-                    token = chat.useToken(this.str.charAt(k=k+1), token);
-                    k++;
-                }
-                var c = this.str.charAt(k);
-                if(token.crazyText) c = char(random(256));
+            chat.add(new Message().message('building enable = ' + buildingEnable).build());
 
-                img.fill(token.color);
-                img.stroke(0);
-                img.strokeWeight(2);
-                img.text(c, 0, 0);
-                img.translate(img.textWidth(c),0);
-            }
+            break;
 
-        //saveCanvas(img);
-        this.img = img;
     }
 }

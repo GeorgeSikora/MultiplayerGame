@@ -24,7 +24,7 @@ class Knife extends Equipment {
         image(this.img,0,0);
         pop();
     }
-    shoot(obj) {
+    use(obj) {
         var id = sound_knife.play();
         //sound_knife.pos(map(mouseX,0,width,-1,1),map(mouseY,0,height,-1,1), -0.5, id);
 

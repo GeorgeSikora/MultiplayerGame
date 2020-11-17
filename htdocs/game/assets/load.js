@@ -34,6 +34,8 @@ function preload() {
   sound_rifle = new Howl({src: ['assets/sounds/riflegun.mp3']});
   sound_shotgun = new Howl({src: ['assets/sounds/shotgun.mp3']});
   sound_knife = new Howl({src: ['assets/sounds/knife.mp3']});
+  sound_place = new Howl({src: ['assets/sounds/place.wav']});
+  sound_pop = new Howl({src: ['assets/sounds/pop.wav']});
 
   /* Fonts */
   font_default = loadFont('assets/fonts/OpenSans-Regular.ttf');

@@ -16,8 +16,11 @@ class MyPlayer extends GameObject{
     this.colorID = colorID;
     this.col = getColor(colorID);
 
-    this.guns = [new Knife(), new Rifle(), new Shotgun()];
-    this.selectedGun = 0;
+    this.weapons = [new Knife(), new Rifle(), new Shotgun()];
+    this.tools = [new Build()];
+
+    this.equipment = this.weapons;
+    this.selectedEquipment = 0;
     this.rotation = 0;
 
     /* EXTRA VALUES */
@@ -44,8 +47,8 @@ class MyPlayer extends GameObject{
     /* player rotation */
     this.rotation = atan2(mouseY - height / 2, mouseX - width / 2);
     /* gun automatic shoot */
-    if(!menuOpened && mouseIsPressed && this.guns[this.selectedGun].AUTOMATIC) {
-      this.shoting();
+    if(!menuOpened && mouseIsPressed && this.equipment[this.selectedEquipment].HOLDING_USE) {
+      this.equipmentUsage();
     }
   }
   
@@ -62,15 +65,19 @@ class MyPlayer extends GameObject{
     //rect(0,0, this.w, this.h);
     pop();
     /* gun */
-    this.guns[this.selectedGun].draw(this);
+    this.equipment[this.selectedEquipment].draw(this);
     /* name & hp */ 
     fill(255,255,0);
     textAlign(CENTER, BOTTOM);
     text(this.name +'\n' +this.hp +'hp', this.pos.x, this.pos.y-5 -this.h/2);
   }
 
-  shoting() {
-    if(mouseButton == LEFT) this.guns[this.selectedGun].shoot(this);
+  equipmentUsage() {
+    if(mouseButton == LEFT) this.equipment[this.selectedEquipment].use(this);
+  }
+
+  mousePressed(){
+  this.equipmentUsage();
   }
   
   keyPressed(){

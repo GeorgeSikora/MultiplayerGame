@@ -39,7 +39,7 @@ class Message {
         
         img.textAlign(LEFT, TOP);
         img.textSize(chat.TEXT_SIZE);
-        img.stroke(32);
+        img.stroke(0);
         img.strokeWeight(3);
         img.translate(0, (chat.LINE_HEIGHT - chat.TEXT_SIZE)/2);
         console.log((chat.LINE_HEIGHT - chat.TEXT_SIZE)/2);

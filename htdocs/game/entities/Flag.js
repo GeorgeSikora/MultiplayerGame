@@ -5,8 +5,8 @@ class Flag extends GameObject {
 
         this.center = {x: 14, y: 122};
 
-        
-        this.layer = this.h - this.center.y;
+        this.layer = this.pos.y + this.h - this.center.y;
+        this.team = team;
 
         if(team === 'red'){
             this.img = img_flag_red;
@@ -16,7 +16,6 @@ class Flag extends GameObject {
 
         objects.push(new TextSign('Press [E] to capture flag', x, y - this.h - 12));
         this.textSign = objects[objects.length-1];
-        
     }
     draw(){
         push();
@@ -26,5 +25,8 @@ class Flag extends GameObject {
         pop();
 
         this.textSign.show = (dist(player.pos.x, player.pos.y, this.pos.x, this.pos.y) < 100);
+    }
+    remove(){
+        removeObject(this.textSign);
     }
 }

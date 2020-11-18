@@ -10,6 +10,7 @@ class TextSign extends GameObject {
     draw(){
         if(!this.show) return;
 
+        push();
         fill(0, 127);
         rectMode(CENTER);
         rect(this.pos.x, this.pos.y +3, 240, 30);
@@ -17,5 +18,6 @@ class TextSign extends GameObject {
         textSize(20);
         textAlign(CENTER, CENTER);
         text(this.str, this.pos.x, this.pos.y);
+        pop();
     }
 }

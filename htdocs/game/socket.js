@@ -72,6 +72,7 @@ class Multiplayer {
     socket.on('block-rem', pos => {
       for(var i = 0; i < objects.length; i++) {
         var obj = objects[i];
+        if(obj.constructor.name != 'Block') continue;
         if(pos.x == obj.pos.x && pos.y == obj.pos.y) {
           sound_pop.play();
           removeObject(obj);

@@ -44,8 +44,10 @@ function removeObjectByID(id){
 }
   
 function removeObject(object){
+    const id = objects.indexOf(object);
+    if(id == -1) return;
+    const obj = objects[id];
 
-    if(object.collision != null) col.splice(col.indexOf(object.collision), 1);
-
-    objects.splice(objects.indexOf(object), 1);
+    objects.splice(id, 1);
+    if(obj.remove != null) obj.remove();
 }

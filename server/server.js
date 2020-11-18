@@ -11,7 +11,7 @@ app = express();
 
 var server = app.listen(process.env.PORT || SERVER_PORT); // set PORT=3216 && node server.js
 io = require('socket.io')(server, {pingInterval: PING_INTERVAL});
-console.log('Socket.io server started');
+console.log('Socket.io server started port: ' + process.env.PORT || SERVER_PORT);
 
 /********* SERVICE HTML PAGE *********/
 require('./service/app.js');

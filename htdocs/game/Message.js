@@ -39,6 +39,10 @@ class Message {
         
         img.textAlign(LEFT, TOP);
         img.textSize(chat.TEXT_SIZE);
+        img.stroke(32);
+        img.strokeWeight(3);
+        img.translate(0, (chat.LINE_HEIGHT - chat.TEXT_SIZE)/2);
+        console.log((chat.LINE_HEIGHT - chat.TEXT_SIZE)/2);
 
             var token = {color: WHITE};
             for (var k = 0; k < this.str.length; k++) {
@@ -50,8 +54,6 @@ class Message {
                 if(token.crazyText) c = char(random(256));
 
                 img.fill(token.color);
-                img.stroke(0);
-                img.strokeWeight(2);
                 img.text(c, 0, 0);
                 img.translate(img.textWidth(c),0);
             }

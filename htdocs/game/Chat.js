@@ -9,7 +9,7 @@ class Chat {
         this.LINES = 12; // maximum lines of chat
 
         /* dimensions px */
-        this.LINE_HEIGHT    = 18;
+        this.LINE_HEIGHT    = 20;
         this.TEXT_SIZE      = 16;
         this.INPUT_PADDING  =  4;
 
@@ -52,6 +52,7 @@ class Chat {
             }
             
             if(line.img != null) {
+                tint(255, line.opacity);
                 imageMode(CORNER);
                 image(line.img,0,-this.LINE_HEIGHT);
             } else {

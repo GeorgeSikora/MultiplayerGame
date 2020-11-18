@@ -5,7 +5,7 @@ class Camera {
     constructor(target){
 
         this.target = target;
-        this.scale = 0.8;
+        this.scale = 1.0;
         this.pos = {x: 0, y: 0};
         this.easing = 0.1;
         

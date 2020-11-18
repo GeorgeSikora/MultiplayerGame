@@ -17,7 +17,7 @@ class MyPlayer extends GameObject{
     this.col = getColor(colorID);
 
     this.weapons = [new Knife(), new Rifle(), new Shotgun()];
-    this.tools = [new Build()];
+    this.tools = [new BuildBlock(), new BuildFlag('blue'), new BuildFlag('red')];
 
     this.equipment = this.weapons;
     this.selectedEquipment = 0;

@@ -25,7 +25,6 @@ function setup() {
   for(var x = 0; x < 10000; x++){
     objects.push(new Grass(16 * round(random(-600,600)), 16 * round(random(-600,600))));
   }
-  cam.scale = 1.2;
 }
 
 let menuOpened = false;
@@ -64,7 +63,8 @@ function draw() {
   cam.ortho();
 
   /* background color */
-  background(100, 155, 74);
+  //background(100, 155, 74);
+  background(12);
 
   /* draw Safe Zone */
   drawSavezone();

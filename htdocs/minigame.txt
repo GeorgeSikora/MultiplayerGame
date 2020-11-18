@@ -1,0 +1,27 @@
+
+# minigame: Capture the flag #
+
+> Hráč vezme vlajku protivníkovi
+	- smaže se prapor vlajky
+	- hráč bude mít za zády nesoucí vlajku
+> jestli někdo z nepřátel hráče nesoucího vlajku trefí
+	- hráč se respawne na svém spawnu
+	- vlajka vypadne jako item na zem
+> jestli někdo z protivníků vlajku sebere
+	- objeví se opět za zády hráče
+> jestli někdo z týmu vlajku sebere
+	- odebere se z místa a tím se eliminuje
+> jestli ukradnutou vlajku protivní zanese ke sve vlajce
+	- dostává tým nesoucí vlajku na spawn bod
+	- vlajka se obnovi na nepřátelské straně
+> když se přinese dostatečný počet nepřátelských vlajek
+	- hra tímto končí a vítězí tým s nejrychleji dosaženým počket vlajek
+	
+	
+	
+	
+	
+	
+	
+	
+	

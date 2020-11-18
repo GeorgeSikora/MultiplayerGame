@@ -9,6 +9,8 @@ class GameObject {
         this.w = w;
         this.h = h;
         this.center = {x:0,y:0};
+
+        this.layer = 0;
     }
     update(){
         // Basicly nothing

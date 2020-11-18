@@ -20,7 +20,12 @@ function setup() {
   /* set default volume at 30% */
   Howler.volume(0.3);
   
-  objects.push(new Flag(0,0));
+  objects.push(new Flag(-400, 0, 'red'));
+  objects.push(new Flag( 400, 0, 'blue'));
+  for(var x = 0; x < 10000; x++){
+    objects.push(new Grass(16 * round(random(-600,600)), 16 * round(random(-600,600))));
+  }
+  cam.scale = 1.2;
 }
 
 let menuOpened = false;
@@ -59,21 +64,34 @@ function draw() {
   cam.ortho();
 
   /* background color */
-  background(19);
+  background(100, 155, 74);
 
   /* draw Safe Zone */
   drawSavezone();
 
   /* update and draw objects */
+  var objectsRender = [];
   for (var i = 0; i < objects.length; i++) {
     var obj = objects[i];
     obj.update();
     if(objects[i] == null) continue;
     /* draw only when it is on screen */
     if(rectRect(obj.pos.x-obj.center.x, obj.pos.y-obj.center.y, obj.w, obj.h, cam.pos.x-width/cam.scale/2, cam.pos.y-height/cam.scale/2, width/cam.scale, height/cam.scale)){
-      obj.draw();
+      //obj.draw();
+      objectsRender.push(obj);
     }
   }
+  objectsRender.push(player);
+
+  objectsRender.sort(function(a, b) {
+      return a.layer - b.layer;
+  });
+
+  for (var i = 0; i < objectsRender.length; i++) {
+    objectsRender[i].draw();
+  }
+  
+  //console.log(objectsRender);
 
   /* refresh and draw other players on server */
   for (var i = 0; i < players.length; i++) {
@@ -82,7 +100,7 @@ function draw() {
   }
 
   /* draw my player */
-  player.draw();
+  //player.draw();
   
   /* set left top corner ortho pos x0 y0 */
   ortho(0, width, -height, 0);

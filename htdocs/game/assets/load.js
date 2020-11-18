@@ -2,6 +2,8 @@
 function preload() {
 
   /* Images and Textures */
+  img_grass = loadImage('assets/images/grass.png');
+
   img_player = loadImage('assets/images/player.png');
   img_block = loadImage('assets/images/block.png');
 
@@ -9,8 +11,8 @@ function preload() {
   img_rifle = loadImage('assets/images/rifle.png');
   img_shotgun = loadImage('assets/images/shotgun.png');
 
-  img_flag = loadImage('assets/images/flag-red.png');
-  //img_flag = get(0,0,img_flag.width/2,height);
+  img_flag_red = loadImage('assets/images/flag-red.png');
+  img_flag_blue = loadImage('assets/images/flag-blue.png');
 
   /* Icons */
   ico_sounds_on = loadImage('assets/images/sounds_on.png');

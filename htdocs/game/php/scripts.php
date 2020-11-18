@@ -26,6 +26,8 @@
 <script src="entities/Block.js"></script>
 <script src="entities/Bullet.js"></script>
 <script src="entities/Flag.js"></script>
+<script src="entities/TextSign.js"></script>
+<script src="entities/Grass.js"></script>
 <!-- equipments -->
 <script src="entities/Equipment.js"></script>
 <script src="entities/equipments/Build.js"></script>

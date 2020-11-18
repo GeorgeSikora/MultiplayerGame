@@ -56,20 +56,17 @@ class MyPlayer extends GameObject{
   }
   
   draw() {
+    this.layer = this.pos.y +this.h/2;
     /* player */
     push();
     translate(this.pos.x-this.w/2, this.pos.y-this.h/2);
     tint(this.col);
     image(img_player,0,0, this.w, this.h);
-    
-    //translate(this.speed.x, this.speed.y);
-    //stroke(255,0,255);
-    //noFill();
-    //rect(0,0, this.w, this.h);
     pop();
     /* gun */
     this.equipment[this.selectedEquipment].draw(this);
     /* name & hp */ 
+    textSize(16);
     fill(255,255,0);
     textAlign(CENTER, BOTTOM);
     text(this.name +'\n' +this.hp +'hp', this.pos.x, this.pos.y-5 -this.h/2);

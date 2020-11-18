@@ -37,12 +37,11 @@ class Collision {
         overlap.x = combined.x - abs(dx);
         overlap.y = combined.y - abs(dy);
 
-        console.log(overlap);
         if (overlap.x >= overlap.y) {
 
           this.collidedY = true;
           entity.collidedY = true;
-         // this.obj.speed.y = 0;
+          // this.obj.speed.y = 0;
 
           if (dy > 0) {
             //this.collision = Direction.UP;
@@ -85,8 +84,10 @@ function addCol(c) {
 }
 
 function checkCollisions() {
-  for (var i = 0; i < col.length; i++) {
-    colider1 = col[i];
+  for (var i = 0; i < objects.length; i++) {
+    var colider1 = objects[i].collision;
+
+    if(colider1 == null) continue;
 
     if (colider1.obj == null) continue;
     if(colider1.static) continue;
@@ -95,51 +96,59 @@ function checkCollisions() {
     colider1.colidedX = false;
     colider1.colidedY = false;
   
-    for (var j = 0; j < col.length; j++) {
-      var colider2 = col[j];
-      if (colider1 == colider2) continue;
-
-      var x1 = colider1.pos.x - colider1.obj.center.x, y1 = colider1.pos.y - colider1.obj.center.y, w1 = colider1.w, h1 = colider1.h;
-      var x2 = colider2.pos.x - colider2.obj.center.x, y2 = colider2.pos.y - colider2.obj.center.y, w2 = colider2.w, h2 = colider2.h;
-
-      if (x1 + w1 >= x2 && y1 + h1 >= y2 && x2 + w2 >= x1 && y2 + h2 >= y1) {
-
-        var Xa = x1 + w1 - x2;
-        var Xb = x2 + w2 - x1;
-
-        var Ya = y1 + h1 - y2;
-        var Yb = y2 + h2 - y1;
-
-        var deltaX = Xa < Xb ? -Xa : Xb;
-        var deltaY = Ya < Yb ? -Ya : Yb;
-
-        if (abs(deltaX) > abs(deltaY)) {
-            //if(round(shift.y) != round(deltaY))
-             // shift.y += deltaY;
-              colider1.pos.y += deltaY; 
-          
-            //if(colider1.obj.speed != null) colider1.obj.speed.y = constrain(deltaY, -1, 1) * 80; // JELLLY
-            if(colider1.obj.speed != null){ 
-              colider1.obj.speed.y = 0;
-              colider1.obj.targetSpeed.y = 0;
-            }
-            colider1.colidedY = true;
-        } else {
-          //if(round(shift.x) != round(deltaX))
-            //shift.x += deltaX;
-            colider1.pos.x += deltaX; 
-            //if(colider1.obj.speed != null) colider1.obj.speed.x = constrain(deltaX, -1, 1) * 80; // JELLY
-            if(colider1.obj.speed != null) {
-              colider1.obj.speed.x = 0;
-              colider1.obj.targetSpeed.y = 0;
-            }
-            colider1.colidedX = true;
-        }
-      }
-    }
+    checkCollisionsWith(colider1);
     //colider1.pos.x += shift.x;
     //colider1.pos.y += shift.y;
   }
+  checkCollisionsWith(player);
+}
+function checkCollisionsWith(colider1){
+for (var j = 0; j < objects.length; j++) {
+  var colider2 = objects[j].collision;
+  if (colider2 == null) continue;
+  if (colider1 == colider2) continue;
+
+  var x1 = colider1.pos.x, y1 = colider1.pos.y, w1 = colider1.w, h1 = colider1.h;
+  var x2 = colider2.pos.x, y2 = colider2.pos.y, w2 = colider2.w, h2 = colider2.h;
+
+  if(colider1.center != null) {x1 -= colider1.center.x; y1 -= colider1.center.y;}
+  if(colider2.center != null) {x2 -= colider2.center.x; y2 -= colider2.center.y;}
+
+  if (x1 + w1 >= x2 && y1 + h1 >= y2 && x2 + w2 >= x1 && y2 + h2 >= y1) {
+
+    var Xa = x1 + w1 - x2;
+    var Xb = x2 + w2 - x1;
+
+    var Ya = y1 + h1 - y2;
+    var Yb = y2 + h2 - y1;
+
+    var deltaX = Xa < Xb ? -Xa : Xb;
+    var deltaY = Ya < Yb ? -Ya : Yb;
+
+    if (abs(deltaX) > abs(deltaY)) {
+        //if(round(shift.y) != round(deltaY))
+         // shift.y += deltaY;
+          colider1.pos.y += deltaY; 
+      
+        //if(colider1.obj.speed != null) colider1.obj.speed.y = constrain(deltaY, -1, 1) * 80; // JELLLY
+        if(colider1.speed != null){ 
+          colider1.speed.y = 0;
+          colider1.targetSpeed.y = 0;
+        }
+        colider1.colidedY = true;
+    } else {
+      //if(round(shift.x) != round(deltaX))
+        //shift.x += deltaX;
+        colider1.pos.x += deltaX; 
+        //if(colider1.obj.speed != null) colider1.obj.speed.x = constrain(deltaX, -1, 1) * 80; // JELLY
+        if(colider1.speed != null) {
+          colider1.speed.x = 0;
+          colider1.targetSpeed.y = 0;
+        }
+        colider1.colidedX = true;
+    }
+  }
+}
 }
 
 class Direction {

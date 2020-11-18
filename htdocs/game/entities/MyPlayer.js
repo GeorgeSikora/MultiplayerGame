@@ -6,7 +6,7 @@ class MyPlayer extends GameObject{
   constructor(id, name, x, y, colorID) {
     super(x,y,64,64);
 
-    this.collision = addCol(new Collision(this));
+    this.collision = new Collision(this);
     this.center = {x: this.w/2, y: this.h/2};
 
     this.id = id;

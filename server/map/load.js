@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 try {  
-    const data = fs.readFileSync('map/map.txt', 'utf8');
+    const data = fs.readFileSync('map/map_flags.txt', 'utf8');
     const lines = data.split(/\r?\n/);
 
     for(var i = 0; i < lines.length; i++){
@@ -16,5 +16,5 @@ try {
 }
 
 
-objects.push(new Flag(-200, 0, 'red'));
-objects.push(new Flag(200, 0, 'blue'));
+objects.push(new Flag(-1400, 0, 'red'));
+objects.push(new Flag(1400, 0, 'blue'));

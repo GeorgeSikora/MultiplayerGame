@@ -6,11 +6,11 @@ class Camera {
 
         this.target = target;
         this.scale = 1.0;
-        this.pos = {x: 0, y: 0};
+        this.pos = {x: target.pos.x, y: target.pos.y};
         this.easing = 0.1;
         
         this.mouse = {x: 0, y: 0};
-
+  
     }
     
     ortho(){

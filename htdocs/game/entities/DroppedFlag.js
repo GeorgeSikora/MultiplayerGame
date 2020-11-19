@@ -60,15 +60,20 @@ class DroppedFlag extends GameObject {
                 
                 // key E pressed
 
+                socket.emit('DroppedFlag-pick', this.team);
                 sound_bye.play();
-                player.capturedFlag = this.team;
-                removeObject(this);
+
+                //removeObject(this);
             }
 
             if(this.returnReady) {
                 
                 // key E pressed
-
+                
+                socket.emit('DroppedFlag-return', this.team);
+                sound_yay.play();
+                
+                /*
                 for(var i = 0; i < objects.length; i++){
                     if(objects[i].constructor.name != 'Flag') continue;
                     if(objects[i].team == this.team) {
@@ -76,10 +81,10 @@ class DroppedFlag extends GameObject {
                         sound_yay.play();
                     }
                 }
+
                 removeObject(this);
+                */
             }
-
-
         }
     }
     remove(){

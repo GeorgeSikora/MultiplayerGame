@@ -8,11 +8,13 @@ class Flag extends GameObject {
         this.layer = this.pos.y + this.h - this.center.y;
         this.team = team;
 
-        this.captureReady = false;
-
         this.captured = false;
 
-        objects.push(new TextSign('Press [E] to capture flag', x, y - this.h - 12));
+        this.captureReady = false;
+
+        this.autoAccept = true;
+
+        objects.push(new TextSign('I am just flag :)', x, y - this.h - 12));
         this.textSign = objects[objects.length-1];
     }
     draw(){
@@ -25,8 +27,12 @@ class Flag extends GameObject {
 
                     // player HAVE flag
 
-                    this.acceptReady = true;
-                    this.textSign.str = 'Press [E] to accept flag !';
+                    if(this.autoAccept) {
+                        this.acceptFlag();
+                    } else {
+                        this.acceptReady = true;
+                        this.textSign.str = 'Press [E] to accept flag !';
+                    }
                 }
             } else {
 
@@ -71,10 +77,7 @@ class Flag extends GameObject {
                 
                 // key E pressed
 
-                sound_bye.play();
-                this.captured = true;
-                player.capturedFlag = this.team;
-                console.log('Captured ' + this.team + ' flag!');
+                this.captureFlag();
                 this.captureReady = false;
             }
 
@@ -82,19 +85,36 @@ class Flag extends GameObject {
                 
                 // key E pressed
 
-                for(var i = 0; i < objects.length; i++){
-                    if(objects[i].constructor.name != 'Flag') continue;
-                    if(objects[i].team == player.capturedFlag) {
-                        objects[i].captured = false;
-                        sound_yay.play();
-                    }
-                }
-                player.capturedFlag = null;
+                this.acceptFlag();
                 this.acceptReady = false;
             }
-
-
         }
+    }
+    captureFlag(){
+        
+        socket.emit('flag-capture', this.team);
+
+        sound_bye.play();
+        /*
+        this.captured = true;
+        */
+        player.capturedFlag = this.team;
+    }
+    acceptFlag(){
+
+        socket.emit('flag-accept', player.capturedFlag);
+
+        sound_yay.play();
+        /*
+        for(var i = 0; i < objects.length; i++){
+            if(objects[i].constructor.name != 'Flag') continue;
+            if(objects[i].team == player.capturedFlag) {
+                objects[i].captured = false;
+                sound_yay.play();
+            }
+        }
+        */
+        player.capturedFlag = null;
     }
     remove(){
         removeObject(this.textSign);

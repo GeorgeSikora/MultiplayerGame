@@ -3,7 +3,7 @@ const {RESET,BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE} = require('./colors
 
 /********* SERVER CONFIG *********/
 const SERVER_PORT = 3031; // main socket.io server port
-const TICK_DURATION = 60; // ms
+const TICK_DURATION = 90; // ms
 const PING_INTERVAL = 3000; // ping interval
 
 express = require('express');
@@ -56,7 +56,7 @@ function refresh(){
         objects[i].update();
     }
     for(var i = 0; i < players.length; i++){
-        if(players[i].respawning) console.log(players[i].name + ' respawning...');
+        //if(players[i].respawning) console.log(players[i].name + ' respawning...');
         players[i].update();
     }
     lapseTime = getMillis() - time;

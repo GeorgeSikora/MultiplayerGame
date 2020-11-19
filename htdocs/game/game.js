@@ -1,6 +1,6 @@
 
 /* HERE PUT YOUR SERVER IP OR URL WITH PORT */
-const SERVER_URL = '185.221.124.205:3031/client';
+const SERVER_URL = 'localhost:3031/client'; // 185.221.124.205
 
 /*** MAIN SETUP ***/
 function setup() {
@@ -12,7 +12,7 @@ function setup() {
   textFont(font_default);
   noStroke();
   /* create necessary game objects */
-  player = new MyPlayer(0, post.name, 0, 0, post.colorID);
+  player = new MyPlayer(0, post.name, 0, 0, post.color);
   cam = new Camera(player);
   chat = new Chat();
   /* connect to the multiplayer server */
@@ -20,7 +20,6 @@ function setup() {
   /* set default volume at 30% */
   Howler.volume(0.3);
 
-  
   objects.push(new Flag(-300, 0, 'red'));
   objects.push(new Flag( 300, 0, 'blue'));
   

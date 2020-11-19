@@ -11,7 +11,7 @@ let multiplayer, socket;
 let fps = 0;
 
 // player pos sender
-const SEND_GAP = 100;
+const SEND_GAP = 90;
 let serverConst = []; // server constants
 
 class Multiplayer {
@@ -43,10 +43,23 @@ class Multiplayer {
       window.location.replace("/?error="+err.id+"&message="+err.message);
     });
 
-    socket.on('respawn', ()=> {
-      player.pos.x = 0; 
-      player.pos.y = 0; 
-      socket.emit('respawned');
+    socket.on('respawn', (shooterID, pos)=> {
+      splash.opacity = 255;
+      sound_yay.play();
+      player.pos.x = pos.x; 
+      player.pos.y = pos.y; 
+      player.enable = false;
+
+      var index = objectIndexOf(players, shooterID, 'id');
+      cam.target = players[index];
+
+      setTimeout(() => {
+        sound_drop1.play();
+        splash.opacity = 255;
+        player.enable = true;
+        cam.target = player;
+        socket.emit('respawned');
+      }, 3000);
     });
 
     socket.on('setPos', (pos)=> {
@@ -127,8 +140,6 @@ class Multiplayer {
     socket.emit('initReq', {
       name:      player.name, 
       password:  'heslo',
-      x:         player.pos.x,
-      y:         player.pos.y,
       col:       player.col
     });
   }
@@ -136,13 +147,13 @@ class Multiplayer {
   refresh() {
     if(this.sendTimer < millis()) {
 
-      var sel = player.equipment[player.selectedEquipment].constructor.name;
+      const sel = player.equipment[player.selectedEquipment].constructor.name;
 
       socket.emit('pos', {
         x: player.pos.x, 
         y: player.pos.y, 
         rotation: player.rotation, 
-        selected: sel,
+        selected: sel
       });
       this.sendTimer = millis() + SEND_GAP;
     }
@@ -196,6 +207,7 @@ function initGame(data) {
     }
   }
   gameLoaded = true;
+  minimap.build();
 
   console.log('Game loaded', millis() - startTime);
 }

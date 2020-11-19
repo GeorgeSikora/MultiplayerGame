@@ -1,6 +1,6 @@
 
 /* HERE PUT YOUR SERVER IP OR URL WITH PORT */
-const SERVER_URL = 'localhost:3031/client'; // 185.221.124.205
+const SERVER_URL = '185.221.124.205:3031/client'; // 185.221.124.205
 
 /*** MAIN SETUP ***/
 function setup() {
@@ -12,7 +12,8 @@ function setup() {
   textFont(font_default);
   noStroke();
   /* create necessary game objects */
-  player = new MyPlayer(0, post.name, 0, 0, post.color);
+  const pos = post.color == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
+  player = new MyPlayer(0, post.name, pos.x, pos.y, post.color);
   cam = new Camera(player);
   chat = new Chat();
   /* connect to the multiplayer server */
@@ -30,6 +31,8 @@ function setup() {
   objects.push(new Flag( 200, 200, 'yellow'));
   objects.push(new DroppedFlag( 100, 100, 'blue'));
   */
+  splash = new ScreenFlash();
+  minimap = new Minimap();
 }
 
 let menuOpened = false;
@@ -110,6 +113,9 @@ function draw() {
   /* set left top corner ortho pos x0 y0 */
   ortho(0, width, -height, 0);
 
+  /* minimap */
+  minimap.draw();
+
   /* informations corner */
   drawInfo();
 
@@ -121,6 +127,8 @@ function draw() {
   }
 
   chat.draw(10,height-10);
+
+  splash.draw();
 
   if(frameCount%50 == 0) finalDrawTime = (millis() - drawTime).toFixed(2);
 }

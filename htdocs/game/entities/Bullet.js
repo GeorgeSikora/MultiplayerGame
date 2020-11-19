@@ -18,6 +18,7 @@ class Bullet extends GameObject {
         for(var i = 0; i < objects.length; i++){
             var obj = objects[i];
             if(obj.constructor.name == 'Bullet') continue;
+            if(obj.collision == null) continue;
             if(lineRect(this.pos.x, this.pos.y, this.pos.x+move.x, this.pos.y+move.y, obj.pos.x-obj.w/2, obj.pos.y-obj.h/2, obj.w, obj.h)){
                 removeObject(this);
                 return;

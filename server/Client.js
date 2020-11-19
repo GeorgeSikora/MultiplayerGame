@@ -22,7 +22,7 @@ ioClient.on('connection', socket => {
     socket.on('initReq', data => { // init request
         console.log(socket.id, data);
         socket.emit('init', {constants: constants, players: players, objects: objects});
-        players.push(new Player(socket.id, data.name, data.x, data.y, data.colorID, data.col));
+        players.push(new Player(socket.id, data.name, data.x, data.y, data.col));
         socket.broadcast.emit('newPlayer', players[players.length-1]);
     });
 
@@ -74,7 +74,7 @@ ioClient.on('connection', socket => {
         console.log('removing index: ' + removeIndex + ' now size is: ' + players.length);
     });
 
-    socket.on('block-add', pos => {
+    socket.on('block-add', pos => {sss
         
         for(var i = 0; i < objects.length; i++) {
           var obj = objects[i];
@@ -105,6 +105,86 @@ ioClient.on('connection', socket => {
         var id = ObjManager.getPlayer(socket.id);
         if(id == -1) return;
         socket.broadcast.emit('chat-message', new Message(msg, players[id]));
+    });
+    
+    socket.on('flag-capture', team => {
+        var id = ObjManager.getPlayer(socket.id);
+        if(id == -1) return;
+
+        // TODO: Udělat kontrolu, že hráčova pozice je poblíž vlajky
+
+        // TODO: Zjistí jestli v proměnných serveru hráč je držitelem vlajky
+
+        players[id].capturedFlag = team;
+        ioClient.emit('player-set', socket.id, 'capturedFlag', team);
+
+        // TODO: Udělat aby se i ze strany serveru vlajka změnila
+        ioClient.emit('flag-set', team, true);
+
+        console.log(players[id].team + ' team captured ' + team + ' team flag');
+        ioClient.emit('chat-message', new Message(players[id].team + ' team captured ' + team + '\'s flag'));
+
+    });
+
+    socket.on('flag-accept', team => {
+        var id = ObjManager.getPlayer(socket.id);
+        if(id == -1) return;
+
+        // TODO: Udělat kontrolu, že hráčova pozice je poblíž vlajky
+        
+        // TODO: Zjistí jestli v proměnných serveru hráč je držitelem vlajky
+        
+        players[id].capturedFlag = null;
+        ioClient.emit('player-set', socket.id, 'capturedFlag', null);
+
+        // TODO: Udělat aby se i ze strany serveru vlajka změnila
+        ioClient.emit('flag-set', team, false);
+
+        console.log(players[id].team + ' team accepted ' + team + ' team flag');
+        ioClient.emit('chat-message', new Message(players[id].team + ' team accepted ' + team + '\'s flag'));
+
+    });
+
+    socket.on('DroppedFlag-pick', team => {
+        var id = ObjManager.getPlayer(socket.id);
+        if(id == -1) return;
+
+        // TODO: Ověřit zda se nachází v blízkosti
+
+        // Set payer who picked droped flag, as he captured flag
+        players[id].capturedFlag = team;
+        ioClient.emit('player-set', socket.id, 'capturedFlag', team);
+
+        // Remove dropped flag from objects
+        for(var i = 0; i < objects.length; i++){
+            if(objects[i].constructor.name != 'DroppedFlag') continue;
+            if(objects[i].team == team) {
+                ioClient.emit('DroppedFlag-rem', team);
+                ObjManager.removeIndex(i);
+                return;
+            }
+        }
+    });
+    
+    socket.on('DroppedFlag-return', team => {
+        var id = ObjManager.getPlayer(socket.id);
+        if(id == -1) return;
+
+        // TODO: Ověřit zda se nachází v blízkosti
+
+        // Reset the flag of team
+        // TODO: Udělat aby se i ze strany serveru vlajka změnila
+        ioClient.emit('flag-set', team, false);
+
+        // Remove dropped flag from objects
+        for(var i = 0; i < objects.length; i++){
+            if(objects[i].constructor.name != 'DroppedFlag') continue;
+            if(objects[i].team == team) {
+                ioClient.emit('DroppedFlag-rem', team);
+                ObjManager.removeIndex(i);
+                return;
+            }
+        }
     });
 });
 

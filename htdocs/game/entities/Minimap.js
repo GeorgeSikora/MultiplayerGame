@@ -3,7 +3,7 @@ let minimap;
 
 class Minimap {
     constructor(){
-        this.scale = 12;
+        this.scale = 13;
         this.img = null;
     }
     draw(){
@@ -11,9 +11,22 @@ class Minimap {
             push();
             tint(255);
             imageMode(CENTER);
-            translate(width/2, this.img.height/2);
+            translate(width/2, this.img.height/2 +5);
 
             image(this.img, 0, 0);
+
+            stroke(0);
+            strokeWeight(1);
+            rectMode(CENTER);
+
+            for(var i = 0; i < players.length; i++){
+                const p = players[i];
+                fill(p.team);
+                rect(p.pos.x/this.scale, p.pos.y/this.scale, 6, 6);
+            }
+            
+            fill(255, 255, 0);
+            rect(player.pos.x/this.scale, player.pos.y/this.scale, 6, 6);
 
             const posRed = this.getFlagPos('red');
             tint('red');
@@ -65,12 +78,12 @@ class Minimap {
         spawnRed.y /= this.scale;
         spawnBlue.x /= this.scale;
         spawnBlue.y /= this.scale;
-
+       
         this.img.fill('red');
-        this.img.rect(spawnRed.x, spawnRed.y, 10, 10);
+        this.img.ellipse(spawnRed.x, spawnRed.y, 8, 8);
         
         this.img.fill('blue');
-        this.img.rect(spawnBlue.x, spawnBlue.y, 10, 10);
+        this.img.ellipse(spawnBlue.x, spawnBlue.y, 8, 8);
 
         this.img.pop();
     }

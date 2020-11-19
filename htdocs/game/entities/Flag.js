@@ -12,7 +12,7 @@ class Flag extends GameObject {
 
         this.captureReady = false;
 
-        this.autoAccept = true;
+        this.autoAccept = false;
 
         objects.push(new TextSign('I am just flag :)', x, y - this.h - 12));
         this.textSign = objects[objects.length-1];
@@ -69,7 +69,7 @@ class Flag extends GameObject {
     }
     keyPressed(){
 
-        if(key == 'e'){
+        if(key == 'e' || key == 'E'){
             
             // key E pressed
 
@@ -104,7 +104,7 @@ class Flag extends GameObject {
 
         socket.emit('flag-accept', player.capturedFlag);
 
-        sound_yay.play();
+        sound_wow.play();
         /*
         for(var i = 0; i < objects.length; i++){
             if(objects[i].constructor.name != 'Flag') continue;

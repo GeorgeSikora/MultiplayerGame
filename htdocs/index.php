@@ -17,6 +17,9 @@
     <span>Select color of your cube:</span>
 
     <div class="colorselect" style="text-align: center;">
+        <button id="color0" class="red"  onclick="selectColor(0);">    </button>
+        <button id="color1" class="blue" onclick="selectColor(1);">   </button>
+        <!-- 
         <button id="color0" onclick="selectColor(0);" class="red">     </button>
         <button id="color1" onclick="selectColor(1);" class="orange">  </button>
         <button id="color2" onclick="selectColor(2);" class="yellow">  </button>
@@ -24,6 +27,7 @@
         <button id="color4" onclick="selectColor(4);" class="aqua">    </button>
         <button id="color5" onclick="selectColor(5);" class="blue">    </button>
         <button id="color6" onclick="selectColor(6);" class="purple">  </button>
+        -->
     </div>
 
     <br>

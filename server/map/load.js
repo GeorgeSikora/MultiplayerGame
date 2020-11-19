@@ -14,3 +14,7 @@ try {
 } catch(e) {
     console.log('Error:', e.stack);
 }
+
+
+objects.push(new Flag(-200, 0, 'red'));
+objects.push(new Flag(200, 0, 'blue'));

@@ -24,6 +24,7 @@ function getColor(id){
     }
 }
 
+/* OLD
 function getColorToken(id){
     switch(id){
         case '0': return '2';
@@ -33,5 +34,18 @@ function getColorToken(id){
         case '4': return '6';
         case '5': return '7';
         case '6': return '8';
+    }
+}
+*/
+
+function getColorToken(id){
+    switch(id){
+        case 'red':     return '2';
+        case 'orange':  return '3';
+        case 'yellow':  return '4';
+        case 'green':   return '5';
+        case 'aqua':    return '6';
+        case 'blue':    return '7';
+        case 'purple':  return '8';
     }
 }

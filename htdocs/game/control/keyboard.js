@@ -20,6 +20,7 @@ function keyPressed(){
     if(chat.open) return;
   
     player.keyPressed();
+    for(var i = 0; i < objects.length; i++) if(objects[i].keyPressed != null) objects[i].keyPressed();
   }
   function keyReleased(){
     player.keyReleased();

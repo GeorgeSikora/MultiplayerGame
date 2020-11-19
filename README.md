@@ -21,6 +21,8 @@ I added some screenshots of game and server:
 
 
 ### Chat update!
+Smooth chat, looks cool, right?
+
 ![Chat](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/chat.gif)
 
 ### In the game, there is safe zone, where people cannot shoot and cannot be eliminated
@@ -40,19 +42,14 @@ I added some screenshots of game and server:
 I just like this tree, called Wisteria and also it has very nice name. So far, it's just such a temporary name, I don't have a fancy name yet.
 
 ## TODO list
->- Player move ✔
->- Map loading ✔
->- Multiplayer ✔
->- Textures ✔
->- Menu ✔
->- Chat ✔
->- Animated player move ✖
->- Chat commands ✖
->- Map editor ✖
->- Player build ✖
->- Registration and login ✖
->- Collision ✔
->- Server configurations ✔
+- Knife hit enemy on use
+- Sending firing as some 'tool use' event, not as 'shot' and creating bullets. With this I will be able to play music as type of gun
+- Registration and login with MySQL database using Socket.io
+- Server side map editor and management
+- More chat commands
+- Effect when bullet hits wall, player
+- Animated player move
 
 ## Bugs to fix
->- When a player moves on according to blocks placed next to each other, he stops
+- When a player moves on according to blocks placed next to each other, he stops.
+- Rotation easing of enemies tools goes along the full reverse angle, when angle value dropped to start, just looks weird.

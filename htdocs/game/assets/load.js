@@ -13,9 +13,10 @@ function preload() {
   img_rifle = loadImage('assets/images/rifle.png');
   img_shotgun = loadImage('assets/images/shotgun.png');
 
-  img_flag_stick = loadImage('assets/images/flag/stick.png');
-  img_flag_banner = loadImage('assets/images/flag/banner.png');
-  img_flag_dropped= loadImage('assets/images/flag/dropped.png');
+  img_flag_stick   = loadImage('assets/images/flag/stick.png');
+  img_flag_banner  = loadImage('assets/images/flag/banner.png');
+  img_flag_dropped = loadImage('assets/images/flag/dropped.png');
+  img_flag_icon    = loadImage('assets/images/flag/icon.png');
 
   /* Icons */
   ico_sounds_on = loadImage('assets/images/sounds_on.png');
@@ -30,6 +31,11 @@ function preload() {
 
   sound_yay = new Howl({src: ['assets/sounds/yay.mp3']});
   sound_bye = new Howl({src: ['assets/sounds/bye.mp3']});
+  sound_wow = new Howl({src: ['assets/sounds/wow.mp3']});
+  
+  sound_drop1 = new Howl({src: ['assets/sounds/drop1.mp3']});
+  sound_drop2 = new Howl({src: ['assets/sounds/drop2.mp3']});
+  sound_drop2.play();
   /* Music */
   //music_menu = new Howl({src: ['assets/sounds/Kevin MacLeod - Tempting Secrets.mp3'], loop: true});
   //music_menu.play();

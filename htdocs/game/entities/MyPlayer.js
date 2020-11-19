@@ -3,7 +3,7 @@ let player; // my player
 
 /* my single player entity */
 class MyPlayer extends GameObject{
-  constructor(id, name, x, y, colorID) {
+  constructor(id, name, x, y, color) {
     super(x,y,64,64);
 
     this.collision = new Collision(this);
@@ -13,8 +13,9 @@ class MyPlayer extends GameObject{
     this.name = name;
     this.hp = 0;
     this.kills = 0;
-    this.colorID = colorID;
-    this.col = getColor(colorID);
+    //this.colorID = colorID;
+    //this.col = getColor(colorID);
+    this.col = color;
 
     this.weapons = [new Knife(), new Rifle(), new Shotgun()];
     this.tools = [new BuildBlock(), new BuildFlag('blue'), new BuildFlag('green'), new BuildFlag('red'), new BuildFlag('yellow')];
@@ -23,9 +24,9 @@ class MyPlayer extends GameObject{
     this.selectedEquipment = 0;
     this.rotation = 0;
 
-    /* FLAGS GAME */
+    /* FLAGS MINIGAME */
     this.capturedFlag = null;
-    this.team = 'red';
+    this.team = color;
 
     /* EXTRA VALUES */
     this.maxSpeed = 15;

@@ -1,7 +1,7 @@
 
 /*** PLAYER CLASS ***/
 class Player {
-  constructor(id, name, x, y, colorID, col) {
+  constructor(id, name, x, y, col) {
     this.id = id;
     this.name = name;
       
@@ -14,10 +14,13 @@ class Player {
   
     this.hp = constants.PLAYER_HP;
 
-    this.colorID = colorID;
     this.col = col;
 
     this.kills = 0;
+    
+    /* MINIGAME */
+    this.team = col;
+    this.capturedFlag = null;
 
     /* Only server variables */
     this.hackingCounter = 0;

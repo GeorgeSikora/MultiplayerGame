@@ -34,29 +34,33 @@ class Bullet extends GameObject {
         for(var i = 0; i < players.length; i++){
             const p = players[i];
             if(p.id == this.shooterID) continue;
+            if(p.respawning) continue;
 
             if(Collision.lineRect(this.pos.x, this.pos.y, this.pos.x+move.x, this.pos.y+move.y, p.pos.x-p.w/2, p.pos.y-p.h/2, p.w, p.h)){
                if(p.pos.x <= -constants.SAFE_ZONE || p.pos.x >= constants.SAFE_ZONE || p.pos.y <= -constants.SAFE_ZONE || p.pos.y >= constants.SAFE_ZONE) {
-                    p.hp -= constants.PLAYER_DAMAGE;
 
-                    if(p.hp <= 0) {
+                    const killer = players[ObjManager.getPlayer(this.shooterID)];
+                    if(killer != null && (killer.team != p.team || constants.FRIENDLY_FIRE)){
 
-                        if(p.capturedFlag != null) {
-                            objects.push(new DroppedFlag(p.pos.x, p.pos.y, p.capturedFlag));
-                            ioClient.emit('player-set', p.id, 'capturedFlag', null);
-                            ioClient.emit('DroppedFlag-add', p.pos, p.capturedFlag);
-                            p.capturedFlag = null;
-                        }
+                        p.hp -= constants.PLAYER_DAMAGE;
 
-                        ioClient.to(p.id).emit('respawn');
+                        if(p.hp <= 0) {
 
-                        p.respawning = true;
-                        p.pos = {x:0, y:0};
-                        p.hp = constants.PLAYER_HP;
-                        
-                        const killer = players[ObjManager.getPlayer(this.shooterID)];
-       
-                        if(killer != null){
+                            if(p.capturedFlag != null) {
+                                objects.push(new DroppedFlag(p.pos.x, p.pos.y, p.capturedFlag));
+                                ioClient.emit('player-set', p.id, 'capturedFlag', null);
+                                ioClient.emit('DroppedFlag-add', p.pos, p.capturedFlag);
+                                p.capturedFlag = null;
+                            }
+
+                            const pos = p.team == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
+                            
+                            ioClient.to(p.id).emit('respawn', this.shooterID, pos);
+
+                            p.respawning = true;
+                            p.pos = {x: pos.x, y: pos.y};
+                            p.hp = constants.PLAYER_HP;
+
                             ioClient.emit('chat-message', new Message('&a'+killer.name+' zabil hráče '+p.name));
                             killer.kills++;
                         }

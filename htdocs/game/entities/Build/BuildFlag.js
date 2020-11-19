@@ -1,9 +1,18 @@
 
 class BuildFlag extends Build {
     constructor(team){
-        super('flag', ((team == 'blue') ? img_flag_blue : img_flag_red).get(0,0,96,128));
+        super('flag', null);
+        
         this.team = team;
         this.center = {x: 14, y: 122};
+
+        this.col = team;
+        
+        this.img = createGraphics(96,128);
+        this.img.image(img_flag_stick, 0, 0);
+        this.img.tint(this.col);
+        this.img.image(img_flag_banner.get(0,0,96,128), 0, 0,);
+        
     }
     use(obj) {
         if(this.lastGrid.x != this.grid.x || this.lastGrid.y != this.grid.y || this.lastButton != mouseButton){

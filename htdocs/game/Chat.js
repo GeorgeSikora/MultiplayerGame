@@ -52,7 +52,7 @@ class Chat {
             }
             
             if(line.img != null) {
-                tint(255, line.opacity);
+                if(!this.open) tint(255, line.opacity);
                 imageMode(CORNER);
                 image(line.img,0,-this.LINE_HEIGHT);
             } else {

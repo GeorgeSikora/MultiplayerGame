@@ -5,7 +5,7 @@ class Message {
         this.opacity = 255;
     }
     name(){
-        this.str += '&' + getColorToken(player.colorID) + player.name + ' &r';
+        this.str += '&' + getColorToken(player.col) + player.name + ' &r';
         return this;
     }
     time(){

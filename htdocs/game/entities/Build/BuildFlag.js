@@ -2,11 +2,13 @@
 class BuildFlag extends Build {
     constructor(team){
         super('flag', null);
-        
+
         this.team = team;
+        if(team == null) this.team = 'white';
+        
         this.center = {x: 14, y: 122};
 
-        this.col = team;
+        this.col = this.team;
         
         this.img = createGraphics(96,128);
         this.img.image(img_flag_stick, 0, 0);

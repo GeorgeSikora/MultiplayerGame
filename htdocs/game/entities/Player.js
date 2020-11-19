@@ -4,7 +4,7 @@ let players = []; // other players
 /* other players */
 class Player extends GameObject{
   constructor(id, name, x, y, col) {
-    super(x, y, 64, 64)
+    super(x, y, 64, 64);
 
     this.id = id;
     this.name = name;
@@ -25,13 +25,18 @@ class Player extends GameObject{
   }
   
   refresh() { 
-    this.pos.x += (this.target.x - this.pos.x) *0.25;
-    this.pos.y += (this.target.y - this.pos.y) *0.25;
+    this.pos.x += (this.target.x - this.pos.x) *0.25; // 0.25
+    this.pos.y += (this.target.y - this.pos.y) *0.25; // 0.25
   }
   
   draw() {
     tint(this.col);
     image(img_player, this.pos.x-this.w/2, this.pos.y-this.h/2, this.w, this.h);
+
+    // TEST
+    //fill(0,255,0,127);
+    //rect(this.target.x-this.w/2, this.target.y-this.h/2, this.w, this.h);
+    
     this.rotation += (this.targetRotation - this.rotation) * 0.2;
 
     if(this.selectedEquipment != 0){

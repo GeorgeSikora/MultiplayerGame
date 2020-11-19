@@ -51,3 +51,11 @@ function removeObject(object){
     objects.splice(id, 1);
     if(obj.remove != null) obj.remove();
 }
+
+function removeObjectIndex(id){
+    if(id == -1) return;
+    const obj = objects[id];
+
+    objects.splice(id, 1);
+    if(obj.remove != null) obj.remove();
+}

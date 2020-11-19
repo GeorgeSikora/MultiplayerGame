@@ -29,6 +29,9 @@
 <script src="entities/DroppedFlag.js"></script>
 <script src="entities/TextSign.js"></script>
 <script src="entities/Grass.js"></script>
+<!-- OTHER -->
+<script src="entities/ScreenFlash.js"></script>
+<script src="entities/Minimap.js"></script>
 <!-- equipments -->
 <script src="entities/Equipment.js"></script>
 <script src="entities/equipments/Build.js"></script>

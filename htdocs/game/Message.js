@@ -42,7 +42,6 @@ class Message {
         img.stroke(0);
         img.strokeWeight(3);
         img.translate(0, (chat.LINE_HEIGHT - chat.TEXT_SIZE)/2);
-        console.log((chat.LINE_HEIGHT - chat.TEXT_SIZE)/2);
 
             var token = {color: WHITE};
             for (var k = 0; k < this.str.length; k++) {

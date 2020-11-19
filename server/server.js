@@ -24,10 +24,12 @@ GameObject  = require('./GameObject');
 Player      = require('./utils/player.js');
 Block       = require('./utils/Block.js');
 Bullet      = require('./utils/Bullet.js');
+Flag        = require('./utils/Flag.js');
+DroppedFlag        = require('./utils/DroppedFlag.js');
 Message     = require('./Message.js');
 ObjManager  = require('./manager.js');
 
-/********* GLOBAL ARRAYS *********/
+/********* ARRAYS *********/
 players = [];
 objects = [];
 
@@ -48,7 +50,7 @@ function refresh(){
     deltaTime = time - lastTime;
     lastTime = time;
 
-    logInfo();
+    //logInfo();
 
     for(var i = 0; i < objects.length; i++){
         objects[i].update();

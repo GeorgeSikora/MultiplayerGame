@@ -10,7 +10,7 @@ const colors = [
 
 var outlineDefault = 'none';
 var outlineSelected = '5px auto -webkit-focus-ring-color';
-
+/*
 let selectedID = 0;
 selectColor(selectedID);
 
@@ -21,4 +21,17 @@ function selectColor(id) {
     selectedID = id;
     //console.log(colors[selectedID].name);
     document.getElementById('selected-color').value = selectedID;
+} 
+*/
+
+let selectedID = 0;
+selectColor(selectedID);
+
+function selectColor(id) {
+    document.getElementById('color' + selectedID).style.outline = outlineDefault;
+    document.getElementById('color' + id).style.outline = outlineSelected;
+
+    selectedID = id;
+    //console.log(colors[selectedID].name);
+    document.getElementById('selected-color').value = document.getElementById('color' + selectedID).className;
 } 

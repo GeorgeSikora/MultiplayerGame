@@ -17,11 +17,15 @@ class MyPlayer extends GameObject{
     this.col = getColor(colorID);
 
     this.weapons = [new Knife(), new Rifle(), new Shotgun()];
-    this.tools = [new BuildBlock(), new BuildFlag('blue'), new BuildFlag('red')];
+    this.tools = [new BuildBlock(), new BuildFlag('blue'), new BuildFlag('green'), new BuildFlag('red'), new BuildFlag('yellow')];
 
     this.equipment = this.weapons;
     this.selectedEquipment = 0;
     this.rotation = 0;
+
+    /* FLAGS GAME */
+    this.capturedFlag = null;
+    this.team = 'red';
 
     /* EXTRA VALUES */
     this.maxSpeed = 15;
@@ -63,6 +67,14 @@ class MyPlayer extends GameObject{
     tint(this.col);
     image(img_player,0,0, this.w, this.h);
     pop();
+    /* headband */
+    if(this.capturedFlag != null){
+      push();
+      translate(this.pos.x, this.pos.y);
+      tint(this.capturedFlag);
+      image(img_headband, -img_headband.width/2, -img_headband.height/2);
+      pop();
+    }
     /* gun */
     this.equipment[this.selectedEquipment].draw(this);
     /* name & hp */ 

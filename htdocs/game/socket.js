@@ -80,6 +80,42 @@ class Multiplayer {
         }
       }
     });
+
+    socket.on('flag-set', (team, captured) => {
+      for(var i = 0; i < objects.length; i++){
+        if(objects[i].constructor.name != 'Flag') continue;
+        if(objects[i].team === team) {
+            objects[i].captured = captured;
+        }
+      }
+    });
+    
+    socket.on('player-set', (id, name, value) => {
+
+      if(id == player.id){
+        player[name] = value;
+        return;
+      }
+
+      var index = objectIndexOf(players, id, 'id'); // get index by id
+      if(index == -1) return;
+      players[index][name] = value;
+    });
+
+    socket.on('DroppedFlag-add', (pos, team) => {
+      objects.push(new DroppedFlag(pos.x, pos.y, team));
+    });
+
+    socket.on('DroppedFlag-rem', team => {
+      for(var i = 0; i < objects.length; i++){
+        if(objects[i].constructor.name != 'DroppedFlag') continue;
+        if(objects[i].team == team) {
+            removeObjectIndex(i);
+            return;
+        }
+      }
+    });
+
     //socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp, kills
   }
 
@@ -93,7 +129,6 @@ class Multiplayer {
       password:  'heslo',
       x:         player.pos.x,
       y:         player.pos.y,
-      colorID:   player.colorID,
       col:       player.col
     });
   }
@@ -150,7 +185,15 @@ function initGame(data) {
   const objectsLoad = data.objects;
   for (var i = 0; i < objectsLoad.length; i++) {
     const obj = objectsLoad[i];
-    if(obj.name == 'Block') objects.push(new Block(obj.pos.x, obj.pos.y));
+
+    switch(obj.name){
+      case 'Block':
+        objects.push(new Block(obj.pos.x, obj.pos.y));
+        break;
+      case 'Flag':
+        objects.push(new Flag(obj.pos.x, obj.pos.y, obj.team));
+        break;
+    }
   }
   gameLoaded = true;
 
@@ -184,7 +227,6 @@ function refPlayer(p) {
   players[index].target = {x: p.x, y: p.y};
   players[index].hp = p.hp;
   players[index].targetRotation = p.rotation;
-  console.log(p.selected);
   players[index].selectedEquipment = p.selected;
 }
 

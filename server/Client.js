@@ -21,8 +21,11 @@ ioClient.on('connection', socket => {
 
     socket.on('initReq', data => { // init request
         console.log(socket.id, data);
+
+        const pos = data.col == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
+
         socket.emit('init', {constants: constants, players: players, objects: objects});
-        players.push(new Player(socket.id, data.name, data.x, data.y, data.col));
+        players.push(new Player(socket.id, data.name, pos.x, pos.y, data.col));
         socket.broadcast.emit('newPlayer', players[players.length-1]);
     });
 
@@ -74,7 +77,7 @@ ioClient.on('connection', socket => {
         console.log('removing index: ' + removeIndex + ' now size is: ' + players.length);
     });
 
-    socket.on('block-add', pos => {sss
+    socket.on('block-add', pos => {
         
         for(var i = 0; i < objects.length; i++) {
           var obj = objects[i];

@@ -23,8 +23,8 @@ class Shotgun extends Equipment {
             //sound_shotgun.pos(map(mouseX,0,width,-1,1),map(mouseY,0,height,-1,1), -0.5, id);
             //sound_shotgun.stereo(0, id);
 
-            player.speed.x += cos(obj.rotation + PI) * 15.0;
-            player.speed.y += sin(obj.rotation + PI) * 15.0;
+            player.speed.x = cos(obj.rotation + PI) * 15.0;
+            player.speed.y = sin(obj.rotation + PI) * 15.0;
 
             for(var i = 0; i < this.SHOTS; i++) {
                 socket.emit('shot', {

@@ -19,12 +19,18 @@ function setup() {
   multiplayer = new Multiplayer(SERVER_URL);
   /* set default volume at 30% */
   Howler.volume(0.3);
+
   
-  objects.push(new Flag(-400, 0, 'red'));
-  objects.push(new Flag( 400, 0, 'blue'));
-  for(var x = 0; x < 10000; x++){
-    objects.push(new Grass(16 * round(random(-600,600)), 16 * round(random(-600,600))));
-  }
+  objects.push(new Flag(-300, 0, 'red'));
+  objects.push(new Flag( 300, 0, 'blue'));
+  
+  /*
+  objects.push(new Flag(-200, -200, 'red'));
+  objects.push(new Flag( 200, -200, 'green'));
+  objects.push(new Flag(-200, 200, 'blue').cap(true));
+  objects.push(new Flag( 200, 200, 'yellow'));
+  objects.push(new DroppedFlag( 100, 100, 'blue'));
+  */
 }
 
 let menuOpened = false;

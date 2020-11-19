@@ -53,3 +53,4 @@ I just like this tree, called Wisteria and also it has very nice name. So far, i
 ## Bugs to fix
 - When a player moves on according to blocks placed next to each other, he stops.
 - Rotation easing of enemies tools goes along the full reverse angle, when angle value dropped to start, just looks weird.
+- players emit with pos etc. have very big delay, needs to sending only variables that have changed.

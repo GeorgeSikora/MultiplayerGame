@@ -5,7 +5,8 @@ class Camera {
     constructor(target){
 
         this.target = target;
-        this.scale = 1.0;
+        this.targetScale = 1.0;
+        this.scale = 0.5;
         this.pos = {x: target.pos.x, y: target.pos.y};
         this.easing = 0.1;
         
@@ -19,6 +20,8 @@ class Camera {
 
         this.pos.x += (targetPos.x - this.pos.x) * this.easing;
         this.pos.y += (targetPos.y - this.pos.y) * this.easing;
+
+        this.scale += (this.targetScale - this.scale) * this.easing;
 
         const left   = -width  / (this.scale*2);
         const right  =  width  / (this.scale*2);

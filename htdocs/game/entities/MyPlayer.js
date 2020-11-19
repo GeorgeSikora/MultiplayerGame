@@ -32,6 +32,8 @@ class MyPlayer extends GameObject{
     this.maxSpeed = 15;
     this.speed = {x:0, y:0};
     this.targetSpeed = {x:0, y:0};
+
+    this.enable = true;
   
     this.left = 0;
     this.right = 0;
@@ -40,6 +42,8 @@ class MyPlayer extends GameObject{
   }
   
   refresh() { 
+    if(!this.enable) return;
+
     /* control */
     this.targetSpeed.x = (this.right - this.left) * this.maxSpeed;
     this.targetSpeed.y = (this.down - this.up)    * this.maxSpeed;
@@ -90,7 +94,8 @@ class MyPlayer extends GameObject{
   }
 
   mousePressed(){
-  this.equipmentUsage();
+    if(!this.enable) return;
+    this.equipmentUsage();
   }
   
   keyPressed(){

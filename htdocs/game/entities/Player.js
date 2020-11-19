@@ -11,15 +11,14 @@ class Player extends GameObject{
     this.hp = 0;
     this.col = col;
 
-    this.guns = [new Knife(), new Rifle(), new Shotgun()];
-
-    this.selectedGun = 0;
-
-    
     this.selectedEquipment = 'Knife';
 
     this.rotation = 0;
     this.targetRotation = 0;
+
+    /* FLAGS MINIGAME */
+    this.capturedFlag = null;
+    this.team = col;
 
     /* EXTRA VALUES */
     this.target = {x:x, y:y};
@@ -36,8 +35,17 @@ class Player extends GameObject{
     this.rotation += (this.targetRotation - this.rotation) * 0.2;
 
     if(this.selectedEquipment != 0){
-    var myObject = eval("new " + this.selectedEquipment + "()");
-    myObject.draw(this);
+      var myObject = eval("new " + this.selectedEquipment + "()");
+      myObject.draw(this);
+    }
+
+    /* headband */
+    if(this.capturedFlag != null){
+      push();
+      translate(this.pos.x, this.pos.y);
+      tint(this.capturedFlag);
+      image(img_headband, -img_headband.width/2, -img_headband.height/2);
+      pop();
     }
 
     /*

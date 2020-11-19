@@ -1,6 +1,9 @@
 
 /*** BULLET CLASS ***/
 
+const ioClient = require("../Client");
+const DroppedFlag = require("./DroppedFlag");
+
 class Bullet extends GameObject {
     constructor(shooterID, x, y, dir){
         super(x,y,6,6);
@@ -34,23 +37,34 @@ class Bullet extends GameObject {
 
             if(Collision.lineRect(this.pos.x, this.pos.y, this.pos.x+move.x, this.pos.y+move.y, p.pos.x-p.w/2, p.pos.y-p.h/2, p.w, p.h)){
                if(p.pos.x <= -constants.SAFE_ZONE || p.pos.x >= constants.SAFE_ZONE || p.pos.y <= -constants.SAFE_ZONE || p.pos.y >= constants.SAFE_ZONE) {
-                p.hp -= constants.PLAYER_DAMAGE;
+                    p.hp -= constants.PLAYER_DAMAGE;
 
-                if(p.hp <= 0) {
-                    ioClient.to(p.id).emit('respawn');
-                    p.respawning = true;
-                    p.pos = {x:0, y:0};
-                    p.hp = constants.PLAYER_HP;
-                    
-                    const killer = players[ObjManager.getPlayer(this.shooterID)];
-                    if(killer != null){
-                        ioClient.emit('chat-message', new Message('&a'+killer.name+' zabil hráče '+p.name));
-                        killer.kills++;
+                    if(p.hp <= 0) {
+
+                        if(p.capturedFlag != null) {
+                            objects.push(new DroppedFlag(p.pos.x, p.pos.y, p.capturedFlag));
+                            ioClient.emit('player-set', p.id, 'capturedFlag', null);
+                            ioClient.emit('DroppedFlag-add', p.pos, p.capturedFlag);
+                            p.capturedFlag = null;
+                        }
+
+                        ioClient.to(p.id).emit('respawn');
+
+                        p.respawning = true;
+                        p.pos = {x:0, y:0};
+                        p.hp = constants.PLAYER_HP;
+                        
+                        const killer = players[ObjManager.getPlayer(this.shooterID)];
+       
+                        if(killer != null){
+                            ioClient.emit('chat-message', new Message('&a'+killer.name+' zabil hráče '+p.name));
+                            killer.kills++;
+                        }
                     }
                 }
-               }
-               ObjManager.remove(this);
-               return;
+
+                ObjManager.remove(this);
+                return;
             }
         }
         this.pos.x += move.x;

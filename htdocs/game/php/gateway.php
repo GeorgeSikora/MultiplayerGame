@@ -6,7 +6,7 @@
     <script>
         const post = {
             name:    '<?php echo $_POST['name'];?>',
-            colorID: '<?php echo $_POST['color'];?>'
+            color:   '<?php echo $_POST['color'];?>'
         };
     </script>
 

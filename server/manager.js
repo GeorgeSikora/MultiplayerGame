@@ -5,6 +5,10 @@ class ObjectManager {
         if(index == -1) return;
         objects.splice(index, 1);
     }
+    removeIndex(id){
+        if(id == -1) return;
+        objects.splice(id, 1);
+    }
     getPlayer(playerID) {
         for(var i = players.length-1; i >= 0; i--) {
            if (players[i].id == playerID) return i;

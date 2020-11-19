@@ -71,7 +71,7 @@ class DroppedFlag extends GameObject {
                 // key E pressed
                 
                 socket.emit('DroppedFlag-return', this.team);
-                sound_yay.play();
+                sound_wow.play();
                 
                 /*
                 for(var i = 0; i < objects.length; i++){

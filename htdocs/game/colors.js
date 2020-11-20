@@ -6,7 +6,7 @@ const ORANGE  = '#FF8000';
 const YELLOW  = '#FFFF00';
 const GREEN   = '#00FF00';
 const AQUA    = '#00D4D4';
-const BLUE    = '#0000FF';
+const BLUE    = '#5078FF';
 const PURPLE  = '#50007F';
 
 const GRAY   = '#666666';

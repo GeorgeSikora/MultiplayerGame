@@ -38,7 +38,10 @@ function drawSavezone(){
 }
 
 /* left top corner text */
+let infoEnable = false;
 function drawInfo(){
+    if(!infoEnable) return;
+
     push();
     fill(255);
     textSize(18);

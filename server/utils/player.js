@@ -36,6 +36,15 @@ class Player {
       rotation: this.rotation, 
       selected: this.selectedGun
     });
+    ioSpectator.emit('refPlayer', {
+      id: this.id ,
+      x: this.pos.x, 
+      y: this.pos.y, 
+      hp: this.hp, 
+      kills: this.kills, 
+      rotation: this.rotation, 
+      selected: this.selectedGun
+    });
   }
 }
 

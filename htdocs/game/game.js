@@ -1,6 +1,6 @@
 
 /* HERE PUT YOUR SERVER IP OR URL WITH PORT */
-const SERVER_URL = '185.221.124.205:3031/client'; // 185.221.124.205
+const SERVER_URL = 'localhost:'+PORT+'/client'; // 185.221.124.205
 
 /*** MAIN SETUP ***/
 function setup() {

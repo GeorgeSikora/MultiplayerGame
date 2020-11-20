@@ -5,35 +5,49 @@ class Minimap {
     constructor(){
         this.scale = 13;
         this.img = null;
+
+        this.enable = true;
+        this.opacity = 0;
+        this.targetOpacity = 0;
     }
     draw(){
+        this.targetOpacity = this.enable ? 255 : 0;
+        this.opacity += (this.targetOpacity - this.opacity) * 0.1;
+
         if(this.img != null) {
             push();
-            tint(255);
+            tint(255, this.opacity);
             imageMode(CENTER);
             translate(width/2, this.img.height/2 +5);
 
             image(this.img, 0, 0);
 
-            stroke(0);
-            strokeWeight(1);
+            //stroke(0);
+            //strokeWeight(1);
+            noStroke();
             rectMode(CENTER);
 
             for(var i = 0; i < players.length; i++){
                 const p = players[i];
-                fill(p.team);
+                var c = color(p.team)
+                c.setAlpha(this.opacity);
+                fill(c);
                 rect(p.pos.x/this.scale, p.pos.y/this.scale, 6, 6);
             }
             
-            fill(255, 255, 0);
+            fill(255, 255, 0, this.opacity);
             rect(player.pos.x/this.scale, player.pos.y/this.scale, 6, 6);
 
             const posRed = this.getFlagPos('red');
-            tint('red');
+            var c = color('red');
+            c.setAlpha(this.opacity);
+            tint(c);
             if(posRed != null) image(img_flag_icon, posRed.x/this.scale, posRed.y/this.scale);
 
             const posBlue = this.getFlagPos('blue');
-            tint('blue');
+            var c = color('blue');
+            c.setAlpha(this.opacity);
+            tint(c);
             if(posBlue != null) image(img_flag_icon, posBlue.x/this.scale, posBlue.y/this.scale);
 
             pop();

@@ -7,7 +7,8 @@
 
 var gameLoaded = false;
 
-let multiplayer, socket;
+let socket;
+let multiplayer;
 let fps = 0;
 
 // player pos sender
@@ -128,7 +129,21 @@ class Multiplayer {
         }
       }
     });
+    socket.on('start', () => {
+      gameStart();
+    });
+    socket.on('end', () => {
+      gameEnd();
+    });
+    socket.on('restart', () => {
+      gameRestart();
+    });
 
+    socket.on('player-teams', (red, blue) => {
+      console.log(red, blue);
+      teams['red'] = red;
+      teams['blue'] = blue;
+    });
     //socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp, kills
   }
 
@@ -136,12 +151,6 @@ class Multiplayer {
     gameLoaded = false;
     console.log('%c Connected, your id: %c'+socket.id,'color: lime','color: aqua');
     player.id = '/client#' + socket.id;
-    // If connected, send initRequest with initial data
-    socket.emit('initReq', {
-      name:      player.name, 
-      password:  'heslo',
-      col:       player.col
-    });
   }
   // refresh every frame
   refresh() {
@@ -177,6 +186,22 @@ setInterval(function(){
 // Init game and entities
 function initGame(data) {
   var startTime = millis();
+
+  player.team = selectedTeam;
+  const pos = player.team == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
+
+  player.pos.x = pos.x;
+  player.pos.y = pos.y;
+
+  cam.pos.x = pos.x;
+  cam.pos.y = pos.y;
+
+  player.enable = true;
+  player.show = true;
+
+  cam.targetScale = 1.0;
+  splash.opacity = 255;
+  sound_drop1.play();
 
   /* INIT GAME SETTINGS */
   serverConst = data.constants;

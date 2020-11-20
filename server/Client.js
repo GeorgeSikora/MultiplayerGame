@@ -1,6 +1,8 @@
 
 const ioClient = io.of('/client');
 
+var startTimeoutHandle;
+
 // middleware
 ioClient.use((socket, next) => {
     const query = socket.handshake.query;
@@ -20,6 +22,12 @@ ioClient.on('connection', socket => {
     console.log('New client connected');
 
     socket.on('initReq', data => { // init request
+
+        if(gameStarted) {
+            socket.emit('chat-message', new Message('&2Game already started!'));
+            return;
+        }
+
         console.log(socket.id, data);
 
         const pos = data.col == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
@@ -27,6 +35,18 @@ ioClient.on('connection', socket => {
         socket.emit('init', {constants: constants, players: players, objects: objects});
         players.push(new Player(socket.id, data.name, pos.x, pos.y, data.col));
         socket.broadcast.emit('newPlayer', players[players.length-1]);
+
+        if(startTimeoutHandle != null) clearTimeout(startTimeoutHandle);
+
+        if(players.length >= 2) {
+
+            ioClient.emit('chat-message', new Message('&3Game will start after 10 seconds!'));
+
+            startTimeoutHandle = setTimeout(() => {
+                ioClient.emit('chat-message', new Message('&3Game started!'));
+                gameStarted = true;
+            }, 10000);
+        }
     });
 
     socket.on('pos', pos => {
@@ -73,8 +93,11 @@ ioClient.on('connection', socket => {
         var removeIndex = ObjManager.getPlayer(socket.id);
         if(removeIndex == -1) return;
         ioClient.emit('remPlayer', socket.id);
+        //ioSpectator.emit('remPlayer', socket.id);
         players.splice(removeIndex, 1);
         console.log('removing index: ' + removeIndex + ' now size is: ' + players.length);
+        
+        socket.emit('player-teams', red, blue);
     });
 
     socket.on('block-add', pos => {
@@ -107,6 +130,8 @@ ioClient.on('connection', socket => {
     socket.on('chat-message', msg => {
         var id = ObjManager.getPlayer(socket.id);
         if(id == -1) return;
+
+        //io.of('/spec').emit('chat-message', new Message(msg, players[id]));
         socket.broadcast.emit('chat-message', new Message(msg, players[id]));
     });
     
@@ -120,13 +145,12 @@ ioClient.on('connection', socket => {
 
         players[id].capturedFlag = team;
         ioClient.emit('player-set', socket.id, 'capturedFlag', team);
-
+  
         // TODO: Udělat aby se i ze strany serveru vlajka změnila
         ioClient.emit('flag-set', team, true);
-
+    
         console.log(players[id].team + ' team captured ' + team + ' team flag');
-        ioClient.emit('chat-message', new Message(players[id].team + ' team captured ' + team + '\'s flag'));
-
+        ioClient.emit('chat-message', new Message('&3Player &'+Message.getColorToken(players[id].team) + players[id].name + '&3 captured &' + Message.getColorToken(team) + team + '\'s&3 flag'));
     });
 
     socket.on('flag-accept', team => {
@@ -139,13 +163,31 @@ ioClient.on('connection', socket => {
         
         players[id].capturedFlag = null;
         ioClient.emit('player-set', socket.id, 'capturedFlag', null);
+        //ioSpectator.emit('player-set', socket.id, 'capturedFlag', null);
 
         // TODO: Udělat aby se i ze strany serveru vlajka změnila
         ioClient.emit('flag-set', team, false);
 
         console.log(players[id].team + ' team accepted ' + team + ' team flag');
-        ioClient.emit('chat-message', new Message(players[id].team + ' team accepted ' + team + '\'s flag'));
+        ioClient.emit('chat-message', new Message('&3Player &'+Message.getColorToken(players[id].team) + players[id].name + '&3 accepted &' + Message.getColorToken(team) + team + '\'s&3 flag'));
+ 
+        /* !!! CALL THE GAME END !!! */
+        ioClient.emit('end');
+        ioClient.emit('chat-message', new Message('&3Game ends!'));
+        ioClient.emit('chat-message', new Message('&6Game will be restarted after 5 seconds.'));
 
+        setTimeout(() => {
+            ioClient.emit('chat-message', new Message('&5Game restarted'));
+            ioClient.emit('restart');
+
+            players = [];
+            objects = [];
+
+            loadMap();
+
+            gameStarted = false;
+        
+        }, 5000);
     });
 
     socket.on('DroppedFlag-pick', team => {
@@ -184,11 +226,36 @@ ioClient.on('connection', socket => {
             if(objects[i].constructor.name != 'DroppedFlag') continue;
             if(objects[i].team == team) {
                 ioClient.emit('DroppedFlag-rem', team);
+                //ioSpectator.emit('DroppedFlag-rem', team);
                 ObjManager.removeIndex(i);
                 return;
             }
         }
     });
+    /*
+    socket.on('get-player-teams', () => {
+        var red = 0, blue = 0;
+        for(var i = 0; i < players.length; i++){
+            if(players[i].team == 'red')    red++;
+            if(players[i].team == 'blue')   blue++;
+        }
+        socket.emit('player-teams', red, blue);
+    });
+    */
 });
+
+function emitAll(...args){
+    io.of('/spec').emit(...args);
+    io.of('/client').emit(...args);
+}
+
+function sendTeams(){
+    var red = 0, blue = 0;
+        for(var i = 0; i < players.length; i++){
+            if(players[i].team == 'red')    red++;
+            if(players[i].team == 'blue')   blue++;
+        }
+        socket.emit('player-teams', red, blue);
+}
 
 module.exports = ioClient;

@@ -54,6 +54,7 @@ class Flag extends GameObject {
 
         push();
         translate(this.pos.x - this.center.x, this.pos.y - this.center.y);
+        tint(255);
         image(img_flag_stick, 0, 0);
         if(!this.captured){
             tint(this.team);

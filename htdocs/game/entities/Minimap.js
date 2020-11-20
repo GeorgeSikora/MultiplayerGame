@@ -103,7 +103,6 @@ class Minimap {
                     }
                 } else {
                     if(o.team == team) {
-                        console.log(o.pos);
                         return o.pos;
                     }
                 }

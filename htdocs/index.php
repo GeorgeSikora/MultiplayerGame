@@ -33,9 +33,10 @@
     <br>
 
     <span>and type your name:</span>
-    <form class="input-play" name="play-form" action="/game/" onsubmit="return validateForm()" method="post">
+    <form class="input-play" name="play-form" action="/game/" onsubmit="return validateForm()" method="get">
 		<input type="text" id="name" name="name" placeholder="jméno nebo přezdívka" autocomplete="off"></input>
         <input type="hidden" id="selected-color" name="color"></input>
+        <input type="hidden" name="port" value="1771"></input>
         <br><br>
 		<button class="play" type="submit">Play</button>
     </form>

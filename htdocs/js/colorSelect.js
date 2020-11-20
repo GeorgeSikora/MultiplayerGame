@@ -10,6 +10,7 @@ const colors = [
 
 var outlineDefault = 'none';
 var outlineSelected = '5px auto -webkit-focus-ring-color';
+
 /*
 let selectedID = 0;
 selectColor(selectedID);

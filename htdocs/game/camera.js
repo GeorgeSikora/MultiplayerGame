@@ -5,9 +5,13 @@ class Camera {
     constructor(target){
 
         this.target = target;
-        this.targetScale = 1.0;
+        
+        this.pos        = {x: target.pos.x, y: target.pos.y};
+        this.targetPos  = {x: target.pos.x, y: target.pos.y};
+
+        this.targetScale = 1.5;
         this.scale = 0.5;
-        this.pos = {x: target.pos.x, y: target.pos.y};
+        
         this.easing = 0.1;
         
         this.mouse = {x: 0, y: 0};
@@ -15,11 +19,12 @@ class Camera {
     }
     
     ortho(){
-        const targetPos = { x: this.target.pos.x, 
-                            y: this.target.pos.y };
+        if(this.target != null) 
+        this.targetPos = {  x: this.target.pos.x, 
+                            y: this.target.pos.y};
 
-        this.pos.x += (targetPos.x - this.pos.x) * this.easing;
-        this.pos.y += (targetPos.y - this.pos.y) * this.easing;
+        this.pos.x += (this.targetPos.x - this.pos.x) * this.easing;
+        this.pos.y += (this.targetPos.y - this.pos.y) * this.easing;
 
         this.scale += (this.targetScale - this.scale) * this.easing;
 

@@ -1,0 +1,55 @@
+
+body { 
+    padding: 0; 
+    margin: 0; 
+    background-color: #121212;
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  text-align: center;
+}
+
+table {
+    margin-top: 100px;
+    color: #ffffcc;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+}
+
+input {
+    background-color: #440044;
+    color: #eeffff;
+    border: none;
+    outline: none;
+
+    width: 100%;
+    height: 32px
+}
+  
+td, th {
+    border: 1px solid #888899;
+    text-align: left;
+}
+
+th.name {
+    padding: 0 8px 0 8px;
+}
+th.value {
+    padding: 0px;
+}
+
+.button {
+    background-color: #770077;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }

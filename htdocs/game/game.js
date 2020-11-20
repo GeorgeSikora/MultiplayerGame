@@ -1,6 +1,6 @@
 
 /* HERE PUT YOUR SERVER IP OR URL WITH PORT */
-const SERVER_URL = 'localhost:'+PORT+'/client'; // 185.221.124.205
+let SERVER_URL = 'localhost:3031/client'; // 185.221.124.205
 
 /*** MAIN SETUP ***/
 function setup() {
@@ -12,18 +12,22 @@ function setup() {
   textFont(font_default);
   noStroke();
   /* create necessary game objects */
-  const pos = post.color == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
-  player = new MyPlayer(0, post.name, pos.x, pos.y, post.color);
+
+  player = new MyPlayer(0, post.name, 0, 0, 'white');
+  player.enable = false;
+  player.show = false;
+
   cam = new Camera(player);
   chat = new Chat();
   /* connect to the multiplayer server */
   multiplayer = new Multiplayer(SERVER_URL);
+  socket.emit('get-player-teams');
   /* set default volume at 30% */
   Howler.volume(0.3);
 
-  objects.push(new Flag(-300, 0, 'red'));
-  objects.push(new Flag( 300, 0, 'blue'));
-  
+  objects.push(new FlagSelect(-200, 0, 'red'));
+  objects.push(new FlagSelect( 200, 0, 'blue'));
+
   /*
   objects.push(new Flag(-200, -200, 'red'));
   objects.push(new Flag( 200, -200, 'green'));
@@ -89,7 +93,12 @@ function draw() {
       objectsRender.push(obj);
     }
   }
+
   objectsRender.push(player);
+  for (var i = 0; i < players.length; i++) {
+    objectsRender.push(players[i]);
+    //players[i].draw();
+  }
 
   objectsRender.sort(function(a, b) {
       return a.layer - b.layer;
@@ -104,7 +113,7 @@ function draw() {
   /* refresh and draw other players on server */
   for (var i = 0; i < players.length; i++) {
     players[i].refresh();
-    players[i].draw();
+    //players[i].draw();
   }
 
   /* draw my player */
@@ -131,4 +140,43 @@ function draw() {
   splash.draw();
 
   if(frameCount%50 == 0) finalDrawTime = (millis() - drawTime).toFixed(2);
+}
+
+function gameStart(){
+  
+}
+
+function gameEnd(){
+  player.enable = false;
+
+  cam.target = null;
+  cam.easing = 0.02;
+  cam.targetPos = {x: 0, y: 0};
+  cam.targetScale = 0.35;
+
+  minimap.enable = false;
+}
+
+function gameRestart(){
+
+  socket.disconnect();
+
+  objects = [];
+  players = [];
+  
+  player = new MyPlayer(0, post.name, 0, 0, 'white');
+  player.enable = false;
+  player.show = false;
+
+  cam = new Camera(player);
+
+  /* connect to the multiplayer server */
+  multiplayer = new Multiplayer(SERVER_URL);
+  /* set default volume at 30% */
+  Howler.volume(0.3);
+
+  objects.push(new FlagSelect(-200, 0, 'red'));
+  objects.push(new FlagSelect( 200, 0, 'blue'));
+  
+  splash = new ScreenFlash();
 }

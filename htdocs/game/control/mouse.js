@@ -9,6 +9,7 @@ function mousePressed(){
   }
 
   player.mousePressed();
+  for(var i = 0; i < objects.length; i++) if(objects[i].mousePressed != null) objects[i].mousePressed();
 }
   
 let scoolTimer = 0;

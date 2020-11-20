@@ -5,11 +5,11 @@ class Message {
         this.opacity = 255;
     }
     name(){
-        this.str += '&' + getColorToken(player.col) + player.name + ' &r';
+        this.str += '&' + getColorToken(player.team) + player.name + ' &r';
         return this;
     }
     time(){
-        this.str +='&9[' + this.getTime() + '] &r';
+        this.str +='&9' + this.getTime() + ' &r';
         return this;
     }
     message(text){

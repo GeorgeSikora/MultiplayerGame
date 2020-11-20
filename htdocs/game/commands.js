@@ -1,7 +1,8 @@
 
 const helpList = [
     '/build - toggle build mode',
-    '/save - save map'
+    '/save - save map',
+    '/info - show more game info'
 ];
 
 function command(str) {
@@ -26,6 +27,8 @@ function command(str) {
 
             break;
         case 'build':
+            chat.add(new Message().message('&2You dont have permissions').build());
+            return;
 
             buildingEnable = !buildingEnable;
 
@@ -38,8 +41,6 @@ function command(str) {
                 chat.add(new Message().message('Weapon guns').build());
             }
 
-            
-
             break;
         case 'save':
             var output = [];
@@ -49,6 +50,18 @@ function command(str) {
                 output.push(obj.pos.x + ' ' + obj.pos.y);
             }
             saveStrings(output,'map.txt');
+            break;
+        case 'info':
+            infoEnable = !infoEnable;
+            break;
+        case 'map':
+            minimap.enable = !minimap.enable;
+            break;
+        case 'end':
+            gameEnd();
+            break;
+        case 'restart':
+            gameRestart();
             break;
         default:
             //eval(cmd);

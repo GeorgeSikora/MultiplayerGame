@@ -27,7 +27,7 @@ Player      = require('./utils/player.js');
 Block       = require('./utils/Block.js');
 Bullet      = require('./utils/Bullet.js');
 Flag        = require('./utils/Flag.js');
-DroppedFlag        = require('./utils/DroppedFlag.js');
+DroppedFlag = require('./utils/DroppedFlag.js');
 Message     = require('./Message.js');
 ObjManager  = require('./manager.js');
 
@@ -36,17 +36,22 @@ players = [];
 objects = [];
 
 /********* LOAD MAP *********/
-require('./map/load.js');
+loadMap = require('./map/load.js');
+loadMap();
 
 /********* NAMESPACES *********/
-ioClient = require('./Client.js');
-ioAdmin  = require('./Admin.js');
+ioClient    = require('./Client.js');
+ioSpectator = require('./Spectator.js');
+ioAdmin     = require('./Admin.js');
 
-/********* NAMESPACES *********/
+/********* GAME VARIABLES *********/
+gameStarted = false;
 
 deltaTime = 1;
 var lapseTime = 0;
 var lastTime = getMillis();
+
+/********* REFRESH *********/
 function refresh(){
     var time = getMillis();
     deltaTime = time - lastTime;

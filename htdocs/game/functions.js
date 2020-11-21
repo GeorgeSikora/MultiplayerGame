@@ -48,6 +48,7 @@ function drawInfo(){
     textAlign(LEFT, TOP);
     text(
       'connected: '         + socket.connected
+    + '\nstarted: '         + gameStarted
     + '\nping: '            + multiplayer.latency + 'ms'
     + '\nFPS: '             + fps
     + '\nloop time: '       + finalDrawTime + '/' + (1000/60).toFixed(2) + ' ms'

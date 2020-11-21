@@ -6,7 +6,7 @@ const CHAT_MESSAGE_DURATION = 9000; // ms
 class Chat {
     constructor() {
         /* settings */
-        this.LINES = 12; // maximum lines of chat
+        this.LINES = 15; // maximum lines of chat
 
         /* dimensions px */
         this.LINE_HEIGHT    = 20;

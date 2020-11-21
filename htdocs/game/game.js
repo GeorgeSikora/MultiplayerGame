@@ -1,6 +1,6 @@
 
 /* HERE PUT YOUR SERVER IP OR URL WITH PORT */
-let SERVER_URL = 'localhost:3031/client'; // 185.221.124.205
+let SERVER_URL = '185.221.124.205:3031/client'; 
 
 /*** MAIN SETUP ***/
 function setup() {
@@ -13,7 +13,7 @@ function setup() {
   noStroke();
   /* create necessary game objects */
 
-  player = new MyPlayer(0, post.name, 0, 0, 'white');
+  player = new MyPlayer(0, post.name, 0, 0, 'lobby');
   player.enable = false;
   player.show = false;
 
@@ -38,6 +38,8 @@ function setup() {
   splash = new ScreenFlash();
   minimap = new Minimap();
 }
+
+let inGame = false;
 
 let menuOpened = false;
 let muted = false;
@@ -139,11 +141,17 @@ function draw() {
 
   splash.draw();
 
+  if(inGame && !socket.connected) {
+    gameRestart();
+  }
+
   if(frameCount%50 == 0) finalDrawTime = (millis() - drawTime).toFixed(2);
 }
 
 function gameStart(){
-  
+  console.log('game started');
+  minimap.enable = true;
+  inGame = true;
 }
 
 function gameEnd(){
@@ -158,6 +166,8 @@ function gameEnd(){
 }
 
 function gameRestart(){
+
+  gameStarted = false;
 
   socket.disconnect();
 
@@ -179,4 +189,9 @@ function gameRestart(){
   objects.push(new FlagSelect( 200, 0, 'blue'));
   
   splash = new ScreenFlash();
+  
+  socket.emit('get-player-teams');
+
+  minimap.enable = false;
+  inGame = false;
 }

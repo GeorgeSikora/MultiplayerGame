@@ -28,7 +28,7 @@ class MyPlayer extends GameObject{
     this.team = team;
 
     /* EXTRA VALUES */
-    this.maxSpeed = 15;
+    this.maxSpeed = 20;
     this.speed = {x:0, y:0};
     this.targetSpeed = {x:0, y:0};
 

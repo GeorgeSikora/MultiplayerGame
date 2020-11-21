@@ -47,5 +47,6 @@ function getColorToken(id){
         case 'aqua':    return '6';
         case 'blue':    return '7';
         case 'purple':  return '8';
+        default: return '4';
     }
 }

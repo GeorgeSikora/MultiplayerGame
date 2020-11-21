@@ -1,5 +1,5 @@
 class Message {
-    constructor(message,player){
+    constructor(message, player){
         if(player == null) 
             this.str = '&9' + this.getTime() + ' &1 ' + message;
         else

@@ -65,7 +65,7 @@ ioClient.on('connection', socket => {
         console.log('removing index: ' + removeIndex + ' now size is: ' + players.length);
 
         const teams = countTeams();
-        if(teams.red == 0 || teams.blue == 0) {
+        if(gameStarted && (teams.red == 0 || teams.blue == 0)) {
             gameEnd();
         }
     });

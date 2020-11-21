@@ -27,13 +27,18 @@ ioClient.on('connection', socket => {
             socket.emit('chat-message', new Message('&2Game already started!'));
             return;
         }
+        const teams = countTeams();
 
-        console.log(socket.id, data);
+        if((data.team == 'red' && teams.red != 0 && teams.blue == 0)
+        || (data.team == 'blue' && teams.red == 0  && teams.blue != 0)){
+            socket.emit('chat-message', new Message('&2Tento tým by byl v přesile, vyber si nějaký jiný!'));
+            return;
+        }
 
-        const pos = data.col == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
+        const pos = data.team == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
 
         socket.emit('init', {constants: constants, players: players, objects: objects});
-        players.push(new Player(socket.id, data.name, pos.x, pos.y, data.col));
+        players.push(new Player(socket.id, data.name, pos.x, pos.y, data.team));
         socket.broadcast.emit('newPlayer', players[players.length-1]);
 
         if(startTimeoutHandle != null) clearTimeout(startTimeoutHandle);
@@ -46,6 +51,22 @@ ioClient.on('connection', socket => {
                 ioClient.emit('chat-message', new Message('&3Game started!'));
                 gameStarted = true;
             }, 10000);
+        }
+        
+        sendTeams();
+    });
+
+    socket.on('disconnect', (reason) => {
+        var removeIndex = ObjManager.getPlayer(socket.id);
+        if(removeIndex == -1) return;
+        ioClient.emit('remPlayer', socket.id);
+        //ioSpectator.emit('remPlayer', socket.id);
+        players.splice(removeIndex, 1);
+        console.log('removing index: ' + removeIndex + ' now size is: ' + players.length);
+
+        const teams = countTeams();
+        if(teams.red == 0 || teams.blue == 0) {
+            gameEnd();
         }
     });
 
@@ -84,20 +105,9 @@ ioClient.on('connection', socket => {
     });
 
     socket.on('shot', data => {
-        if(data.x < -constants.SAFE_ZONE || data.x > constants.SAFE_ZONE || data.y < -constants.SAFE_ZONE || data.y > constants.SAFE_ZONE) {
+        //if(data.x < -constants.SAFE_ZONE || data.x > constants.SAFE_ZONE || data.y < -constants.SAFE_ZONE || data.y > constants.SAFE_ZONE) {
             objects.push(new Bullet(socket.id, data.x, data.y, data.dir));
-        }
-    });
-
-    socket.on('disconnect', (reason) => {
-        var removeIndex = ObjManager.getPlayer(socket.id);
-        if(removeIndex == -1) return;
-        ioClient.emit('remPlayer', socket.id);
-        //ioSpectator.emit('remPlayer', socket.id);
-        players.splice(removeIndex, 1);
-        console.log('removing index: ' + removeIndex + ' now size is: ' + players.length);
-        
-        socket.emit('player-teams', red, blue);
+        //}
     });
 
     socket.on('block-add', pos => {
@@ -172,22 +182,7 @@ ioClient.on('connection', socket => {
         ioClient.emit('chat-message', new Message('&3Player &'+Message.getColorToken(players[id].team) + players[id].name + '&3 accepted &' + Message.getColorToken(team) + team + '\'s&3 flag'));
  
         /* !!! CALL THE GAME END !!! */
-        ioClient.emit('end');
-        ioClient.emit('chat-message', new Message('&3Game ends!'));
-        ioClient.emit('chat-message', new Message('&6Game will be restarted after 5 seconds.'));
-
-        setTimeout(() => {
-            ioClient.emit('chat-message', new Message('&5Game restarted'));
-            ioClient.emit('restart');
-
-            players = [];
-            objects = [];
-
-            loadMap();
-
-            gameStarted = false;
-        
-        }, 5000);
+        gameEnd();
     });
 
     socket.on('DroppedFlag-pick', team => {
@@ -232,6 +227,10 @@ ioClient.on('connection', socket => {
             }
         }
     });
+    
+    socket.on('get-player-teams', () => {
+        sendTeams();
+    });
     /*
     socket.on('get-player-teams', () => {
         var red = 0, blue = 0;
@@ -250,12 +249,35 @@ function emitAll(...args){
 }
 
 function sendTeams(){
-    var red = 0, blue = 0;
-        for(var i = 0; i < players.length; i++){
-            if(players[i].team == 'red')    red++;
-            if(players[i].team == 'blue')   blue++;
-        }
-        socket.emit('player-teams', red, blue);
+    const teams = countTeams();
+    ioClient.emit('player-teams', teams.red, teams.blue);
+}
+
+function countTeams(){
+    var teams = {red: 0, blue: 0};
+    for(var i = 0; i < players.length; i++) 
+        teams[players[i].team]++;
+    return teams;
+}
+
+function gameEnd(){
+    
+    ioClient.emit('end');
+    ioClient.emit('chat-message', new Message('&3Game ends!'));
+    ioClient.emit('chat-message', new Message('&6Game will be restarted after 5 seconds.'));
+
+    setTimeout(() => {
+        ioClient.emit('chat-message', new Message('&5Game restarted'));
+        ioClient.emit('restart');
+
+        players = [];
+        objects = [];
+
+        loadMap();
+
+        gameStarted = false;
+    
+    }, 5000);
 }
 
 module.exports = ioClient;

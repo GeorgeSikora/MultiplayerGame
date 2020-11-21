@@ -61,7 +61,7 @@ class FlagSelect extends GameObject {
             socket.emit('initReq', {
                 name:      player.name, 
                 password:  'heslo',
-                col:       this.team
+                team:       this.team
             });
 
             selectedTeam = this.team;

@@ -55,8 +55,11 @@ class FlagSelect extends GameObject {
 
     mousePressed(){
         if(dist(cam.mouse.x, cam.mouse.y, this.pos.x, this.pos.y) < 200){
-            console.log('Player selected ' + this.team + ' team.');
             
+            if(!socket.connected) return;
+
+            console.log('Player selected ' + this.team + ' team.');
+
             // If connected, send initRequest with initial data
             socket.emit('initReq', {
                 name:      player.name, 

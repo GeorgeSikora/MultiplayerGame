@@ -57,7 +57,8 @@ function drawInfo(){
     + "\nPlayers online: "  + (players.length+1) 
     + "\nObjects: "         + objects.length
     + '\nmute: '            + muted
-    + '\nVolume: '          + int(Howler.volume()*100) + '%'
+    + '\nMaster-vol: '      + int(Howler.volume()*100) + '%'
+    + '\nMusic-vol: '       + int(volumeMusic*100) + '%'
     ,5, 5);
     pop();
 }

@@ -12,21 +12,21 @@ function setup() {
   textFont(font_default);
   noStroke();
   /* create necessary game objects */
-
   player = new MyPlayer(0, post.name, 0, 0, 'lobby');
   player.enable = false;
   player.show = false;
 
   cam = new Camera(player);
   chat = new Chat();
+  splash = new ScreenFlash();
+  minimap = new Minimap();
+
   /* connect to the multiplayer server */
   multiplayer = new Multiplayer(SERVER_URL);
   socket.emit('get-player-teams');
-  /* set default volume at 30% */
-  Howler.volume(0.3);
 
-  objects.push(new FlagSelect(-200, 0, 'red'));
-  objects.push(new FlagSelect( 200, 0, 'blue'));
+  sound_drop2.play();
+  gameRestart();
 
   /*
   objects.push(new Flag(-200, -200, 'red'));
@@ -35,8 +35,14 @@ function setup() {
   objects.push(new Flag( 200, 200, 'yellow'));
   objects.push(new DroppedFlag( 100, 100, 'blue'));
   */
-  splash = new ScreenFlash();
-  minimap = new Minimap();
+ /*
+ objects.push(new FlagSelect(-200, 0, 'red'));
+ objects.push(new FlagSelect( 200, 0, 'blue'));
+
+  sound_drop2.play();
+  music_menu_id = music_menu.play();
+  music_menu.volume(musicVolume, music_menu_id);
+  */
 }
 
 let inGame = false;
@@ -45,6 +51,8 @@ let menuOpened = false;
 let muted = false;
 let buildingEnable = false;
 let finalDrawTime = 0;
+
+let music, musicID;
 
 /*** MAIN LOOP ***/
 function draw() {
@@ -149,12 +157,22 @@ function draw() {
 }
 
 function gameStart(){
+  //Howler.stop();
+
   console.log('game started');
   minimap.enable = true;
   inGame = true;
+  //music_menu.rate(3, music_menu_id);
+  music_menu.fade(volumeMusic, 0, 2000, music_menu_id);
 }
 
+var music_end_id;
+
 function gameEnd(){
+  music_end_id = music_end.play();
+  music_end.volume(musicVolume, music_end_id);
+  music_end.fade(0, volumeMusic, 1000, music_end_id);
+
   player.enable = false;
 
   cam.target = null;
@@ -166,6 +184,16 @@ function gameEnd(){
 }
 
 function gameRestart(){
+  music_end.fade(volumeMusic, 0.05, 3000, music_end_id);
+  setTimeout(()=>{
+
+    if(inGame) return;
+
+    Howler.stop();
+    music_menu_id = music_menu.play();
+    music_menu.volume(volumeMusic, music_menu_id);
+  }, 3000);
+
 
   gameStarted = false;
 
@@ -185,8 +213,8 @@ function gameRestart(){
   /* set default volume at 30% */
   Howler.volume(0.3);
 
-  objects.push(new FlagSelect(-200, 0, 'red'));
-  objects.push(new FlagSelect( 200, 0, 'blue'));
+  objects.push(new FlagSelect(-200, 50, 'red'));
+  objects.push(new FlagSelect( 200, 50, 'blue'));
   
   splash = new ScreenFlash();
   

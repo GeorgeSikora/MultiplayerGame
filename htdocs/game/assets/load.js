@@ -1,4 +1,6 @@
 
+let music_menu_id;
+
 function preload() {
 
   /* Images and Textures */
@@ -35,10 +37,9 @@ function preload() {
   
   sound_drop1 = new Howl({src: ['assets/sounds/drop1.mp3']});
   sound_drop2 = new Howl({src: ['assets/sounds/drop2.mp3']});
-  sound_drop2.play();
   /* Music */
-  //music_menu = new Howl({src: ['assets/sounds/Kevin MacLeod - Tempting Secrets.mp3'], loop: true});
-  //music_menu.play();
+  music_end = new Howl({src: ['assets/music/Wolfgang Lohr - Astronomia (Electro Swing Cover) (Coffin Dance Meme Song Remix).mp3'], loop: false});
+  music_menu = new Howl({src: ['assets/music/Kevin MacLeod - Tempting Secrets.mp3'], loop: true});
 
   /* Fonts */
   font_default = loadFont('assets/fonts/OpenSans-Regular.ttf');

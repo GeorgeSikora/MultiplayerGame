@@ -5,7 +5,8 @@
   version: 0.1
 */
 
-var gameLoaded = false;
+let gameLoaded = false;
+let gameStarted = false;
 
 let socket;
 let multiplayer;
@@ -133,14 +134,16 @@ class Multiplayer {
       gameStart();
     });
     socket.on('end', () => {
+      if(!inGame) return;
       gameEnd();
+      gameStarted = false;
     });
     socket.on('restart', () => {
+      if(!inGame) return;
       gameRestart();
     });
 
     socket.on('player-teams', (red, blue) => {
-      console.log(red, blue);
       teams['red'] = red;
       teams['blue'] = blue;
     });
@@ -186,6 +189,7 @@ setInterval(function(){
 // Init game and entities
 function initGame(data) {
   var startTime = millis();
+  gameStart();
 
   player.team = selectedTeam;
   const pos = player.team == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
@@ -232,9 +236,12 @@ function initGame(data) {
     }
   }
   gameLoaded = true;
+  gameStarted = true;
   minimap.build();
 
   console.log('Game loaded', millis() - startTime);
+  
+  inGame = true;
 }
 
 // When new player is connected

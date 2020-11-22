@@ -5,6 +5,7 @@ const helpList = [
     '/info - show more game info',
     '/map - on/off minimap'
 ];
+const HELP_LIST_PAGES = 1;
 
 function command(str) {
     const splitStr = str.split(' ');
@@ -13,12 +14,22 @@ function command(str) {
 
     switch(cmd){
         case 'help':
-            var page = 0;
-            if(param[0] != null){
-                page = param[0];
+            var page = param[0];
+
+            if(page == null) {
+                page = 1;
+            }
+            if(!isNumeric(page)) {
+                chat.add(new Message().message('&2Wrong parameter "' + param[0] + '", must be page number.').build());
+                break;
+            } 
+            if(page < 1 || page > HELP_LIST_PAGES) {
+                chat.add(new Message().message('&3Page ' + page + ' doesnt exists.').build());
+                chat.add(new Message().message('&5Available only from 1 to ' + HELP_LIST_PAGES + ' page').build());
+                break;
             }
             
-            chat.add(new Message().message('page ' + page + ' of ' + 10).build());
+            chat.add(new Message().message('page ' + page + ' of ' + HELP_LIST_PAGES).build());
 
             helpList.forEach(line => {
                 chat.add(new Message().message(line).build());
@@ -69,4 +80,8 @@ function command(str) {
             break;
 
     }
+}
+
+function isNumeric(value) {
+    return /^-?\d+$/.test(value);
 }

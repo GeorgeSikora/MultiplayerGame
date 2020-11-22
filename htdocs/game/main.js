@@ -34,23 +34,15 @@ function draw() {
 
   /* chceck and repair positions of coliding objects */
   checkCollisions();
-  /*
-  for(var i = 0; i < objects.length; i++){
-    if(objects[i].constructor.name === 'Block'){
-      player.collision.collideRect(objects[i]);
-    }
-  }
-  */
 
   /* cam ortho */
   cam.ortho();
 
   /* background color */
-  //background(100, 155, 74);
-  background(12);
+  background(12); //background(100, 155, 74);
 
   /* draw Safe Zone */
-  drawSavezone();
+  //drawSavezone();
 
   /* update and draw objects */
   var objectsRender = [];
@@ -78,10 +70,8 @@ function draw() {
   for (var i = 0; i < objectsRender.length; i++) {
     objectsRender[i].draw();
   }
-  
-  //console.log(objectsRender);
 
-  /* refresh and draw other players on server */
+  /* refresh other players on server */
   for (var i = 0; i < players.length; i++) {
     players[i].refresh();
     //players[i].draw();

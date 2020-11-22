@@ -1,7 +1,7 @@
 
 class BuildFlag extends Build {
     constructor(team){
-        super('flag', null);
+      super('flag', null);
 
         this.team = team;
         if(team == null) this.team = 'white';

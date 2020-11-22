@@ -18,20 +18,7 @@
 <body oncontextmenu="return false;">
 
   <div id="menu">
-    <div class="content">
-
-    <h1>Menu</h1>
-    <div class="slider">
-      <p>Master: &nbsp<p id="masterVolume">30</p></p>
-      <input type="range" id="volume-master" min="0" max="100" value="30">
-    </div>
-
-    <div class="slider">
-      <p>Music: &nbsp<p id="musicVolume">50</p></p>
-      <input type="range" id="volume-music" min="0" max="100" value="50">
-    </div>
-
-    </div>
+    <div id="content"></div>
   </div>
 
 </body>
@@ -39,21 +26,24 @@
 
 <script>
 
+  function loadScreen(screen){
+    switch(screen){
+      case 'menu':
+        $('#content').load("menu/main.html");
+        break;
+      case 'settings':
+        $('#content').load("menu/settings.html");
+        break;
+      case 'credits':
+        $('#content').load("menu/credits.html");
+        break;
+    }
+  }
+
+  //loadScreen('menue');
+
   /* set default volumes */
   Howler.volume(0.3);
   let volumeMusic = 0.5; 
-
-  $("#volume-master").on("input change", function() {
-    Howler.volume(this.value/100.0);
-    $("#masterVolume").html(this.value);
-  });
-
-  $("#volume-music").on("input change", function() {
-    volumeMusic = (this.value/100.0);
-    if(!inGame){
-      music_menu.volume(volumeMusic, music_menu_id);
-    }
-    $("#musicVolume").html(this.value);
-  });
 
 </script>

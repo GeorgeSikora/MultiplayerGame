@@ -11,9 +11,9 @@
 </head>
 
 <body>
-<div class="center">
+<div class="content">
 
-    <h1>Multiplayer cube</h1>
+    <h1>Capture the flag</h1>
     <!--<span>Select color of your cube:</span>
 
     <div class="colorselect" style="text-align: center;">
@@ -30,23 +30,25 @@
     </div>
     -->
 
-    <br>
-
-    <span>your name:</span>
     <form class="input-play" name="play-form" action="/game/" onsubmit="return validateForm()" method="post">
-		<input type="text" id="name" name="name" placeholder="jméno nebo přezdívka" autocomplete="off"></input>
+        <input type="text" id="name" name="name" placeholder="jméno nebo přezdívka" autocomplete="off"></input>
         <!-- <input type="hidden" id="selected-color" name="color"></input> -->
         <br><br>
-		<button class="play" type="submit">Play</button>
+		<button class="play-button" type="submit">Play</button>
     </form>
     
     <p id="error" class="error-message"></p>
-    
 </div>
+
+<div class="bottom-text">
+        <p>Created by George Sikora © 2020</p>
+    </div>
 </body>
 </html>
 
+<!--
 <script src="js/colorSelect.js"></script>
+-->
 
 <?php if(isset($_GET['error'])){ ?>
     <script>

@@ -19,6 +19,7 @@ function preload() {
   img_flag_banner  = loadImage('assets/images/flag/banner.png');
   img_flag_dropped = loadImage('assets/images/flag/dropped.png');
   img_flag_icon    = loadImage('assets/images/flag/icon.png');
+  img_flag_ringle  = loadImage('assets/images/flag/ringle.png');
 
   /* Icons */
   ico_sounds_on = loadImage('assets/images/sounds_on.png');

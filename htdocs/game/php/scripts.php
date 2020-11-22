@@ -26,13 +26,13 @@
 <script src="entities/Block.js"></script>
 <script src="entities/Bullet.js"></script>
 <script src="entities/Flag.js"></script>
-<script src="entities/FlagSelect.js"></script>
 <script src="entities/DroppedFlag.js"></script>
-<script src="entities/TextSign.js"></script>
 <script src="entities/Grass.js"></script>
 <!-- OTHER -->
-<script src="entities/ScreenFlash.js"></script>
-<script src="entities/Minimap.js"></script>
+<script src="ui/ScreenFlash.js"></script>
+<script src="ui/TextSign.js"></script>
+<script src="ui/Minimap.js"></script>
+<script src="ui/FlagSelect.js"></script>
 <!-- equipments -->
 <script src="entities/Equipment.js"></script>
 <script src="entities/equipments/Build.js"></script>
@@ -43,11 +43,13 @@
 <script src="entities/Build/BuildBlock.js"></script>
 <script src="entities/Build/BuildFlag.js"></script>
 
+<!-- CHAT -->
+<script src="chat/Chat.js"></script>
+<script src="chat/Message.js"></script>
+
 <!-- OTHER SKETCHES -->
 <script src="functions.js"></script>
 <script src="camera.js"></script>
-<script src="Chat.js"></script>
-<script src="Message.js"></script>
 <script src="commands.js"></script>
 <script src="socket.js"></script>
 

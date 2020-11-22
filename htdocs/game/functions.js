@@ -18,25 +18,6 @@ function getGrid(pos, gridSize) {
     return out;
 }
 
-/* safe zone at the spawn */
-function drawSavezone(){
-    if(serverConst.SAFE_ZONE==0)return;
-    push();
-    /* set to bottom layer */
-    translate(0,0,-1);
-    /* draw rectangle with border */
-    fill(0);
-    strokeWeight(7);
-    stroke(127, 0, 0);
-    rect(-serverConst.SAFE_ZONE,-serverConst.SAFE_ZONE,serverConst.SAFE_ZONE*2,serverConst.SAFE_ZONE*2);
-    /* draw text */
-    textSize(32);
-    textAlign(CENTER, TOP);
-    fill(200);
-    text("SAFE ZONE\n", 0, -serverConst.SAFE_ZONE+10);
-    pop();
-}
-
 /* left top corner text */
 let infoEnable = false;
 function drawInfo(){
@@ -60,6 +41,25 @@ function drawInfo(){
     + '\nMaster-vol: '      + int(Howler.volume()*100) + '%'
     + '\nMusic-vol: '       + int(volumeMusic*100) + '%'
     ,5, 5);
+    pop();
+}
+
+/* safe zone at the spawn */
+function drawSavezone(){
+    if(serverConst.SAFE_ZONE==0)return;
+    push();
+    /* set to bottom layer */
+    translate(0,0,-1);
+    /* draw rectangle with border */
+    fill(0);
+    strokeWeight(7);
+    stroke(127, 0, 0);
+    rect(-serverConst.SAFE_ZONE,-serverConst.SAFE_ZONE,serverConst.SAFE_ZONE*2,serverConst.SAFE_ZONE*2);
+    /* draw text */
+    textSize(32);
+    textAlign(CENTER, TOP);
+    fill(200);
+    text("SAFE ZONE\n", 0, -serverConst.SAFE_ZONE+10);
     pop();
 }
 

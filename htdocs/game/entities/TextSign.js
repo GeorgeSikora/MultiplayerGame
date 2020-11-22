@@ -1,5 +1,4 @@
 
-
 class TextSign extends GameObject {
     constructor(str, x, y){
         super(x, y, 0, 0);

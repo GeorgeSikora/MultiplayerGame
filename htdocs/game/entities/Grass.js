@@ -1,5 +1,4 @@
 
-
 class Grass extends GameObject {
     constructor(x, y){
         super(x, y, 16, 16);

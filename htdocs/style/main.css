@@ -1,24 +1,41 @@
 
 body {
-  /*
-  background-image: url('background.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-size: 100% 100%;
-  */
+  margin: 0;
+
   background-color: #0f0f0f;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+  background-image: url('/game/assets/images/login/flags-logo.png');
+  background-size: cover;
+  
 
   font-family: "Courier New", Courier, monospace;
   color: white;
 }
 
-.center {
-  position: absolute;
-  width: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+h1 {
+  margin-top: 45%;
+  font-size: 42px;
+}
+
+.content {
   text-align: center;
+
+  box-shadow: 0 0 50px 100px rgba(0.1, 0.1, 0.1, 0.7);
+	background-color:rgba(0.1, 0.1, 0.1, 0.7);
+
+  outline: none;
+  border: none;
+
+	margin-left: auto;
+	margin-right: auto;
+
+  position: absolute;
+  width: 30%;
+  height: 100%;
+
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 .colorselect button {
@@ -43,8 +60,9 @@ body {
 .colorselect .blue   {background-color: #0000FF;}
 .colorselect .purple {background-color: #50007F;}
 
+/*
 button.play {
-  background-color: #222222; /* Green */
+  background-color: #222222;
   border: none;
   color: white;
   padding: 10px 32px;
@@ -59,6 +77,78 @@ button.play:hover {
   background-color: #334455;
   outline: 2px solid #ccddee;
 }
+*/
 #error {
   color: red;
+}
+
+
+.input-play {
+  margin: auto;
+  width: 50vh;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: row;
+}
+
+input {
+  color: #333;
+  font-size: 18px;
+  border: none;
+
+  width: 100%;
+  padding: 8px 20px;
+  margin: 0px 0px;
+  background-color: #ccc;
+  outline: none;
+
+  border-radius: 5px 0px 0px 5px;
+}
+
+input:focus {
+  /*
+  -webkit-box-shadow: 0px 5px 20px 0px rgba(0,0,0,1);
+  -moz-box-shadow: 0px 5px 20px 0px rgba(0,0,0,1);
+  box-shadow: 0px 5px 20px 0px rgba(0,0,0,1);
+  */
+
+  background-color: #dde;
+}
+
+.play-button {
+  display: inline-block;
+	
+	width: 128px;
+	height: 42px;
+
+  background-color: #FFFF00; /* Green */
+
+  outline: none;
+  border: none;
+  border-radius: 0px 5px 5px 0px;
+
+  text-decoration: none;
+
+  font-family: arial;
+  font-size: 18px;
+
+  color:black;
+  text-align: center;
+}
+
+.play-button:hover {
+  background-color: #808000; /* Green */
+  color: #eee;
+}
+
+div.bottom-text {
+  left: 50%;
+  transform: translateX(-50%);
+
+  position: absolute;
+
+  bottom: 16px;
+  color: #eee;
+  font-size: 16px;
 }

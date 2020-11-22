@@ -1,35 +1,41 @@
-body { 
+body {
   padding: 0; 
   margin: 0; 
   background-color: black; 
   position: fixed;
-} 
+}
 
 #menu {
+  color: white;
   display: none;
   position: fixed;
   width: 100%;
   height: 100%;
   background: #000000cc;
   text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.content {
+.center {
+  margin: 0;
   position: absolute;
-  width: 100%;
   top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 h1 {
-  color: white;
+  margin-top: 64px;
+}
+
+h2 {
   margin: 0px;
 }
 
 .slider {
-  width: 20%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 20vw;
+  margin: 0 auto;
 }
 
 .slider input {
@@ -39,4 +45,33 @@ h1 {
 .slider p {
   float: left;
   color: white;
+}
+
+.back-button-position {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 64px;
+  left: 50%;
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.button {
+  display: inline-block;
+  width: 10vw;
+  margin-left: auto;
+  margin-right: auto;
+
+  /*background-color: #4CAF50;*/
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  margin: 10px 12px;
+  cursor: pointer;
+
+  background: url('/game/assets/images/menu/button.png') no-repeat 50% 50%;
+  background-size:cover;
 }

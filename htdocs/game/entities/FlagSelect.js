@@ -1,11 +1,6 @@
 
 let selectedTeam;
 
-let teams = {
-    red: 0,
-    blue: 0
-};
-
 class FlagSelect extends GameObject {
     constructor(x, y, team){
         super(x, y, 96, 128);
@@ -24,9 +19,11 @@ class FlagSelect extends GameObject {
         objects.push(new TextSign('I am just flag :)', x, y - this.h - 12));
         this.textSign = objects[objects.length-1];
         //this.textSign.color = this.team;
+
+        this.animShift = random(3);
     }
     draw(){
-        if(dist(cam.mouse.x, cam.mouse.y, this.pos.x, this.pos.y) < 200){
+        if(menuOpened == false && dist(cam.mouse.x, cam.mouse.y, this.pos.x, this.pos.y) < 160){
             this.textSign.str = 'Click to select ' + this.team + ' team';
             this.textSign.show = true;
         } else {
@@ -34,27 +31,36 @@ class FlagSelect extends GameObject {
         }
 
         push();
-        translate(this.pos.x - this.center.x, this.pos.y - this.center.y);
+        translate(this.pos.x, this.pos.y);
+        
+        tint(255);
+        if(this.textSign.show ) tint(255, 255, 0);
+        image(img_flag_ringle, -img_flag_ringle.width/2, -img_flag_ringle.height/2);
+
+        translate( -this.center.x, -this.center.y);
+
+        tint(255);
         image(img_flag_stick, 0, 0);
         if(!this.captured){
             tint(this.team);
-            const frame = floor(frameCount / 13) % 3;
+            const frame = floor(frameCount / 13 + + this.animShift) % 3;
             image(img_flag_banner, 0, 0, img_flag_banner.width/3, img_flag_banner.height, frame * img_flag_banner.width/3, 0, img_flag_banner.width/3, img_flag_banner.height);
         }
         pop();
 
         push();
-        translate(this.pos.x, this.pos.y + 20);
+        translate(this.pos.x, this.pos.y + 32);
+
         fill(200);
         textSize(20);
         textAlign(CENTER, TOP);
-        text(teams[this.team] + ' players',0,0);
+        text(game.teams[this.team] + ' players', 0, 0);
         pop();
 
     }
 
     mousePressed(){
-        if(dist(cam.mouse.x, cam.mouse.y, this.pos.x, this.pos.y) < 200){
+        if(dist(cam.mouse.x, cam.mouse.y, this.pos.x, this.pos.y) < 160){
             
             if(!socket.connected) return;
 

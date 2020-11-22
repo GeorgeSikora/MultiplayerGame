@@ -2,7 +2,8 @@
 const helpList = [
     '/build - toggle build mode',
     '/save - save map',
-    '/info - show more game info'
+    '/info - show more game info',
+    '/map - on/off minimap'
 ];
 
 function command(str) {
@@ -58,10 +59,10 @@ function command(str) {
             minimap.enable = !minimap.enable;
             break;
         case 'end':
-            gameEnd();
+            game.end();
             break;
         case 'restart':
-            gameRestart();
+            game.restart();
             break;
         default:
             //eval(cmd);

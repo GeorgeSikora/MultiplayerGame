@@ -14,9 +14,9 @@ io = require('socket.io')(server, {pingInterval: PING_INTERVAL});
 console.log('Socket.io server started port: ' + process.env.PORT || SERVER_PORT);
 
 /********* SERVICE HTML PAGE *********/
-if(process.env.MAIN == 1){
+//if(process.env.MAIN == 1){
     require('./service/app.js');
-}
+//}
 
 /********* FUNCTIONS *********/
 Collision   = require('./collisions/functions.js');

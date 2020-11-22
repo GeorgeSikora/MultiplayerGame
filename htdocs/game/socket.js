@@ -5,16 +5,7 @@
   version: 0.1
 */
 
-let gameLoaded = false;
-let gameStarted = false;
-
-let socket;
-let multiplayer;
-let fps = 0;
-
-// player pos sender
-const SEND_GAP = 90;
-let serverConst = []; // server constants
+let multiplayer, socket;
 
 class Multiplayer {
   constructor(url) {
@@ -72,7 +63,7 @@ class Multiplayer {
     socket.on('chat-message', msg => {
       var newMsg = new Message();
       newMsg.str = msg.str;
-      newMsg.timeout = millis() + CHAT_MESSAGE_DURATION;
+      newMsg.timeout = millis() + Chat.MESSAGE_DURATION;
       newMsg.opacity = 255;
       newMsg.buildImage();
 
@@ -131,21 +122,21 @@ class Multiplayer {
       }
     });
     socket.on('start', () => {
-      gameStart();
+      game.start();
     });
     socket.on('end', () => {
       if(!inGame) return;
-      gameEnd();
+      game.end();
       gameStarted = false;
     });
     socket.on('restart', () => {
       if(!inGame) return;
-      gameRestart();
+      game.restart();
     });
 
     socket.on('player-teams', (red, blue) => {
-      teams['red'] = red;
-      teams['blue'] = blue;
+      game.teams['red'] = red;
+      game.teams['blue'] = blue;
     });
     //socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp, kills
   }
@@ -189,7 +180,7 @@ setInterval(function(){
 // Init game and entities
 function initGame(data) {
   var startTime = millis();
-  gameStart();
+  game.start();
 
   player.team = selectedTeam;
   const pos = player.team == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
@@ -209,7 +200,6 @@ function initGame(data) {
 
   /* INIT GAME SETTINGS */
   serverConst = data.constants;
-  console.log(serverConst);
 
   // log size of players
   console.log('%c Players size: %c' + data.players.length,'color: lime','color: yellow');

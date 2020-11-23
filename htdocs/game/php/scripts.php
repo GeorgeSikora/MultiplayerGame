@@ -26,7 +26,9 @@
 <script src="entities/Flag.js"></script>
 <script src="entities/DroppedFlag.js"></script>
 <script src="entities/Grass.js"></script>
+
 <script src="entities/Particle.js"></script>
+<script src="entities/Smoke.js"></script>
 
 <!-- EQUIPMENT -->
 <script src="entities/Equipment.js"></script>

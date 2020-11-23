@@ -22,6 +22,7 @@ class Player extends GameObject{
 
     /* EXTRA VALUES */
     this.target = {x:x, y:y};
+    this.center = {x: this.w/2, y: this.h/2}
   }
   
   refresh() { 
@@ -35,21 +36,25 @@ class Player extends GameObject{
   
   draw() {
 
+    push();
+    translate(this.pos.x, this.pos.y);
+    imageMode(CORNER);
+    rectMode(CORNER);
+
     /* player */
     tint(this.col);
-    image(img_player, this.pos.x-this.w/2, this.pos.y-this.h/2, this.w, this.h);
+    image(img_player, -this.center.x, -this.center.y, this.w, this.h);
+
     // TEST
     //fill(0,255,0,127);
-    //rect(this.target.x-this.w/2, this.target.y-this.h/2, this.w, this.h);
+    //rect(0, 0, this.w, this.h);
 
     /* headband */
     if(this.capturedFlag != null){
-      push();
-      translate(this.pos.x, this.pos.y);
       tint(this.capturedFlag);
       image(img_headband, -img_headband.width/2, -img_headband.height/2);
-      pop();
     }
+    pop();
 
     /* equipment */
     if(this.selectedEquipment != 0){

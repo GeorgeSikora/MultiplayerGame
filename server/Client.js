@@ -264,7 +264,7 @@ function gameEnd(){
     
     ioClient.emit('end');
     ioClient.emit('chat-message', new Message('&3Game ends!'));
-    ioClient.emit('chat-message', new Message('&6Game will be restarted after 5 seconds.'));
+    ioClient.emit('chat-message', new Message('&6Game will be restarted after 10 seconds.'));
 
     setTimeout(() => {
         ioClient.emit('chat-message', new Message('&5Game restarted'));
@@ -277,7 +277,7 @@ function gameEnd(){
 
         gameStarted = false;
     
-    }, 5000);
+    }, 10000);
 }
 
 module.exports = ioClient;

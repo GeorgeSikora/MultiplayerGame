@@ -37,8 +37,8 @@ $("#volume-master").on("input change", function() {
 
 $("#volume-music").on("input change", function() {
     volumeMusic = (this.value/100.0);
-    if(!inGame){
-        music_menu.volume(volumeMusic, music_menu_id);
+    if(!game.started) {
+        music_menu.volume(volumeMusic, game.music_menu_id);
     }
     $("#musicVolume").html(this.value);
 });

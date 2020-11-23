@@ -39,13 +39,13 @@ function command(str) {
 
             break;
         case 'build':
-            chat.add(new Message().message('&2You dont have permissions').build());
-            return;
+            //chat.add(new Message().message('&2You dont have permissions').build());
+            //return;
 
-            buildingEnable = !buildingEnable;
+            game.buildingEnable = !game.buildingEnable;
 
             player.selectedEquipment = 0;
-            if(buildingEnable){
+            if(game.buildingEnable){
                 player.equipment = player.tools;
                 chat.add(new Message().message('Building tools, pro vypnutí opakuj příkaz "/build"').build());
             } else {
@@ -74,6 +74,11 @@ function command(str) {
             break;
         case 'restart':
             game.restart();
+            break;
+        case 'smoke':
+            for(var i = 0; i < 50; i++){
+                objects.push(new Smoke(player.pos.x, player.pos.y));
+            }
             break;
         default:
             //eval(cmd);

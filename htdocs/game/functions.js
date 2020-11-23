@@ -29,15 +29,15 @@ function drawInfo(){
     textAlign(LEFT, TOP);
     text(
       'connected: '         + socket.connected
-    + '\nstarted: '         + gameStarted
+    + '\ngame.started: '    + game.started
     + '\nping: '            + multiplayer.latency + 'ms'
-    + '\nFPS: '             + fps
-    + '\nloop time: '       + finalDrawTime + '/' + (1000/60).toFixed(2) + ' ms'
+    + '\nFPS: '             + game.fps
+    + '\nloop time: '       + game.drawTime + ' ms'
     + '\nkills: '           + player.kills 
     + '\nx: '               + round(player.pos.x) + ' y: ' + round(player.pos.y) 
     + "\nPlayers online: "  + (players.length+1) 
     + "\nObjects: "         + objects.length
-    + '\nmute: '            + muted
+    + '\nmute: '            + game.muted
     + '\nMaster-vol: '      + int(Howler.volume()*100) + '%'
     + '\nMusic-vol: '       + int(volumeMusic*100) + '%'
     ,5, 5);
@@ -46,20 +46,19 @@ function drawInfo(){
 
 /* safe zone at the spawn */
 function drawSavezone(){
-    if(serverConst.SAFE_ZONE==0)return;
+    var zone = game.constants; // size of the zone
+    if(zone == 0)return;
     push();
-    /* set to bottom layer */
-    translate(0,0,-1);
     /* draw rectangle with border */
     fill(0);
     strokeWeight(7);
     stroke(127, 0, 0);
-    rect(-serverConst.SAFE_ZONE,-serverConst.SAFE_ZONE,serverConst.SAFE_ZONE*2,serverConst.SAFE_ZONE*2);
+    rect( -zone, -zone, zone * 2, zone * 2);
     /* draw text */
     textSize(32);
     textAlign(CENTER, TOP);
     fill(200);
-    text("SAFE ZONE\n", 0, -serverConst.SAFE_ZONE+10);
+    text("SAFE ZONE\n", 0, -zone + 10);
     pop();
 }
 

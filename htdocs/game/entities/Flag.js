@@ -17,6 +17,7 @@ class Flag extends GameObject {
         objects.push(new TextSign('I am just flag :)', x, y - this.h - 12));
         this.textSign = objects[objects.length-1];
     }
+
     draw(){
         if(dist(player.pos.x, player.pos.y, this.pos.x, this.pos.y) < 100){
             if(this.team == player.team){
@@ -53,8 +54,17 @@ class Flag extends GameObject {
         this.textSign.show = this.captureReady | this.acceptReady;
 
         push();
-        translate(this.pos.x - this.center.x, this.pos.y - this.center.y);
         tint(255);
+        translate(this.pos.x, this.pos.y);
+
+        // RING
+        /*
+        tint(255);
+        if(this.textSign.show ) tint(255, 255, 0);
+        image(img_flag_ringle, -img_flag_ringle.width/2, -img_flag_ringle.height/2);
+        */
+
+        translate( -this.center.x, -this.center.y);
         image(img_flag_stick, 0, 0);
         if(!this.captured){
             tint(this.team);

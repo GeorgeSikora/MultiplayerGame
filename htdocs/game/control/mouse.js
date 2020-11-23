@@ -1,11 +1,10 @@
 
 function mousePressed(){
-    if(menuOpened) return;
+    if(game.menuOpened) return;
 
     /* right top corner mute icon click action */
     if(mouseX > width-32 && mouseX < width && mouseY < 32 && mouseY > 0){
-        muted = !muted;
-        Howler.mute(muted);
+        Howler.mute(game.muted = !game.muted);
     }
 
     if(chat.open) return;
@@ -20,6 +19,8 @@ function mouseReleased(){
   
 let scoolTimer = 0;
 function mouseWheel(event) {
+    if(game.menuOpened) return;
+
     if(scoolTimer < millis()) {
         if(event.delta < 0) {
             player.selectedEquipment--;

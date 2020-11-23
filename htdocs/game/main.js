@@ -1,6 +1,6 @@
 
 /* SERVER IP WITH ':' PORT AND '/' NAMESPACE */
-let SERVER_URL = '185.221.124.205:3031/client'; 
+let SERVER_URL = '185.221.124.205:3031/client';  // 
 
 /*** SETUP ***/
 function setup() {
@@ -11,6 +11,7 @@ function setup() {
   /* set some default stuff */
   textFont(font_default);
   noStroke();
+  frameRate(60);
   /* create necessary game objects */
   game.setup();
 }
@@ -90,7 +91,7 @@ function draw() {
   drawInfo();
 
   tint(255);
-  if(muted) {
+  if(game.muted) {
     image(ico_sounds_off, width-32, 0);
   }else{
     image(ico_sounds_on, width-32, 0);
@@ -100,9 +101,17 @@ function draw() {
 
   splash.draw();
 
-  if(inGame && !socket.connected) {
-    game.restart();
+  if(!socket.connected) {
+    if(game.started) {
+      game.restart();
+      chat.add(new Message().message('&2Server crashed!').build());
+    } else {
+      fill(255, 16, 16);
+      textSize(32);
+      textAlign(CENTER, TOP);
+      text('Cannot connect to the server', width/2, 32);
+    }
   }
 
-  if(frameCount%50 == 0) finalDrawTime = (millis() - drawTime).toFixed(2);
+  if(frameCount%50 == 0) game.drawTime = (millis() - drawTime).toFixed(2);
 }

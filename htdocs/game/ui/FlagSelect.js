@@ -1,6 +1,4 @@
 
-let selectedTeam;
-
 class FlagSelect extends GameObject {
     constructor(x, y, team){
         super(x, y, 96, 128);
@@ -23,7 +21,7 @@ class FlagSelect extends GameObject {
         this.animShift = random(3);
     }
     draw(){
-        if(menuOpened == false && dist(cam.mouse.x, cam.mouse.y, this.pos.x, this.pos.y) < 160){
+        if(!game.menuOpened && dist(cam.mouse.x, cam.mouse.y, this.pos.x, this.pos.y) < 160){
             this.textSign.str = 'Click to select ' + this.team + ' team';
             this.textSign.show = true;
         } else {
@@ -64,8 +62,6 @@ class FlagSelect extends GameObject {
             
             if(!socket.connected) return;
 
-            console.log('Player selected ' + this.team + ' team.');
-
             // If connected, send initRequest with initial data
             socket.emit('initReq', {
                 name:      player.name, 
@@ -73,7 +69,7 @@ class FlagSelect extends GameObject {
                 team:       this.team
             });
 
-            selectedTeam = this.team;
+            player.team = this.team;
         }
     }
 

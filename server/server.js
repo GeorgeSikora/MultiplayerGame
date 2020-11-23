@@ -3,7 +3,7 @@ const {RESET,BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE} = require('./colors
 
 /********* SERVER CONFIG *********/
 const SERVER_PORT = 3031; // main socket.io server port
-const TICK_DURATION = 90; // ms
+const TICK_DURATION = 50; // ms
 const PING_INTERVAL = 3000; // ping interval
 
 express = require('express');

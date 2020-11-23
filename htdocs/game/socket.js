@@ -125,12 +125,11 @@ class Multiplayer {
       game.start();
     });
     socket.on('end', () => {
-      if(!inGame) return;
+      if(!game.started) return;
       game.end();
-      gameStarted = false;
     });
     socket.on('restart', () => {
-      if(!inGame) return;
+      if(!game.started) return;
       game.restart();
     });
 
@@ -138,11 +137,12 @@ class Multiplayer {
       game.teams['red'] = red;
       game.teams['blue'] = blue;
     });
+
     //socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp, kills
   }
 
   connected() {
-    gameLoaded = false;
+    game.loaded = false;
     console.log('%c Connected, your id: %c'+socket.id,'color: lime','color: aqua');
     player.id = '/client#' + socket.id;
   }
@@ -172,7 +172,7 @@ function pong(latency) {
 }
 
 setInterval(function(){
-  fps = parseInt(frameRate());
+  game.fps = parseInt(frameRate());
 }, 500);
 
 /********* SOCKET IO EVENTS *********/
@@ -182,7 +182,6 @@ function initGame(data) {
   var startTime = millis();
   game.start();
 
-  player.team = selectedTeam;
   const pos = player.team == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
 
   player.pos.x = pos.x;
@@ -199,7 +198,7 @@ function initGame(data) {
   sound_drop1.play();
 
   /* INIT GAME SETTINGS */
-  serverConst = data.constants;
+  game.constants = data.constants;
 
   // log size of players
   console.log('%c Players size: %c' + data.players.length,'color: lime','color: yellow');
@@ -225,13 +224,12 @@ function initGame(data) {
         break;
     }
   }
-  gameLoaded = true;
-  gameStarted = true;
   minimap.build();
 
   console.log('Game loaded', millis() - startTime);
   
-  inGame = true;
+  game.loaded = true;
+  game.started = true;
 }
 
 // When new player is connected
@@ -250,7 +248,7 @@ function remPlayer(id) {
 
 // Refresh player data
 function refPlayer(p) {
-  if(!gameLoaded) return;
+  if(!game.loaded) return;
   if(p.id == player.id) { 
     player.hp = p.hp;
     player.kills = p.kills;

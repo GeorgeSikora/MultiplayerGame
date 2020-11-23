@@ -1,6 +1,10 @@
 
 let minimap;
 
+setInterval(() => {
+    minimap.build();
+}, 3000);
+
 class Minimap {
     constructor(){
         this.scale = 13;
@@ -16,8 +20,8 @@ class Minimap {
         this.targetOpacity = this.enable ? 255 : 0;
         this.opacity += (this.targetOpacity - this.opacity) * 0.1;
 
-        if(this.img == null) return;
-
+        if(this.img == null || this.opacity < 1) return;
+ 
         push();
         
         /* POSITION */

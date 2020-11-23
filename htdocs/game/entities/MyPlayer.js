@@ -72,9 +72,25 @@ class MyPlayer extends GameObject {
     /* player rotation */
     this.rotation = atan2(mouseY - height / 2, mouseX - width / 2);
     /* equipment mouse hold using */
-    if(!menuOpened && mouseIsPressed && this.equipment[this.selectedEquipment].HOLDING_USE) {
+    if(!game.menuOpened && mouseIsPressed && this.equipment[this.selectedEquipment].HOLDING_USE) {
       this.equipmentUsage();
     }
+    
+    if(this.isMoving()) {
+      //for(var i = 0; i < 100; i++)
+        objects.push(new Particle(this.pos.x + random(-this.w/2, this.w/2), this.pos.y + this.h/2 - 5));
+      /*
+      if(this.speed.x > 0) {
+        objects.push(new Particle(this.pos.x + random(-this.w/2, this.w/2), this.pos.y + this.h/2 - 5));
+      } else {
+        objects.push(new Particle(this.pos.x + random(-this.w/2, this.w/2), this.pos.y + this.h/2 - 5));
+      }
+      */
+    }
+
+    //for(var i = 0; i < 1; i++)
+    //  objects.push(new Smoke(player.pos.x, player.pos.y));
+  
   }
   
   draw() {
@@ -123,6 +139,10 @@ class MyPlayer extends GameObject {
     if (keyCode == 87) this.up    = 0;
     if (keyCode == 83) this.down  = 0;
     if (keyCode == 68) this.right = 0;
+  }
+
+  isMoving(){
+    return this.left || this.right || this.up || this.down;
   }
   
   stopMove() {

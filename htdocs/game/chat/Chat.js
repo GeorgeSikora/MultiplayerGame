@@ -90,6 +90,7 @@ class Chat {
 
             /* input box */
             fill(0, this.inputOpacity);
+            rectMode(CORNER);
             rect(0,-Chat.LINE_HEIGHT -Chat.INPUT_PADDING, 300, Chat.LINE_HEIGHT +2*Chat.INPUT_PADDING);
 
             /* input text */

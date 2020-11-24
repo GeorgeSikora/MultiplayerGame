@@ -13,7 +13,8 @@ class BuildFlag extends Build {
         this.img = createGraphics(96,128);
         this.img.image(img_flag_stick, 0, 0);
         this.img.tint(this.col);
-        this.img.image(img_flag_banner.get(0,0,96,128), 0, 0,);
+        this.img.image(img_flag_banner.get(0,0,96,128), 0, 0);
+        this.img.remove();
         
     }
     use(obj) {

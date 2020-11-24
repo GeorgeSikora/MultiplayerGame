@@ -1,9 +1,11 @@
 
 let minimap;
 
+/*
 setInterval(() => {
     minimap.build();
 }, 3000);
+*/
 
 class Minimap {
     constructor(){
@@ -14,6 +16,11 @@ class Minimap {
 
         this.opacity = 0;
         this.targetOpacity = 0;
+
+        /* AUTOMATIC SCALE */
+        this.autoScale = true;
+        this.MAX_WIDTH = 400;
+        this.MAX_HEIGHT = 300;
     }
 
     draw(){
@@ -24,17 +31,18 @@ class Minimap {
  
         push();
         
-        /* POSITION */
-        translate(this.img.width/2 +5, this.img.height/2 +5);
+        /* position */
+        translate(5, 5);
 
         tint(255, this.opacity);
-        imageMode(CENTER);
+        imageMode(CORNER);
             
         /* draw builded map */
         image(this.img, 0, 0);
 
         noStroke();
         rectMode(CENTER);
+        translate(this.center.x, this.center.y);
 
         /* other players */
         for(var i = 0; i < players.length; i++){
@@ -48,26 +56,21 @@ class Minimap {
         /* my player */
         fill(255, 255, 0, this.opacity);
         rect(player.pos.x/this.scale, player.pos.y/this.scale, 6, 6);
+        
+        imageMode(CENTER);
 
         /* red flag */
-        const posRed = this.getFlagPos('red');
-        var c = color('red');
-        c.setAlpha(this.opacity);
-        tint(c);
-        if(posRed != null) image(img_flag_icon, posRed.x/this.scale, posRed.y/this.scale);
+        this.drawFlag('red');
 
         /* blue flag */
-        const posBlue = this.getFlagPos('blue');
-        var c = color('blue');
-        c.setAlpha(this.opacity);
-        tint(c);
-        if(posBlue != null) image(img_flag_icon, posBlue.x/this.scale, posBlue.y/this.scale);
+        this.drawFlag('blue');
 
         pop();
     }
 
-    build(){
+    build() {
 
+        // calc the border
         var left = 0, top = 0, right = 0, bottom = 0;
         for(var i = 0; i < objects.length; i++){
 
@@ -80,18 +83,36 @@ class Minimap {
             if(pos.y + o.h > bottom)  bottom = pos.y + o.h;
         }
 
+        // calc width & height of map
         const map = {w: right - left, h: bottom - top};
+
+        // automatic scaling, if turned on
+        if(this.autoScale) {
+            if(map.w > map.h) {
+                this.scale = map.w/this.MAX_WIDTH;
+            } else {
+                this.scale = map.h/this.MAX_HEIGHT;
+            }
+        }
+
+        // set the center shift of zero position x,y in map
+        this.center = {x: -left/this.scale, y: -top/this.scale};
+
+        // get scaled map dimensions
+        const mapScaled = {w: map.w/this.scale, h: map.h/this.scale};
         
-        this.img = createGraphics(map.w/this.scale, map.h/this.scale);
+        // create image, where we will draw the stuff
+        this.img = createGraphics(mapScaled.w, mapScaled.h);
 
-        this.img.push();
+        // center the stuff to drawing with the center point
+        this.img.translate(this.center.x, this.center.y);
 
-        this.img.translate(-left/this.scale, -top/this.scale);
+        // border weight and color
         this.img.strokeWeight(1);
         this.img.stroke(0);
 
         // objects and buildings
-        for(var i = 0; i < objects.length; i++){
+        for(var i = 0; i < objects.length; i++) {
             const o = objects[i];
             if(o instanceof Block) {
                 this.img.rectMode(CENTER);
@@ -115,31 +136,41 @@ class Minimap {
         this.img.fill('blue');
         this.img.ellipse(spawnBlue.x, spawnBlue.y, 6, 6);
 
-        this.img.pop();
+        this.img.remove();
     }
 
-    getFlagPos(team){
-        for(var i = 0; i < objects.length; i++){
+    drawFlag(team) {
+        const pos = this.getFlagPos(team);
+        var c = color(team);
+        c.setAlpha(this.opacity);
+        tint(c);
+        if(pos != null) image(img_flag_icon, pos.x/this.scale, pos.y/this.scale);
+    }
+
+    getFlagPos(team) {
+        for(var i = 0; i < objects.length; i++) {
             const o = objects[i];
+
             if(o instanceof Flag) {
                 if(o.captured) {
-                    for(var p = 0; p < players.length; p++){
-                        if(players[p].capturedFlag == team) {
-                            return players[p].pos;
-                        }
+                    for(var p = 0; p < players.length; p++) {
+                        /* some player has a flag */
+                        if(players[p].capturedFlag == team) return players[p].pos;
                     }
-                    if(player.capturedFlag == team){
+                    if(player.capturedFlag == team) {
+                        /* my player has a flag */
                         return player.pos;
                     }
                 } else {
-                    if(o.team == team) {
-                        return o.pos;
-                    }
+                    /* object is just standing flag */
+                    if(o.team == team) return o.pos;
                 }
             }
             if(o instanceof DroppedFlag) {
+                /* flag is dropped somewhere */
                 if(o.team == team) return o.pos;
             }
         }
+        /* flag not found :( */
     }
 }

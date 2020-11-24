@@ -37,32 +37,52 @@ class MyPlayer extends GameObject {
     this.up = 0;
     this.down = 0;
 
+    this.shotgunBullets = 20;
+
+    this.lightBullets = 100;
+    this.smokeGranates = 5;
+
     /* EQUIPMENT */
     this.weapons = [
       new Knife(), 
       new Rifle(), 
-      new Shotgun()
+      new Shotgun(),
+      new HandGranate()
     ];
     
     this.tools = [
       new BuildBlock(), 
       new BuildFlag('blue'), 
       new BuildFlag('green'), 
-      new BuildFlag('red'), 
+      new BuildFlag('red'),
       new BuildFlag('yellow')
     ];
     
     this.equipment = this.weapons;
     this.selectedEquipment = 0;
+
+    /* OTHER */
+    this.botEnable = false;
   }
   
-  refresh() { 
+  refresh() {
     if(!this.enable) return;
+
     /* refresh proper layer */
     this.layer = this.pos.y +this.h/2;
     /* control */
     this.targetSpeed.x = (this.right - this.left) * this.maxSpeed;
     this.targetSpeed.y = (this.down - this.up)    * this.maxSpeed;
+
+     /* bot control */
+     if(this.botEnable) {
+      if((sin(millis()/500) < 0)) {
+      this.targetSpeed.x = this.maxSpeed;
+      } else {
+        this.targetSpeed.x = -this.maxSpeed;
+      }
+    }
+
     /* move easing */
     this.speed.x += (this.targetSpeed.x*(deltaTime / 50) - this.speed.x) *0.35 *(deltaTime / 50);
     this.speed.y += (this.targetSpeed.y*(deltaTime / 50) - this.speed.y) *0.35 *(deltaTime / 50);
@@ -123,8 +143,6 @@ class MyPlayer extends GameObject {
   }
 
   mousePressed() {
-    objects.push(new Granate(this.pos.x, this.pos.y, atan2(mouseY - height / 2, mouseX - width / 2)));
-
     if(!this.enable) return;
     this.equipmentUsage();
   }

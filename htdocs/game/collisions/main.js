@@ -90,9 +90,9 @@ function checkCollisions() {
     var colider1 = objects[i].collision;
 
     if(colider1 == null) continue;
+    if (colider1.static) continue;
 
     if (colider1.obj == null) continue;
-    if(colider1.static) continue;
 
     var shift = {x: 0, y: 0};
     colider1.colidedX = false;
@@ -104,11 +104,17 @@ function checkCollisions() {
   }
   checkCollisionsWith(player);
 }
+
 function checkCollisionsWith(colider1){
 for (var j = 0; j < objects.length; j++) {
   var colider2 = objects[j].collision;
   if (colider2 == null) continue;
   if (colider1 == colider2) continue;
+  
+  // ignore collision for player and other moving stuff
+  if(colider2.obj != null) {
+    if(colider2.obj.constructor.name == 'Granate') continue;
+  }
 
   var x1 = colider1.pos.x, y1 = colider1.pos.y, w1 = colider1.w, h1 = colider1.h;
   var x2 = colider2.pos.x, y2 = colider2.pos.y, w2 = colider2.w, h2 = colider2.h;
@@ -130,10 +136,8 @@ for (var j = 0; j < objects.length; j++) {
     if (abs(deltaX) > abs(deltaY)) {
 
       if(deltaY > 0) {
-        console.log('TOP');
         colider1.direction = 'top';
       } else {
-        console.log('BOTTOM');
         colider1.direction = 'bottom';
       }
 
@@ -149,10 +153,8 @@ for (var j = 0; j < objects.length; j++) {
         colider1.colidedY = true;
     } else {
       if(deltaX > 0) {
-        console.log('LEFT');
         colider1.direction = 'left';
       } else {
-        console.log('RIGHT');
         colider1.direction = 'right';
       }
       //if(round(shift.x) != round(deltaX))

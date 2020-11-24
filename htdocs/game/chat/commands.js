@@ -3,7 +3,8 @@ const helpList = [
     '/build - toggle build mode',
     '/save - save map',
     '/info - show more game info',
-    '/map - on/off minimap'
+    '/map - on/off minimap',
+    '/pt - players target pos'
 ];
 const HELP_LIST_PAGES = 1;
 
@@ -39,8 +40,8 @@ function command(str) {
 
             break;
         case 'build':
-            //chat.add(new Message().message('&2You dont have permissions').build());
-            //return;
+            chat.add(new Message().message('&2You dont have permissions').build());
+            return;
 
             game.buildingEnable = !game.buildingEnable;
 
@@ -64,7 +65,10 @@ function command(str) {
             saveStrings(output,'map.txt');
             break;
         case 'info':
-            infoEnable = !infoEnable;
+            game.showInfo = !game.showInfo;
+            break;
+        case 'pt':
+            game.showPlayersTarget = !game.showPlayersTarget;
             break;
         case 'map':
             minimap.enable = !minimap.enable;
@@ -76,12 +80,15 @@ function command(str) {
             game.restart();
             break;
         case 'smoke':
-            for(var i = 0; i < 50; i++){
-                objects.push(new Smoke(player.pos.x, player.pos.y));
-            }
+            objects.push(new Granate(player.pos.x, player.pos.y, atan2(mouseY - height / 2, mouseX - width / 2)));
+            break;
+        case 'reload':
+            location.reload();
+            break;
+        case 'bot':
+            player.botEnable = !player.botEnable;
             break;
         default:
-            //eval(cmd);
             break;
 
     }

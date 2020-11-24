@@ -37,6 +37,7 @@
 <script src="entities/equipments/Knife.js"></script>
 <script src="entities/equipments/Rifle.js"></script>
 <script src="entities/equipments/Shotgun.js"></script>
+<script src="entities/equipments/HandGranate.js"></script>
 
 <script src="entities/Build/BuildBlock.js"></script>
 <script src="entities/Build/BuildFlag.js"></script>

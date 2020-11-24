@@ -10,6 +10,8 @@ class game {
   static muted = false;
   static loaded = false;
   static started = false;
+  static showInfo = false;
+  static showPlayersTarget = false
 
   static teams = {red: 0, blue: 0};
 
@@ -61,6 +63,8 @@ class game {
   }
   static restart() {
 
+    /* KVŮLI OBNOVY PROVEDENÝCH ZMĚN U KLIENTŮ, KTEŘÍ NEZNAJÍ F5 :) */
+    if(game.started) location.reload();
 
     setTimeout(()=>{
       if(game.started) return;
@@ -72,7 +76,6 @@ class game {
     socket.disconnect();
 
     music_end.fade(volumeMusic, 0.0, 3000, this.music_end_id);
-
 
     objects = [];
     players = [];

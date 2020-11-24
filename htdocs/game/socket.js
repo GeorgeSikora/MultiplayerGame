@@ -30,6 +30,10 @@ class Multiplayer {
     socket.on('remPlayer',     remPlayer); // some player disconnected
 
     socket.on('shot',     shot);
+
+    socket.on('smoke-granate', (pos, rot) => {
+      objects.push(new Granate(pos.x, pos.y, rot));
+    })
     
     socket.on('exception', (err) => {
       console.error('ERROR ' + err.id + ' ' + err.message);

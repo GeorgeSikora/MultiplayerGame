@@ -5,8 +5,6 @@ class DroppedFlag extends GameObject {
         super(x, y, 64, 32);
 
         this.team = team;
-
-        this.pickReady = false;
     }
 }
 

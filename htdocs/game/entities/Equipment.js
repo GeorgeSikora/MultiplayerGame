@@ -30,5 +30,5 @@ class Equipment {
             y: obj.pos.y + sin(obj.rotation)*this.img.width/2 + cos(obj.rotation + shift)*12
         }
     }
-    shoot(obj) {}
+    use(obj) {}
 }

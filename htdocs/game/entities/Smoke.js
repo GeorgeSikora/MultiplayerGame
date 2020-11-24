@@ -57,17 +57,18 @@ class Smoke extends GameObject {
     this.center = {x: this.w/2, y: this.h/2};
     
     this.layer = this.pos.y + this.layerShift;
-  }
-  
-  draw() {
-    
-    if(this.opacity < 1){
+
+    if(this.opacity < 0){
       removeObject(this);
       return;
     }
+  }
+  
+  draw() {
     push()
     noStroke();
     fill(255, this.opacity);
+
     /*
     tint(this.opacity);
     blendMode(LIGHTEST);

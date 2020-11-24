@@ -2,7 +2,7 @@
 /* RIFLE */
 
 class Rifle extends Equipment {
-    constructor(){
+    constructor() {
         super('rifle', img_rifle);
 
         this.HOLDING_USE = true;

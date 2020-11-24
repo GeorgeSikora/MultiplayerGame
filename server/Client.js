@@ -25,7 +25,7 @@ ioClient.on('connection', socket => {
 
         if(gameStarted) {
             socket.emit('chat-message', new Message('&2Game already started!'));
-            return;
+           // return;
         }
         const teams = countTeams();
 
@@ -44,13 +44,14 @@ ioClient.on('connection', socket => {
         if(startTimeoutHandle != null) clearTimeout(startTimeoutHandle);
 
         if(players.length >= 2) {
-
+            /*
             ioClient.emit('chat-message', new Message('&3Game will start after 10 seconds!'));
 
             startTimeoutHandle = setTimeout(() => {
                 ioClient.emit('chat-message', new Message('&3Game started!'));
                 gameStarted = true;
             }, 10000);
+            */
         }
         
         sendTeams();
@@ -108,6 +109,13 @@ ioClient.on('connection', socket => {
         //if(data.x < -constants.SAFE_ZONE || data.x > constants.SAFE_ZONE || data.y < -constants.SAFE_ZONE || data.y > constants.SAFE_ZONE) {
             objects.push(new Bullet(socket.id, data.x, data.y, data.dir));
         //}
+    });
+
+    socket.on('smoke-granate', (pos, rot) => {
+        var id = ObjManager.getPlayer(socket.id);
+        if(id == -1) return;
+        
+        ioClient.emit('smoke-granate', pos, rot);
     });
 
     socket.on('block-add', pos => {

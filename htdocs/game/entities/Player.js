@@ -3,6 +3,9 @@ let players = []; // other players
 
 /* other players */
 class Player extends GameObject{
+
+  static moveEasing = 0.3;
+
   constructor(id, name, x, y, col) {
     super(x, y, 64, 64);
 
@@ -26,8 +29,8 @@ class Player extends GameObject{
   }
   
   refresh() { 
-    this.pos.x += (this.target.x - this.pos.x) *0.25; // 0.25
-    this.pos.y += (this.target.y - this.pos.y) *0.25; // 0.25
+    this.pos.x += (this.target.x - this.pos.x) * Player.moveEasing; // 0.25
+    this.pos.y += (this.target.y - this.pos.y) * Player.moveEasing; // 0.25
 
     this.rotation += (this.targetRotation - this.rotation) * 0.2;
 
@@ -39,15 +42,10 @@ class Player extends GameObject{
     push();
     translate(this.pos.x, this.pos.y);
     imageMode(CORNER);
-    rectMode(CORNER);
 
     /* player */
     tint(this.col);
     image(img_player, -this.center.x, -this.center.y, this.w, this.h);
-
-    // TEST
-    //fill(0,255,0,127);
-    //rect(0, 0, this.w, this.h);
 
     /* headband */
     if(this.capturedFlag != null){
@@ -55,6 +53,17 @@ class Player extends GameObject{
       image(img_headband, -img_headband.width/2, -img_headband.height/2);
     }
     pop();
+
+    
+    // TEST
+    if(game.showPlayersTarget) {
+      push();
+      rectMode(CORNER);
+      fill(0,255,0,127);
+      translate(this.target.x, this.target.y);
+      rect(-this.center.x, -this.center.y, this.w, this.h);
+      pop();
+    }
 
     /* equipment */
     if(this.selectedEquipment != 0){

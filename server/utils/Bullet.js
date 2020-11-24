@@ -2,7 +2,6 @@
 /*** BULLET CLASS ***/
 
 const ioClient = require("../Client");
-const DroppedFlag = require("./DroppedFlag");
 
 class Bullet extends GameObject {
     constructor(shooterID, x, y, dir){

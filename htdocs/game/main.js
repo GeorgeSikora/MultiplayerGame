@@ -1,6 +1,6 @@
 
 /* SERVER IP WITH ':' PORT AND '/' NAMESPACE */
-let SERVER_URL = 'localhost:3031/client';  // 185.221.124.205
+let SERVER_URL = '185.221.124.205:3031/client';  // 185.221.124.205
 
 /*** SETUP ***/
 function setup() {
@@ -33,6 +33,12 @@ function draw() {
   /* send vars and etc. to server */
   multiplayer.refresh();
 
+  /* refresh other players on server */
+  for (var i = 0; i < players.length; i++) {
+    players[i].refresh();
+    //players[i].draw();
+  }
+
   /* chceck and repair positions of coliding objects */
   checkCollisions();
 
@@ -47,10 +53,14 @@ function draw() {
 
   /* update and draw objects */
   var objectsRender = [];
-  for (var i = 0; i < objects.length; i++) {
+  for (var i = objects.length-1; i >= 0; i--) {
     var obj = objects[i];
+
     obj.update();
-    if(objects[i] == null) continue;
+
+    /* if this is not equal, it means the objects was removed */
+    if(objects[i] != obj) continue;
+    
     /* draw only when it is on screen */
     if(rectRect(obj.pos.x-obj.center.x, obj.pos.y-obj.center.y, obj.w, obj.h, cam.pos.x-width/cam.scale/2, cam.pos.y-height/cam.scale/2, width/cam.scale, height/cam.scale)){
       //obj.draw();
@@ -58,24 +68,23 @@ function draw() {
     }
   }
 
+  /* add my player to render */
   objectsRender.push(player);
+  
+  /* add other players to render */
   for (var i = 0; i < players.length; i++) {
     objectsRender.push(players[i]);
     //players[i].draw();
   }
 
+  /* sort the objects to render */
   objectsRender.sort(function(a, b) {
       return a.layer - b.layer;
   });
 
+  /* draw objects to render */
   for (var i = 0; i < objectsRender.length; i++) {
     objectsRender[i].draw();
-  }
-
-  /* refresh other players on server */
-  for (var i = 0; i < players.length; i++) {
-    players[i].refresh();
-    //players[i].draw();
   }
 
   /* draw my player */

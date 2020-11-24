@@ -45,7 +45,10 @@ function removeObjectByID(id){
 
 function removeObject(object){
 	const id = objects.indexOf(object);
-	if(id == -1) return;
+	if(id == -1) {
+		console.log('Something wrong with removing object');
+		return;
+	}
 	const obj = objects[id];
 
 	objects.splice(id, 1);

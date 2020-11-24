@@ -19,9 +19,8 @@ function getGrid(pos, gridSize) {
 }
 
 /* left top corner text */
-let infoEnable = false;
 function drawInfo(){
-    if(!infoEnable) return;
+    if(!game.showInfo) return;
 
     push();
     fill(255);

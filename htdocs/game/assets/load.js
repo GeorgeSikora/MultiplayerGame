@@ -7,6 +7,8 @@ function preload() {
 
   img_block = loadImage('assets/images/objects/block.png');
   img_grass = loadImage('assets/images/objects/grass.png');
+  img_granate = loadImage('assets/images/objects/granate.png');
+  img_granate_smoke = loadImage('assets/images/objects/smoke_granate.png');
 
   img_knife = loadImage('assets/images/equipment/knife.png');
   img_rifle = loadImage('assets/images/equipment/rifle.png');
@@ -40,6 +42,8 @@ function preload() {
   sound_drop2 = new Howl({src: ['assets/sounds/drop2.mp3']});
   
   sound_smoke = new Howl({src: ['assets/sounds/smoke.mp3']});
+  sound_wall_hit = new Howl({src: ['assets/sounds/wall_hit.mp3']});
+  sound_wall_hit2 = new Howl({src: ['assets/sounds/wall_hit2.mp3']});
 
   /* Music */
   music_end = new Howl({src: ['assets/music/Wolfgang Lohr - Astronomia (Electro Swing Cover) (Coffin Dance Meme Song Remix).mp3'], loop: false});

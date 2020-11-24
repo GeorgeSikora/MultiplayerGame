@@ -27,6 +27,7 @@ Player      = require('./utils/player.js');
 Block       = require('./utils/Block.js');
 Bullet      = require('./utils/Bullet.js');
 Flag        = require('./utils/Flag.js');
+DroppedFlag = require('./utils/DroppedFlag');
 DroppedFlag = require('./utils/DroppedFlag.js');
 Message     = require('./Message.js');
 ObjManager  = require('./manager.js');

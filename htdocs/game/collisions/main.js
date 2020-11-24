@@ -18,6 +18,8 @@ class Collision {
     this.static = false;
 
     this.center = {x: 32, y: 32};
+
+    this.direction = 'none';
   }
 
   collideRect(entity) {
@@ -126,6 +128,15 @@ for (var j = 0; j < objects.length; j++) {
     var deltaY = Ya < Yb ? -Ya : Yb;
 
     if (abs(deltaX) > abs(deltaY)) {
+
+      if(deltaY > 0) {
+        console.log('TOP');
+        colider1.direction = 'top';
+      } else {
+        console.log('BOTTOM');
+        colider1.direction = 'bottom';
+      }
+
         //if(round(shift.y) != round(deltaY))
          // shift.y += deltaY;
           colider1.pos.y += deltaY; 
@@ -137,6 +148,13 @@ for (var j = 0; j < objects.length; j++) {
         }
         colider1.colidedY = true;
     } else {
+      if(deltaX > 0) {
+        console.log('LEFT');
+        colider1.direction = 'left';
+      } else {
+        console.log('RIGHT');
+        colider1.direction = 'right';
+      }
       //if(round(shift.x) != round(deltaX))
         //shift.x += deltaX;
         colider1.pos.x += deltaX; 
@@ -152,11 +170,9 @@ for (var j = 0; j < objects.length; j++) {
 }
 
 class Direction {
-  constructor(){
-    this.UP     = 1;
-    this.DOWN   = 2;
-    this.LEFT   = 3;
-    this.RIGHT  = 4;
-    this.NONE   = 0;
-  }
+    static UP     = 1;
+    static DOWN   = 2;
+    static LEFT   = 3;
+    static RIGHT  = 4;
+    static NONE   = 0;
 }

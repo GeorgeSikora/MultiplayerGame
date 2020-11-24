@@ -59,6 +59,7 @@ class Message {
         }
 
         this.img = img;
+        img.remove();
     }
 
     useToken(param, token) {

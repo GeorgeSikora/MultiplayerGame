@@ -29,6 +29,7 @@
 
 <script src="entities/Particle.js"></script>
 <script src="entities/Smoke.js"></script>
+<script src="entities/Granate.js"></script>
 
 <!-- EQUIPMENT -->
 <script src="entities/Equipment.js"></script>

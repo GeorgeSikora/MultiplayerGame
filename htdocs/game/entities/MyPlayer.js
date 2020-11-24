@@ -123,6 +123,8 @@ class MyPlayer extends GameObject {
   }
 
   mousePressed() {
+    objects.push(new Granate(this.pos.x, this.pos.y, atan2(mouseY - height / 2, mouseX - width / 2)));
+
     if(!this.enable) return;
     this.equipmentUsage();
   }

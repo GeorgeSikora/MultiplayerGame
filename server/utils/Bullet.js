@@ -12,7 +12,9 @@ class Bullet extends GameObject {
         this.dir = dir;
         this.speed = 1;
 
-        ioClient.emit('shot', {shooterID: this.shooterID, pos: this.pos, speed: {x: Math.cos(this.dir) * this.speed, y: Math.sin(this.dir) * this.speed}});
+        for(var i = 0; i < players.length; i++) {
+            ioClient.to(players[i].id).emit('shot', {shooterID: this.shooterID, pos: this.pos, speed: {x: Math.cos(this.dir) * this.speed, y: Math.sin(this.dir) * this.speed}});
+        }
     }
     update() {
         if(this.pos.x < -10000 || this.pos.x > 10000 || this.pos.y < -10000 || this.pos.y > 10000) {
@@ -60,7 +62,7 @@ class Bullet extends GameObject {
                                 p.capturedFlag = null;
                             }
 
-                            const pos = p.team == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
+                            const pos = p.team == 'red' ? spawnRed : spawnBlue;
                             
                             ioClient.to(p.id).emit('respawn', this.shooterID, pos);
 

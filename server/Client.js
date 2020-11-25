@@ -38,20 +38,20 @@ ioClient.on('connection', socket => {
         const pos = data.team == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
 
         socket.emit('init', {constants: constants, players: players, objects: objects});
+        
         players.push(new Player(socket.id, data.name, pos.x, pos.y, data.team));
         socket.broadcast.emit('newPlayer', players[players.length-1]);
 
         if(startTimeoutHandle != null) clearTimeout(startTimeoutHandle);
 
         if(players.length >= 2) {
-            /*
+            
             ioClient.emit('chat-message', new Message('&3Game will start after 10 seconds!'));
 
             startTimeoutHandle = setTimeout(() => {
                 ioClient.emit('chat-message', new Message('&3Game started!'));
                 gameStarted = true;
             }, 10000);
-            */
         }
         
         sendTeams();

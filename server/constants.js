@@ -1,12 +1,24 @@
 
 class Constants {
     constructor(){
-        this.PLAYER_HP = 15;
-        this.PLAYER_DAMAGE = 1;
-        this.PLAYER_MIN_SHOOT_GAP = 80;
-        this.SAFE_ZONE = 0;
-        this.ANTICHEAT_ENABLE = 0;
-        this.FRIENDLY_FIRE = 0;
+
+        this.PLAYER = {
+            HP:             15,
+            SPEED:          30,
+            DAMAGE:         1,
+            FRIENDLY_FIRE:  false
+        };
+
+        this.GAME = {
+            SAFE_ZONE:                  0,
+            REFRESH_PAGE_ON_RESTART:    false,
+            RESTART_TIME:               5
+        };
+
+        this.ANTICHEAT = {
+            ENABLE: false,
+            MIN_SHOOT_GAP: 80
+        }
     }
 }
 

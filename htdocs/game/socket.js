@@ -17,6 +17,7 @@ class Multiplayer {
       reconnectionDelay: 1500
     });
     socket.on('init',          initGame);  // send players and map
+    socket.on('load-map',      loadMap);
     // built-in events
     socket.on('connect',       this.connected);
     socket.on('connect_error', this.connect_error);
@@ -183,10 +184,11 @@ setInterval(function(){
 
 // Init game and entities
 function initGame(data) {
+
   var startTime = millis();
   game.start();
 
-  const pos = player.team == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
+  const pos = data.spawn;
 
   player.pos.x = pos.x;
   player.pos.y = pos.y;
@@ -217,6 +219,48 @@ function initGame(data) {
     const p = playersLoad[i];
     players.push(new Player(p.id, p.name, p.pos.x, p.pos.y, p.col));
   }
+
+  /*
+  const objectsLoad = data.objects;
+  for (var i = 0; i < objectsLoad.length; i++) {
+    const obj = objectsLoad[i];
+
+    switch(obj.name){
+      case 'Block':
+        objects.push(new Block(obj.pos.x, obj.pos.y));
+        break;
+      case 'Flag':
+        objects.push(new Flag(obj.pos.x, obj.pos.y, obj.team));
+        break;
+    }
+  }
+  
+  minimap.build();
+*/
+  console.log('Game loaded', millis() - startTime);
+  game.loaded = true;
+  game.started = true;
+}
+
+function loadMap(data) {
+  console.log('loading map !!!', data);
+
+  if(!game.started) return;
+
+  var pos = {x: 0, y: 0};
+
+  if(data.spawn != null) {
+    pos = data.spawn;
+  }
+
+  player.pos.x = pos.x;
+  player.pos.y = pos.y;
+
+  cam.pos.x = pos.x;
+  cam.pos.y = pos.y;
+
+  objects = [];
+
   const objectsLoad = data.objects;
   for (var i = 0; i < objectsLoad.length; i++) {
     const obj = objectsLoad[i];
@@ -231,11 +275,6 @@ function initGame(data) {
     }
   }
   minimap.build();
-
-  console.log('Game loaded', millis() - startTime);
-  
-  game.loaded = true;
-  game.started = true;
 }
 
 // When new player is connected

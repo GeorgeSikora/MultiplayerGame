@@ -1,6 +1,6 @@
 
 class Build extends Equipment {
-    constructor(name, img){
+    constructor(name, img) {
         super(name, img); // img_block // img_flag_blue.get(0,0,96,128)
 
         this.HOLDING_USE = true;
@@ -42,15 +42,15 @@ class Build extends Equipment {
         pop();
     }
     use(obj) {
-        if(this.lastGrid.x != this.grid.x || this.lastGrid.y != this.grid.y || this.lastButton != mouseButton){
+        if(this.lastGrid.x != this.grid.x || this.lastGrid.y != this.grid.y || this.lastButton != mouseButton) {
           this.lastGrid = this.grid;
           this.lastButton = mouseButton;
 
-          if(mouseButton == LEFT){
+          if(mouseButton == LEFT) {
             //socket.emit('block-add', this.grid);
             //objects.push(new Flag(this.grid.x, this.grid.y,'blue'))
           }
-          if(mouseButton == RIGHT){
+          if(mouseButton == RIGHT) {
             //socket.emit('block-rem', this.grid);
           }
           

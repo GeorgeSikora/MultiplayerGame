@@ -40,8 +40,8 @@ function command(str) {
 
             break;
         case 'build':
-            chat.add(new Message().message('&2You dont have permissions').build());
-            return;
+            //chat.add(new Message().message('&2You dont have permissions').build());
+            //return;
 
             game.buildingEnable = !game.buildingEnable;
 
@@ -87,6 +87,19 @@ function command(str) {
             break;
         case 'bot':
             player.botEnable = !player.botEnable;
+            break;
+        case 'mirror':
+            BuildBlock.MIRROR = !BuildBlock.MIRROR;
+            chat.add(new Message().message('mirror building = ' + BuildBlock.MIRROR).build());
+            chat.add(new Message().message('mirrorplus building = ' + BuildBlock.MIRRORPLUS).build());
+            break;
+        case 'mirrorplus':
+            BuildBlock.MIRRORPLUS = !BuildBlock.MIRRORPLUS
+            chat.add(new Message().message('mirror building = ' + BuildBlock.MIRROR).build());
+            chat.add(new Message().message('mirrorplus building = ' + BuildBlock.MIRRORPLUS).build());
+            break;
+        case 'mr':
+            minimap.build();
             break;
         default:
             break;

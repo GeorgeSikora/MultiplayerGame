@@ -1,6 +1,8 @@
 
 /* GLOBAL VARIABLES */
 
+let constants = []; // server constants
+
 const SEND_GAP = 90; // player pos sender
 
 class game {
@@ -14,8 +16,6 @@ class game {
   static showPlayersTarget = false
 
   static teams = {red: 0, blue: 0};
-
-  static constants = []; // server constants
 
   static buildingEnable = false;
   static drawTime = 0;
@@ -64,7 +64,7 @@ class game {
   static restart() {
 
     /* KVŮLI OBNOVY PROVEDENÝCH ZMĚN U KLIENTŮ, KTEŘÍ NEZNAJÍ F5 :) */
-    if(game.started) location.reload();
+    if(game.started && constants.GAME.REFRESH_PAGE_ON_RESTART) location.reload();
 
     setTimeout(()=>{
       if(game.started) return;

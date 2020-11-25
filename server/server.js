@@ -40,6 +40,8 @@ objects = [];
 loadMap = require('./map/load.js');
 loadMap();
 
+require('./utils/Turret.js')
+
 /********* NAMESPACES *********/
 ioClient    = require('./Client.js');
 ioSpectator = require('./Spectator.js');
@@ -73,7 +75,7 @@ setInterval(refresh, TICK_DURATION);
 
 function logInfo() {
     console.log(
-         MAGENTA +'players: '   +YELLOW +players.length.toString().padStart(2)
+         MAGENTA +' players: '   +YELLOW +players.length.toString().padStart(2)
         +MAGENTA +' objects: '  +YELLOW +objects.length.toString().padStart(4)
         +MAGENTA +' lapse: '    +YELLOW +lapseTime.toFixed(2).padStart(8)           +' ms'
         +MAGENTA +' delta: '    +YELLOW +deltaTime.toFixed(1).padStart(5)           +' ms'

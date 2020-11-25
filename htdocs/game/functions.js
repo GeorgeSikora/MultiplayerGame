@@ -45,10 +45,12 @@ function drawInfo(){
 
 /* safe zone at the spawn */
 function drawSavezone(){
-    var zone = game.constants; // size of the zone
-    if(zone == 0)return;
+    if(constants.GAME == null) return;
+    var zone = constants.GAME.SAFE_ZONE; // size of the zone
+    if(zone == 0) return;
     push();
     /* draw rectangle with border */
+    rectMode(CENTER);
     fill(0);
     strokeWeight(7);
     stroke(127, 0, 0);

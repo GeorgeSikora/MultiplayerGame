@@ -33,8 +33,8 @@ class Knife extends Equipment {
         this.shake.x = cos(obj.rotation)*42;
         this.shake.y = sin(obj.rotation)*42;
 
-        player.speed.x += cos(obj.rotation) * 1;
-        player.speed.y += sin(obj.rotation) * 1;
+        player.speed.x += cos(obj.rotation) * 2.5;
+        player.speed.y += sin(obj.rotation) * 2.5;
         /*
         const pos = this.getGunHead(obj);
 

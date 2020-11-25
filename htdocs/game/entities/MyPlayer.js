@@ -38,9 +38,8 @@ class MyPlayer extends GameObject {
     this.down = 0;
 
     this.shotgunBullets = 20;
-
     this.lightBullets = 100;
-    this.smokeGranates = 5;
+    this.smokeGranates = 999999;
 
     /* EQUIPMENT */
     this.weapons = [
@@ -98,7 +97,7 @@ class MyPlayer extends GameObject {
     
     if(this.isMoving()) {
       //for(var i = 0; i < 100; i++)
-        objects.push(new Particle(this.pos.x + random(-this.w/2, this.w/2), this.pos.y + this.h/2 - 5));
+        //objects.push(new Particle(this.pos.x + random(-this.w/2, this.w/2), this.pos.y + this.h/2 - 5));
       /*
       if(this.speed.x > 0) {
         objects.push(new Particle(this.pos.x + random(-this.w/2, this.w/2), this.pos.y + this.h/2 - 5));

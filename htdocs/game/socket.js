@@ -14,7 +14,7 @@ class Multiplayer {
     this.sendTimer = 0;
     // connect to server
     socket = io.connect(url, {
-      reconnectionDelay: 1000
+      reconnectionDelay: 1500
     });
     socket.on('init',          initGame);  // send players and map
     // built-in events
@@ -201,8 +201,10 @@ function initGame(data) {
   splash.opacity = 255;
   sound_drop1.play();
 
-  /* INIT GAME SETTINGS */
-  game.constants = data.constants;
+  /* INIT GAME CONSTANTS & SETTINGS */
+  constants = data.constants;
+  console.log(constants);
+  player.maxSpeed = constants.PLAYER.SPEED;
 
   // log size of players
   console.log('%c Players size: %c' + data.players.length,'color: lime','color: yellow');

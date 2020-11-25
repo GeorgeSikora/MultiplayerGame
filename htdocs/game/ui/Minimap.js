@@ -64,6 +64,12 @@ class Minimap {
 
         /* blue flag */
         this.drawFlag('blue');
+        
+        /* blue flag */
+        this.drawFlag('green');
+        
+        /* blue flag */
+        this.drawFlag('yellow');
 
         pop();
     }

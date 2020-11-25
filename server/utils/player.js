@@ -12,7 +12,7 @@ class Player {
     this.selectedGun = 0;
     this.rotation = 0;
   
-    this.hp = constants.PLAYER_HP;
+    this.hp = constants.PLAYER.HP;
 
     this.col = col;
 

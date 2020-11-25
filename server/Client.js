@@ -80,7 +80,7 @@ ioClient.on('connection', socket => {
         const playerPos = {x: p.pos.x, y: p.pos.y};
         const delta = {x: Math.abs(playerPos.x - pos.x), y: Math.abs(playerPos.y - pos.y)};
 
-        if(constants.ANTICHEAT_ENABLE){
+        if(constants.ANTICHEAT.ENABLE){
             if(delta.x > 100 || delta.y > 100) {
                 console.log("Anticheat detected speed hack!");
                 p.hackingCounter++;
@@ -106,8 +106,9 @@ ioClient.on('connection', socket => {
     });
 
     socket.on('shot', data => {
-        //if(data.x < -constants.SAFE_ZONE || data.x > constants.SAFE_ZONE || data.y < -constants.SAFE_ZONE || data.y > constants.SAFE_ZONE) {
-            objects.push(new Bullet(socket.id, data.x, data.y, data.dir));
+        //const ZONE = constants.GAME.SAFE_ZONE;
+        //if(data.x < -ZONE || data.x > ZONE || data.y < -ZONE || data.y > ZONE) {
+        objects.push(new Bullet(socket.id, data.x, data.y, data.dir));
         //}
     });
 
@@ -272,7 +273,7 @@ function gameEnd(){
     
     ioClient.emit('end');
     ioClient.emit('chat-message', new Message('&3Game ends!'));
-    ioClient.emit('chat-message', new Message('&6Game will be restarted after 10 seconds.'));
+    ioClient.emit('chat-message', new Message('&6Game will be restarted after '+constants.GAME.RESTART_TIME+' seconds.'));
 
     setTimeout(() => {
         ioClient.emit('chat-message', new Message('&5Game restarted'));
@@ -285,7 +286,7 @@ function gameEnd(){
 
         gameStarted = false;
     
-    }, 10000);
+    }, constants.GAME.RESTART_TIME*1000);
 }
 
 module.exports = ioClient;

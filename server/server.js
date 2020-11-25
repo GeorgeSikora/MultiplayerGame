@@ -15,7 +15,7 @@ console.log('Socket.io server started port: ' + process.env.PORT || SERVER_PORT)
 
 /********* SERVICE HTML PAGE *********/
 //if(process.env.MAIN == 1){
-    require('./service/app.js');
+require('./service/app.js');
 //}
 
 /********* FUNCTIONS *********/
@@ -38,7 +38,11 @@ objects = [];
 
 /********* LOAD MAP *********/
 loadMap = require('./map/load.js');
-loadMap();
+
+spawnRed = {x: 0, y: 0};
+spawnBlue = {x: 0, y: 0};
+
+loadMap('lobby');
 
 require('./utils/Turret.js')
 

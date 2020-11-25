@@ -1,5 +1,9 @@
 
 class BuildBlock extends Build {
+
+  static MIRROR = false;
+  static MIRRORPLUS = false;
+
     constructor(){
         super('block', img_block);
         this.center = {x: 32, y: 32};
@@ -11,9 +15,33 @@ class BuildBlock extends Build {
 
             if(mouseButton == LEFT){
               socket.emit('block-add', this.grid);
+              if(BuildBlock.MIRROR){
+                //socket.emit('block-add', {x:  this.grid.x, y:   this.grid.y});
+                socket.emit('block-add', {x: -this.grid.x, y:   this.grid.y});
+                socket.emit('block-add', {x:  this.grid.x, y:  -this.grid.y});
+                socket.emit('block-add', {x: -this.grid.x, y:  -this.grid.y});
+                if(BuildBlock.MIRRORPLUS){
+                  socket.emit('block-add', {x:  this.grid.y, y:   this.grid.x});
+                  socket.emit('block-add', {x: -this.grid.y, y:   this.grid.x});
+                  socket.emit('block-add', {x:  this.grid.y, y:  -this.grid.x});
+                  socket.emit('block-add', {x: -this.grid.y, y:  -this.grid.x});
+                }
+              }
             }
             if(mouseButton == RIGHT){
               socket.emit('block-rem', this.grid);
+              if(BuildBlock.MIRROR){
+                //socket.emit('block-rem', {x:  this.grid.x, y:   this.grid.y});
+                socket.emit('block-rem', {x: -this.grid.x, y:   this.grid.y});
+                socket.emit('block-rem', {x:  this.grid.x, y:  -this.grid.y});
+                socket.emit('block-rem', {x: -this.grid.x, y:  -this.grid.y});
+                if(BuildBlock.MIRRORPLUS){
+                  socket.emit('block-rem', {x:  this.grid.y, y:   this.grid.x});
+                  socket.emit('block-rem', {x: -this.grid.y, y:   this.grid.x});
+                  socket.emit('block-rem', {x:  this.grid.y, y:  -this.grid.x});
+                  socket.emit('block-rem', {x: -this.grid.y, y:  -this.grid.x});
+                }
+              }
             }
 
             this.shake.x = cos(obj.rotation)*16;

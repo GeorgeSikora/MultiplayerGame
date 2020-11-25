@@ -76,7 +76,7 @@ class Turret extends GameObject {
     }
 } 
 
-objects.push(new Turret(0, 0));
+//objects.push(new Turret(0, 0));
 
 function getMillis() {
     const hrTime = process.hrtime();

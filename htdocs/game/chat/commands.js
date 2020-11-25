@@ -101,6 +101,9 @@ function command(str) {
         case 'mr':
             minimap.build();
             break;
+        case 'clear':
+            objects = [];
+            break;
         default:
             break;
 

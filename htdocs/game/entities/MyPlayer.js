@@ -37,9 +37,10 @@ class MyPlayer extends GameObject {
     this.up = 0;
     this.down = 0;
 
+    /* EQUIPMENT AMMOUNTS */
     this.shotgunBullets = 20;
     this.lightBullets = 100;
-    this.smokeGranates = 999999;
+    this.smokeGranates = 5;
 
     /* EQUIPMENT */
     this.weapons = [
@@ -48,7 +49,6 @@ class MyPlayer extends GameObject {
       new Shotgun(),
       new HandGranate()
     ];
-    
     this.tools = [
       new BuildBlock(), 
       new BuildFlag('blue'), 
@@ -56,7 +56,6 @@ class MyPlayer extends GameObject {
       new BuildFlag('red'),
       new BuildFlag('yellow')
     ];
-    
     this.equipment = this.weapons;
     this.selectedEquipment = 0;
 
@@ -66,7 +65,7 @@ class MyPlayer extends GameObject {
   
   refresh() {
     if(!this.enable) return;
-
+    
     /* refresh proper layer */
     this.layer = this.pos.y +this.h/2;
     /* control */
@@ -94,22 +93,10 @@ class MyPlayer extends GameObject {
     if(!game.menuOpened && mouseIsPressed && this.equipment[this.selectedEquipment].HOLDING_USE) {
       this.equipmentUsage();
     }
-    
+    /* small particles, when player run */
     if(this.isMoving()) {
-      //for(var i = 0; i < 100; i++)
-        //objects.push(new Particle(this.pos.x + random(-this.w/2, this.w/2), this.pos.y + this.h/2 - 5));
-      /*
-      if(this.speed.x > 0) {
-        objects.push(new Particle(this.pos.x + random(-this.w/2, this.w/2), this.pos.y + this.h/2 - 5));
-      } else {
-        objects.push(new Particle(this.pos.x + random(-this.w/2, this.w/2), this.pos.y + this.h/2 - 5));
-      }
-      */
+      objects.push(new Particle(this.pos.x + random(-this.w/2, this.w/2), this.pos.y + this.h/2 - 5));
     }
-
-    //for(var i = 0; i < 1; i++)
-    //  objects.push(new Smoke(player.pos.x, player.pos.y));
-  
   }
   
   draw() {

@@ -5,6 +5,10 @@ body {
     background-color: #121212;
 }
 
+h1 {
+    color: white;
+}
+
 .center {
   position: absolute;
   left: 50%;
@@ -13,7 +17,8 @@ body {
 }
 
 table {
-    margin-top: 100px;
+    width: 100%;
+    /*margin-top: 100px;*/
     color: #ffffcc;
     font-family: arial, sans-serif;
     border-collapse: collapse;

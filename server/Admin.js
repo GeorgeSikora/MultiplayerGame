@@ -1,3 +1,4 @@
+const {RESET,BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE} = require('./colors.js');
 
 const ioAdmin = io.of('/admin');
 
@@ -20,10 +21,21 @@ ioAdmin.on('connection', socket => {
     socket.on('get_constants', () => {
         socket.emit('constants', constants);
     });
-    socket.on('set_constants', receivedConst => {
-        console.log(receivedConst);
-        for(var i = 0; i < receivedConst.length; i++) {
-           constants[receivedConst[i].name] = receivedConst[i].value;
+    socket.on('set_constants', receivedTables => {
+
+        console.log(CYAN+'Admin set constants:'+RESET);
+
+        for(var i = 0; i < receivedTables.length; i++) {
+
+            var receivedConst = receivedTables[i].array;
+            var tableName = receivedTables[i].name;
+
+            console.log(MAGENTA+tableName+RESET);
+            console.log(receivedConst);
+            
+            for(var j = 0; j < receivedConst.length; j++) {
+                constants[tableName][receivedConst[j].name] = receivedConst[j].value;
+            }
         }
     });
 

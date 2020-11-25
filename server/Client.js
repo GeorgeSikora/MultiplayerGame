@@ -25,7 +25,7 @@ ioClient.on('connection', socket => {
 
         if(gameStarted) {
             socket.emit('chat-message', new Message('&2Game already started!'));
-           // return;
+            return;
         }
         const teams = countTeams();
 
@@ -35,12 +35,16 @@ ioClient.on('connection', socket => {
             return;
         }
 
-        const pos = data.team == 'red' ? {x: -2000, y: 0} : {x: 2000, y: 0};
+        const pos = data.team == 'red' ? spawnRed : spawnBlue;
 
-        socket.emit('init', {constants: constants, players: players, objects: objects});
-        
+        socket.emit('init', {constants: constants, players: players, spawn: pos});
+        socket.emit('load-map', {objects: objects});
+
         players.push(new Player(socket.id, data.name, pos.x, pos.y, data.team));
-        socket.broadcast.emit('newPlayer', players[players.length-1]);
+
+        for(var i = 0; i < players.length; i++) {
+            socket.to(players[i].id).emit('newPlayer', players[players.length-1]); // 
+        }
 
         if(startTimeoutHandle != null) clearTimeout(startTimeoutHandle);
 
@@ -49,6 +53,16 @@ ioClient.on('connection', socket => {
             ioClient.emit('chat-message', new Message('&3Game will start after 10 seconds!'));
 
             startTimeoutHandle = setTimeout(() => {
+
+                loadMap('map_flags');
+                console.log(players.length);
+                for(var i = 0; i < players.length; i++) {
+                    const spawnPos = players[i].team == 'red' ? spawnRed : spawnBlue;
+                    players[i].pos = spawnPos; /* TODO: teleport all players to the respawn of their team */
+                    ioClient.to(players[i].id).emit('load-map', {objects: objects, spawn: spawnPos});
+                }
+
+
                 ioClient.emit('chat-message', new Message('&3Game started!'));
                 gameStarted = true;
             }, 10000);
@@ -80,7 +94,7 @@ ioClient.on('connection', socket => {
         const playerPos = {x: p.pos.x, y: p.pos.y};
         const delta = {x: Math.abs(playerPos.x - pos.x), y: Math.abs(playerPos.y - pos.y)};
 
-        if(constants.ANTICHEAT.ENABLE){
+        if(constants.ANTICHEAT.ENABLE) {
             if(delta.x > 100 || delta.y > 100) {
                 console.log("Anticheat detected speed hack!");
                 p.hackingCounter++;
@@ -252,24 +266,24 @@ ioClient.on('connection', socket => {
     */
 });
 
-function emitAll(...args){
+function emitAll(...args) {
     io.of('/spec').emit(...args);
     io.of('/client').emit(...args);
 }
 
-function sendTeams(){
+function sendTeams() {
     const teams = countTeams();
     ioClient.emit('player-teams', teams.red, teams.blue);
 }
 
-function countTeams(){
+function countTeams() {
     var teams = {red: 0, blue: 0};
     for(var i = 0; i < players.length; i++) 
         teams[players[i].team]++;
     return teams;
 }
 
-function gameEnd(){
+function gameEnd() {
     
     ioClient.emit('end');
     ioClient.emit('chat-message', new Message('&3Game ends!'));
@@ -282,7 +296,7 @@ function gameEnd(){
         players = [];
         objects = [];
 
-        loadMap();
+        loadMap('lobby');
 
         gameStarted = false;
     

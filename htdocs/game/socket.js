@@ -7,6 +7,8 @@
 
 let multiplayer, socket;
 
+var respawnTimeout;
+
 class Multiplayer {
   constructor(url) {
     // main vals
@@ -51,13 +53,13 @@ class Multiplayer {
       var index = objectIndexOf(players, shooterID, 'id');
       cam.target = players[index];
 
-      setTimeout(() => {
+      respawnTimeout = setTimeout(() => {
         sound_drop1.play();
         splash.opacity = 255;
         player.enable = true;
         cam.target = player;
         socket.emit('respawned');
-      }, 3000);
+      }, 10000);
     });
 
     socket.on('setPos', (pos)=> {
@@ -199,8 +201,6 @@ function initGame(data) {
   player.enable = true;
   player.show = true;
 
-  cam.targetScale = 1.0;
-  splash.opacity = 255;
   sound_drop1.play();
 
   /* INIT GAME CONSTANTS & SETTINGS */
@@ -236,7 +236,7 @@ function initGame(data) {
   }
   
   minimap.build();
-*/
+  */
   console.log('Game loaded', millis() - startTime);
   game.loaded = true;
   game.started = true;
@@ -247,17 +247,25 @@ function loadMap(data) {
 
   if(!game.started) return;
 
+  clearTimeout(respawnTimeout);
+
   var pos = {x: 0, y: 0};
 
   if(data.spawn != null) {
     pos = data.spawn;
   }
 
+  player.enable = true;
   player.pos.x = pos.x;
   player.pos.y = pos.y;
 
   cam.pos.x = pos.x;
   cam.pos.y = pos.y;
+  cam.target = player;
+
+  cam.targetScale = 1.0;
+
+  splash.opacity = 255;
 
   objects = [];
 

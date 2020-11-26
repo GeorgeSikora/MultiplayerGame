@@ -55,10 +55,15 @@ ioClient.on('connection', socket => {
             startTimeoutHandle = setTimeout(() => {
 
                 loadMap('map_flags');
+
                 console.log(players.length);
                 for(var i = 0; i < players.length; i++) {
                     const spawnPos = players[i].team == 'red' ? spawnRed : spawnBlue;
-                    players[i].pos = spawnPos; /* TODO: teleport all players to the respawn of their team */
+
+                    players[i].pos = spawnPos; 
+                    players[i].hp = constants.PLAYER.HP;
+                    players[i].kills = 0;
+
                     ioClient.to(players[i].id).emit('load-map', {objects: objects, spawn: spawnPos});
                 }
 
@@ -81,6 +86,10 @@ ioClient.on('connection', socket => {
 
         const teams = countTeams();
         if(gameStarted && (teams.red == 0 || teams.blue == 0)) {
+            
+            const winnerTeam = teams.red != 0 ? 'red' : 'blue';
+
+            ioClient.emit('chat-message', new Message('&The &' + Message.getColorToken(winnerTeam) + winnerTeam + '&3 team won the match!'));
             gameEnd();
         }
     });

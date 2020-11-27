@@ -9,7 +9,7 @@ class game {
 
   static fps = 0;
   static menuOpened = false;
-  static muted = false;
+  static muted = true;
   static loaded = false;
   static started = false;
   static showInfo = false;
@@ -28,6 +28,7 @@ class game {
     minimap = new Minimap();
 
     tileStructure = new TileStructure();
+    chunkSystem = new ChunkSystem();
 
     player.enable = false;
     player.show = false;
@@ -37,6 +38,9 @@ class game {
     socket.emit('get-player-teams');
 
     game.restart();
+
+    Howler.mute(game.muted);
+
     sound_drop2.play();
   }
   static start() {

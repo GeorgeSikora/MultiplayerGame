@@ -17,6 +17,7 @@ class TextSign extends GameObject {
         this.opacity += (this.targetOpacity - this.opacity) * 0.2;
 
         push();
+        noStroke();
         fill(0, this.opacity/2);
         rectMode(CENTER);
         rect(this.pos.x, this.pos.y +3, 240, 30);

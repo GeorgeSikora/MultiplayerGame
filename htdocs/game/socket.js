@@ -282,6 +282,13 @@ function loadMap(data) {
         break;
     }
   }
+
+  for(var i = 0; i < objects.length; i++) {
+    if(objects[i].constructor.name == 'Block') {
+      objects[i].autoTile();
+    }
+  }
+
   minimap.build();
 }
 

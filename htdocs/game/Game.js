@@ -21,12 +21,13 @@ class game {
   static drawTime = 0;
 
   static setup() {
-
     player  = new MyPlayer(0, post.name, 0, 0, 'lobby');
     cam     = new Camera(player);
     chat    = new Chat();
     splash  = new ScreenFlash();
     minimap = new Minimap();
+
+    tileStructure = new TileStructure();
 
     player.enable = false;
     player.show = false;

@@ -26,6 +26,15 @@ function drawInfo(){
     fill(255);
     textSize(18);
     textAlign(LEFT, TOP);
+    var chunksInfo = '';
+    for(var i = 0; i < chunkSystem.chunks.length; i++) {
+        const c = chunkSystem.chunks[i];
+        chunksInfo += 'chunk ';
+        chunksInfo += i;
+        chunksInfo += ' inProcess: ';
+        chunksInfo += c.inProcess;
+        chunksInfo += '\n';
+    }
     text(
       'connected: '         + socket.connected
     + '\ngame.started: '    + game.started
@@ -39,6 +48,7 @@ function drawInfo(){
     + '\nmute: '            + game.muted
     + '\nMaster-vol: '      + int(Howler.volume()*100) + '%'
     + '\nMusic-vol: '       + int(volumeMusic*100) + '%'
+    + '\n' + chunksInfo
     ,5, 5);
     pop();
 }

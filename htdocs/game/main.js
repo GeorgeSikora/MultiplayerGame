@@ -11,7 +11,7 @@ function setup() {
   /* set some default stuff */
   textFont(font_default);
   noStroke();
-  frameRate(60);
+  frameRate(100);
   /* create necessary game objects */
   game.setup();
 }
@@ -23,6 +23,10 @@ function draw() {
   if(frameRate() < 15){
     //chat.add("fps drop " + frameRate() + " fps");
     return;
+  }
+
+  if(frameCount%60 == 0){
+   // console.log(frameRate());
   }
 
   var drawTime = millis();
@@ -60,13 +64,18 @@ function draw() {
 
     /* if this is not equal, it means the objects was removed */
     if(objects[i] != obj) continue;
-    
+    if(obj.staticDraw) continue;
+  
     /* draw only when it is on screen */
-    if(rectRect(obj.pos.x-obj.center.x, obj.pos.y-obj.center.y, obj.w, obj.h, cam.pos.x-width/cam.scale/2, cam.pos.y-height/cam.scale/2, width/cam.scale, height/cam.scale)){
+    if(rectRect(obj.pos.x-obj.center.x, obj.pos.y-obj.center.y, obj.w, obj.h, cam.pos.x-width/cam.scale/2, cam.pos.y-height/cam.scale/2, width/cam.scale, height/cam.scale)) {
       //obj.draw();
       objectsRender.push(obj);
     }
   }
+
+  /********************************************************************************************/
+  chunkSystem.update();
+  /********************************************************************************************/
 
   /* add my player to render */
   objectsRender.push(player);
@@ -124,3 +133,7 @@ function draw() {
 
   if(frameCount%50 == 0) game.drawTime = (millis() - drawTime).toFixed(2);
 }
+
+setInterval(() => {
+  //staticDrawEnd = false;
+}, 3000);

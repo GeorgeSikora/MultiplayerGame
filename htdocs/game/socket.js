@@ -263,7 +263,7 @@ function loadMap(data) {
   cam.pos.y = pos.y;
   cam.target = player;
 
-  cam.targetScale = 1.0;
+  cam.targetScale = 1;
 
   splash.opacity = 255;
 
@@ -290,6 +290,8 @@ function loadMap(data) {
   }
 
   minimap.build();
+
+  chunkSystem.refresh();
 }
 
 // When new player is connected

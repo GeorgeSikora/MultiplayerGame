@@ -43,7 +43,7 @@ ioClient.on('connection', socket => {
         players.push(new Player(socket.id, data.name, pos.x, pos.y, data.team));
 
         for(var i = 0; i < players.length; i++) {
-            socket.to(players[i].id).emit('newPlayer', players[players.length-1]); // 
+            socket.to(players[i].id).emit('newPlayer', players[players.length-1]);
         }
 
         if(startTimeoutHandle != null) clearTimeout(startTimeoutHandle);

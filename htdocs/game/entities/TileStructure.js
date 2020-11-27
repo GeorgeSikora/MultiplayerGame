@@ -26,7 +26,7 @@ class TileStructure {
         this.createTile(2, 4, 0, 1, 0,    this.size*2 );
         this.createTile(4, 1, 2, 0, this.size, this.size*2 );
     
-        this.island = tileset_grass.get(0, 0, this.size, this.size);
+        this.island = tileset_block.get(0, 0, this.size, this.size);
     }
 
     createTile(TL_ID, TR_ID, BL_ID, BR_ID, x, y) {
@@ -40,13 +40,13 @@ class TileStructure {
 
 function cutTile(x, y) {
     var TL, TR, BL, BR;
-    TL = tileset_grass.get(x, y, hsize, hsize);
-    TR = tileset_grass.get(x+hsize, y, hsize, hsize);
-    BL = tileset_grass.get(x, y+hsize, hsize, hsize);
-    BR = tileset_grass.get(x+hsize, y+hsize, hsize, hsize);
+    TL = tileset_block.get(x, y, hsize, hsize);
+    TR = tileset_block.get(x+hsize, y, hsize, hsize);
+    BL = tileset_block.get(x, y+hsize, hsize, hsize);
+    BR = tileset_block.get(x+hsize, y+hsize, hsize, hsize);
     return [TL, TR, BL, BR];
   }
-
+/*
   setInterval(() => {
     for(var i = 0; i < objects.length; i++) {
         if(objects[i].constructor.name == 'Block') {
@@ -54,3 +54,4 @@ function cutTile(x, y) {
         }
       }
   }, 30000);
+  */

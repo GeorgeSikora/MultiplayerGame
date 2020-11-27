@@ -13,13 +13,14 @@ class Block extends GameObject {
         this.BR = 0;
 
         this.texture = null;
+        this.staticDraw = true;
     }
     update(){
         
     }
-    draw(){
-        this.layer = this.pos.y - player.h - this.h;
-        tint(255);
+    draw(g){
+        //this.layer = this.pos.y - player.h - this.h;
+        //g.tint(255);
         //image(tileStructure.island, this.pos.x -this.w/2, this.pos.y -this.h/2);
 
         /*
@@ -29,13 +30,12 @@ class Block extends GameObject {
         */
 
         if (this.TL==0 && this.TR==0 && this.BL==0 && this.BR==0) {
-            image(tileStructure.island, this.pos.x-hsize, this.pos.y-hsize);
+            g.image(tileStructure.island, this.pos.x-hsize, this.pos.y-hsize);
         } else {
-            image(tileStructure.TL[this.TL], this.pos.x-hsize, this.pos.y-hsize);
-            image(tileStructure.TR[this.TR], this.pos.x, this.pos.y-hsize);
-            image(tileStructure.BL[this.BL], this.pos.x-hsize, this.pos.y);
-            image(tileStructure.BR[this.BR], this.pos.x, this.pos.y);
-
+            g.image(tileStructure.TL[this.TL], this.pos.x-hsize, this.pos.y-hsize);
+            g.image(tileStructure.TR[this.TR], this.pos.x, this.pos.y-hsize);
+            g.image(tileStructure.BL[this.BL], this.pos.x-hsize, this.pos.y);
+            g.image(tileStructure.BR[this.BR], this.pos.x, this.pos.y);
         }
         
     }

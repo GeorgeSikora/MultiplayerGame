@@ -21,6 +21,9 @@ function preload() {
   img_flag_ringle  = loadImage('assets/images/flag/ringle.png');
 
   img_particles_smoke  = loadImage('assets/images/particles/smoke.png');
+  
+  tileset_grass  = loadImage('assets/images/tilesets/grass.png');
+  tileset_block  = loadImage('assets/images/tilesets/block.png');
 
   /* Icons */
   ico_sounds_on = loadImage('assets/images/icons/sounds_on.png');

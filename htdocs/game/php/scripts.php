@@ -19,17 +19,17 @@
 
 <!-- ENTITIES AND OBJECTS -->
 <script src="entities/GameObject.js"></script>
-<script src="entities/MyPlayer.js"></script>
-<script src="entities/Player.js"></script>
+<script src="entities/creatures/MyPlayer.js"></script>
+<script src="entities/creatures/Player.js"></script>
 <script src="entities/Block.js"></script>
 <script src="entities/Bullet.js"></script>
 <script src="entities/Flag.js"></script>
 <script src="entities/DroppedFlag.js"></script>
 <script src="entities/Grass.js"></script>
-
 <script src="entities/Particle.js"></script>
 <script src="entities/Smoke.js"></script>
 <script src="entities/Granate.js"></script>
+<script src="entities/TileStructure.js"></script>
 
 <!-- EQUIPMENT -->
 <script src="entities/Equipment.js"></script>

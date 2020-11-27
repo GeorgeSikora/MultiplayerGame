@@ -58,6 +58,7 @@
 <script src="functions.js"></script>
 <script src="camera.js"></script>
 <script src="socket.js"></script>
+<script src="ChunkSystem.js"></script>
 
 <!-- GAME ENGINE -->
 <script src="Game.js"></script>

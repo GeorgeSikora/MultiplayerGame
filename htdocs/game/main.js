@@ -1,6 +1,6 @@
 
 /* SERVER IP WITH ':' PORT AND '/' NAMESPACE */
-let SERVER_URL = 'localhost:3031/client';  // 185.221.124.205
+let SERVER_URL = '185.221.124.205:3031/client';  // 185.221.124.205
 
 /*** SETUP ***/
 function setup() {

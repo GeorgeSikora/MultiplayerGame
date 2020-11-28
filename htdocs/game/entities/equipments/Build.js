@@ -4,6 +4,8 @@ class Build extends Equipment {
         super(name, img); // img_block // img_flag_blue.get(0,0,96,128)
 
         this.HOLDING_USE = true;
+        this.GRID_SIZE = 1;
+        this.GRID_SHIFT = {x: 0, y: 0};
         
         this.center = {x: 0, y: 0};
 
@@ -31,14 +33,25 @@ class Build extends Equipment {
         pop();
         
         if(obj != player) return;
+
+        var target = cam.mouse;
         
-        this.grid = getGrid(cam.mouse, 64);
+        target.x += this.GRID_SHIFT.x;
+        target.y += this.GRID_SHIFT.y;
+
+        this.grid = getGrid(target, this.GRID_SIZE);
+
         push();
         tint(255, 100);
         //image(img_block, this.grid.x-64/2, this.grid.y-64/2);
         translate(this.grid.x, this.grid.y);
         translate(-this.center.x, -this.center.y);
-        image(this.img, 0, 0);
+        translate(-this.GRID_SHIFT.x, -this.GRID_SHIFT.y);
+        if(this.PLACE_SIZE) {
+          image(this.img, 0, 0, this.PLACE_SIZE.x, this.PLACE_SIZE.y);
+        } else {
+          image(this.img, 0, 0);
+        }
         pop();
     }
     use(obj) {

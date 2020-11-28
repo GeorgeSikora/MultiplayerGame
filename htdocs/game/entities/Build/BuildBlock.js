@@ -42,6 +42,7 @@ class BuildBlock extends Build {
                   socket.emit('block-rem', {x: -this.grid.y, y:  -this.grid.x});
                 }
               }
+      
             }
 
             this.shake.x = cos(obj.rotation)*16;

@@ -2,6 +2,8 @@
 class BuildFlag extends Build {
     constructor(team){
       super('flag', null);
+      
+      this.GRID_SIZE = 64;
 
         this.team = team;
         if(team == null) this.team = 'white';

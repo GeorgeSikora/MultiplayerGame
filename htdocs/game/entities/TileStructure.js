@@ -1,6 +1,18 @@
 
-let tileStructure;
-let hsize = 32;
+let tileStructure, tileBackground;
+let hsize = 32; // half size
+
+function loadTiles() {
+  tileStructure = new TileStructure();
+
+  tileBackground = createGraphics(Chunk.SIZE, Chunk.SIZE);
+
+  for(var y = 0; y < Chunk.SIZE; y += 32) {
+    for(var x = 0; x < Chunk.SIZE; x += 32) {
+      tileBackground.image(tileset_background, x, y);
+    }
+  }
+}
 
 class TileStructure {
     constructor() {
@@ -20,13 +32,13 @@ class TileStructure {
         BR = new PImage[5];
         */
 
-        this.createTile(3, 3, 3, 3, this.size, 0      );
-        this.createTile(0, 2, 1, 4, 0,    this.size   );
+        this.createTile(3, 3, 3, 3, this.size, 0           );
+        this.createTile(0, 2, 1, 4, 0,    this.size        );
         this.createTile(1, 0, 4, 2, this.size, this.size   );
-        this.createTile(2, 4, 0, 1, 0,    this.size*2 );
+        this.createTile(2, 4, 0, 1, 0,    this.size*2      );
         this.createTile(4, 1, 2, 0, this.size, this.size*2 );
     
-        this.island = tileset_block.get(0, 0, this.size, this.size);
+        this.island = tileset_grass.get(0, 0, this.size, this.size);
     }
 
     createTile(TL_ID, TR_ID, BL_ID, BR_ID, x, y) {
@@ -40,10 +52,10 @@ class TileStructure {
 
 function cutTile(x, y) {
     var TL, TR, BL, BR;
-    TL = tileset_block.get(x, y, hsize, hsize);
-    TR = tileset_block.get(x+hsize, y, hsize, hsize);
-    BL = tileset_block.get(x, y+hsize, hsize, hsize);
-    BR = tileset_block.get(x+hsize, y+hsize, hsize, hsize);
+    TL = tileset_grass.get(x, y, hsize, hsize);
+    TR = tileset_grass.get(x+hsize, y, hsize, hsize);
+    BL = tileset_grass.get(x, y+hsize, hsize, hsize);
+    BR = tileset_grass.get(x+hsize, y+hsize, hsize, hsize);
     return [TL, TR, BL, BR];
   }
 /*

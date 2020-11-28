@@ -7,6 +7,8 @@ class BuildBlock extends Build {
     constructor(){
         super('block', img_block);
         this.center = {x: 32, y: 32};
+        
+        this.GRID_SIZE = 64;
     }
     use(obj) {
         if(this.lastGrid.x != this.grid.x || this.lastGrid.y != this.grid.y || this.lastButton != mouseButton){

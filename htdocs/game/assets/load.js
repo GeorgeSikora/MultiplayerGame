@@ -22,6 +22,7 @@ function preload() {
 
   img_particles_smoke  = loadImage('assets/images/particles/smoke.png');
   
+  tileset_background  = loadImage('assets/images/tilesets/background.png');
   tileset_grass  = loadImage('assets/images/tilesets/grass.png');
   tileset_block  = loadImage('assets/images/tilesets/block.png');
 

@@ -48,11 +48,15 @@ class Bullet extends GameObject {
 
         this.pos.x += move.x;
         this.pos.y += move.y;
+        
+        // bullets particle 
+        //objects.push(new Particle(this.pos.x, this.pos.y));
     }
     draw(){
         push();
         translate(this.pos.x, this.pos.y);
         rotate(atan2(this.speed.y,this.speed.x));
+        noStroke();
         fill(255,255,0);
         rect(-this.w/2,-this.h/2, this.w, this.h);
         pop();

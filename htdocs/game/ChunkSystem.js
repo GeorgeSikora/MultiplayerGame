@@ -2,7 +2,7 @@
 
 class Chunk {
 
-    static SIZE = 2000;
+    static SIZE = 1088; // for 17 blocks per chunk .... 15 blocks = 960
 
     constructor(x, y) {
         this.pos = {x: x, y: y};
@@ -64,12 +64,12 @@ class Chunk {
         image(this.texture, this.pos.x - Chunk.SIZE/2, this.pos.y - Chunk.SIZE/2);
 
         // draw chunk border
-        /*
+        
         noFill();
         stroke(255, 0, 255);
         rectMode(CORNER);
         rect(this.pos.x - Chunk.SIZE/2, this.pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE);
-        */
+        
     }
 }
 
@@ -99,7 +99,6 @@ class ChunkSystem {
 
             //const delta = {x: (pos.x - this.lastPos.x) / Chunk.SIZE, y: (pos.y - this.lastPos.y) / Chunk.SIZE};
             const delta = {x: pos.x - this.lastPos.x, y: pos.y - this.lastPos.y};
-            console.log(delta.x, delta.y);
 
             for(var i = 0; i < 9; i++) {
                 const x = i%3 -1;
@@ -144,7 +143,7 @@ class ChunkSystem {
             this.chunks[i].update();
         }
         if(millis() - chunksUpdateStart > 0.5)
-        console.log('Chunks update: ' + (millis() - chunksUpdateStart) + 'ms');
+        console.log('Chunks update: ' + (millis() - chunksUpdateStart).toFixed(2) + 'ms');
 
         const chunksDrawStart = millis();
         for(var i = 0; i < 9; i++) {
@@ -154,7 +153,17 @@ class ChunkSystem {
     }
 
     refresh() {
+        
+        const pos = getGrid(cam.pos, Chunk.SIZE);
+
         for(var i = 0; i < 9; i++) {
+            
+            const x = i%3 -1;
+            const y = floor(i/3) -1;
+
+            this.chunks[i].pos.x = pos.x + x * Chunk.SIZE;
+            this.chunks[i].pos.y = pos.y + y * Chunk.SIZE;
+
             this.chunks[i].refresh = true;
         }
     }

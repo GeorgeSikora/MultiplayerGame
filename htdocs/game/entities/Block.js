@@ -12,7 +12,6 @@ class Block extends GameObject {
         this.BL = 0;
         this.BR = 0;
 
-        this.texture = null;
         this.staticDraw = true;
     }
     update(){
@@ -20,26 +19,10 @@ class Block extends GameObject {
     }
     draw(g){
         //this.layer = this.pos.y - player.h - this.h;
-        //g.tint(255);
-        //image(tileStructure.island, this.pos.x -this.w/2, this.pos.y -this.h/2);
+        //tint(255);
+        g.image(img_block, this.pos.x -this.w/2, this.pos.y -this.h/2);
 
         /*
-        if(this.texture != null) {
-            image(this.texture, this.pos.x -this.w/2, this.pos.y -this.h/2);
-        }
-        */
-        if(g == null) {
-            /*
-            if (this.TL==0 && this.TR==0 && this.BL==0 && this.BR==0) {
-                image(tileStructure.island, this.pos.x-hsize, this.pos.y-hsize);
-            } else {
-                image(tileStructure.TL[this.TL], this.pos.x-hsize, this.pos.y-hsize);
-                image(tileStructure.TR[this.TR], this.pos.x, this.pos.y-hsize);
-                image(tileStructure.BL[this.BL], this.pos.x-hsize, this.pos.y);
-                image(tileStructure.BR[this.BR], this.pos.x, this.pos.y);
-            }
-            */
-        } else {
         if (this.TL==0 && this.TR==0 && this.BL==0 && this.BR==0) {
             g.image(tileStructure.island, this.pos.x-hsize, this.pos.y-hsize);
         } else {
@@ -48,7 +31,8 @@ class Block extends GameObject {
             g.image(tileStructure.BL[this.BL], this.pos.x-hsize, this.pos.y);
             g.image(tileStructure.BR[this.BR], this.pos.x, this.pos.y);
         }
-    }
+        */
+    
         
     }
 

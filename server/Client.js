@@ -67,7 +67,6 @@ ioClient.on('connection', socket => {
                     ioClient.to(players[i].id).emit('load-map', {objects: objects, spawn: spawnPos});
                 }
 
-
                 ioClient.emit('chat-message', new Message('&3Game started!'));
                 gameStarted = true;
             }, 10000);
@@ -89,7 +88,7 @@ ioClient.on('connection', socket => {
             
             const winnerTeam = teams.red != 0 ? 'red' : 'blue';
 
-            ioClient.emit('chat-message', new Message('&The &' + Message.getColorToken(winnerTeam) + winnerTeam + '&3 team won the match!'));
+            ioClient.emit('chat-message', new Message('&3The &' + Message.getColorToken(winnerTeam) + winnerTeam + '&3 team won the match!'));
             gameEnd();
         }
     });

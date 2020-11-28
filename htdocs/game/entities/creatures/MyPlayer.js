@@ -51,6 +51,7 @@ class MyPlayer extends GameObject {
     ];
     this.tools = [
       new BuildBlock(), 
+      new BuildTile(),
       new BuildFlag('blue'), 
       new BuildFlag('green'), 
       new BuildFlag('red'),

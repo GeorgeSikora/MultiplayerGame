@@ -82,7 +82,7 @@ class Multiplayer {
       objects.push(new Block(pos.x, pos.y));
 
       for(var i = 0; i < 9; i++) {
-        if(rectRect(pos.x-32, pos.y-32, 64 -1, 64 -1, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE -1, Chunk.SIZE -1)) {
+        if(rectRect(pos.x-32, pos.y-32, 64, 64, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE)) {
           for(var o = 0; o < objects.length; o++) {
             if(objects[o].constructor.name == 'Block') {
               const blockPos = objects[o].pos;
@@ -92,7 +92,7 @@ class Multiplayer {
             }
           }
           chunkSystem.chunks[i].refresh = true;
-          return;
+         // console.log(i);
       }
     }
 
@@ -109,7 +109,7 @@ class Multiplayer {
           removeObject(obj);
 
           for(var i = 0; i < 9; i++) {
-              if(rectRect(pos.x-32, pos.y-32, 64 -1, 64 -1, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE -1, Chunk.SIZE -1)) {
+              if(rectRect(pos.x-32, pos.y-32, 64, 64, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE)) {
                 for(var o = 0; o < objects.length; o++) {
                   if(objects[o].constructor.name == 'Block') {
                     const blockPos = objects[o].pos;
@@ -119,7 +119,7 @@ class Multiplayer {
                   }
                 }
                 chunkSystem.chunks[i].refresh = true;
-                return;
+                //console.log(i);
             }
           }
         }

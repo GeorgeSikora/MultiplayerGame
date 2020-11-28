@@ -27,8 +27,10 @@ class game {
     splash  = new ScreenFlash();
     minimap = new Minimap();
 
-    tileStructure = new TileStructure();
     chunkSystem = new ChunkSystem();
+    
+    loadTiles();
+
 
     player.enable = false;
     player.show = false;

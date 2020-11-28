@@ -80,16 +80,48 @@ class Multiplayer {
     socket.on('block-add', pos => {
       sound_place.play();
       objects.push(new Block(pos.x, pos.y));
+
+      for(var i = 0; i < 9; i++) {
+        if(rectRect(pos.x-32, pos.y-32, 64 -1, 64 -1, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE -1, Chunk.SIZE -1)) {
+          for(var o = 0; o < objects.length; o++) {
+            if(objects[o].constructor.name == 'Block') {
+              const blockPos = objects[o].pos;
+              if((pos.x-64 == blockPos.x || pos.x == blockPos.x || pos.x+64 == blockPos.x) && (pos.y-64 == blockPos.y || pos.y == blockPos.y || pos.y+64 == blockPos.y)) {
+                objects[o].autoTile();
+              }
+            }
+          }
+          chunkSystem.chunks[i].refresh = true;
+          return;
+      }
+    }
+
     });
 
     socket.on('block-rem', pos => {
       for(var i = 0; i < objects.length; i++) {
         var obj = objects[i];
         if(obj.constructor.name != 'Block') continue;
+
+
         if(pos.x == obj.pos.x && pos.y == obj.pos.y) {
           sound_pop.play();
           removeObject(obj);
-          return;
+
+          for(var i = 0; i < 9; i++) {
+              if(rectRect(pos.x-32, pos.y-32, 64 -1, 64 -1, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE -1, Chunk.SIZE -1)) {
+                for(var o = 0; o < objects.length; o++) {
+                  if(objects[o].constructor.name == 'Block') {
+                    const blockPos = objects[o].pos;
+                    if((pos.x-64 == blockPos.x || pos.x == blockPos.x || pos.x+64 == blockPos.x) && (pos.y-64 == blockPos.y || pos.y == blockPos.y || pos.y+64 == blockPos.y)) {
+                      objects[o].autoTile();
+                    }
+                  }
+                }
+                chunkSystem.chunks[i].refresh = true;
+                return;
+            }
+          }
         }
       }
     });
@@ -243,7 +275,7 @@ function initGame(data) {
 }
 
 function loadMap(data) {
-  console.log('loading map !!!', data);
+  console.log('loading map...');
 
   if(!game.started) return;
 
@@ -292,6 +324,8 @@ function loadMap(data) {
   minimap.build();
 
   chunkSystem.refresh();
+  
+  console.log('loaded !');
 }
 
 // When new player is connected

@@ -40,6 +40,7 @@
 <script src="entities/equipments/HandGranate.js"></script>
 
 <script src="entities/Build/BuildBlock.js"></script>
+<script src="entities/Build/BuildTile.js"></script>
 <script src="entities/Build/BuildFlag.js"></script>
 
 <!-- USER INTERFACE -->

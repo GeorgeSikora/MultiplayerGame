@@ -24,6 +24,8 @@ function preload() {
   
   tileset_background  = loadImage('assets/images/tilesets/background.png');
   tileset_grass  = loadImage('assets/images/tilesets/grass.png');
+  tileset_stone  = loadImage('assets/images/tilesets/stone.png');
+  tileset_dirt  = loadImage('assets/images/tilesets/dirt.png');
   tileset_block  = loadImage('assets/images/tilesets/block.png');
 
   /* Icons */

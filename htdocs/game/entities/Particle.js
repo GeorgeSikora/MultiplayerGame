@@ -7,7 +7,7 @@ class Particle extends GameObject {
     this.h = this.w;
     
     this.timeOut = millis() + 100;
-    this.opacity = random(10, 150);
+    this.opacity = random(120, 150);
     this.layerShift = random(16);
   }
   
@@ -29,7 +29,7 @@ class Particle extends GameObject {
   
 	draw() {
     noStroke();
-    fill(128, 109, 84, this.opacity);
+    fill(92, 59, 56, this.opacity);
     rectMode(CENTER);
     rect(this.pos.x, this.pos.y, this.w, this.h);
 	}

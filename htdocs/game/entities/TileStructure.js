@@ -30,7 +30,7 @@ class TileStructure {
         const x = i%(tileset.width/32);
         const y = floor((i*32)/tileset.width);
 
-        console.log(x, y);
+        //console.log(x, y);
 
         this.grass[ this.grassStructure[i]] = tileset.get(x*32, y*32, 32, 32);
       }

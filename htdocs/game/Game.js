@@ -21,15 +21,15 @@ class game {
   static drawTime = 0;
 
   static setup() {
+    chunkSystem = new ChunkSystem();
+    loadTiles();
+    
     player  = new MyPlayer(0, post.name, 0, 0, 'lobby');
     cam     = new Camera(player);
     chat    = new Chat();
     splash  = new ScreenFlash();
     minimap = new Minimap();
 
-    chunkSystem = new ChunkSystem();
-    
-    loadTiles();
 
 
     player.enable = false;

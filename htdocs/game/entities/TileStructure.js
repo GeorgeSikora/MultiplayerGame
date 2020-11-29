@@ -18,6 +18,24 @@ class TileStructure {
     constructor() {
         //let TL = [], TR = [], BL = [], BR = [], island;
 
+      this.grassStructure = [ 6, 9, 5, 15, 14,
+                              7, 10, 1, 13, 3,
+                              2, 8, 4, 12, 11];
+      this.grass = [16];
+
+      const tileset = tileset_dirt;
+      console.log(tileset.width, tileset.height);
+
+      for(var i = 0; i < 15; i++) {
+        const x = i%(tileset.width/32);
+        const y = floor((i*32)/tileset.width);
+
+        console.log(x, y);
+
+        this.grass[ this.grassStructure[i]] = tileset.get(x*32, y*32, 32, 32);
+      }
+
+
         this.TL = [];
         this.TR = [];
         this.BL = [];

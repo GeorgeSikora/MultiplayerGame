@@ -23,7 +23,7 @@ class Minimap {
         this.MAX_HEIGHT = 300;
     }
 
-    draw(){
+    draw() {
         this.targetOpacity = this.enable ? 255 : 0;
         this.opacity += (this.targetOpacity - this.opacity) * 0.1;
 
@@ -92,6 +92,9 @@ class Minimap {
         // calc width & height of map
         const map = {w: right - left, h: bottom - top};
 
+        // if the map is empty
+        if(map.w == 0 || map.h == 0) return;
+
         // automatic scaling, if turned on
         if(this.autoScale) {
             if(map.w > map.h) {
@@ -106,7 +109,7 @@ class Minimap {
 
         // get scaled map dimensions
         const mapScaled = {w: map.w/this.scale, h: map.h/this.scale};
-        
+
         // create image, where we will draw the stuff
         this.img = createGraphics(mapScaled.w, mapScaled.h);
 

@@ -2,12 +2,12 @@
 class BuildTile extends Build {
 
     constructor(){
-        super('tile', tileset_background);
-        this.center = {x: 16, y: 16};
+        super('tile', tileStructure.grass[10]);
+        this.center = {x: 24, y: 24};
 
         this.GRID_SIZE = 32;
-        this.GRID_SHIFT = {x: 16, y: 16};
-        this.PLACE_SIZE = {x: 64, y: 64};
+        //this.GRID_SHIFT = {x: -24, y: -24};
+        this.PLACE_SIZE = {x: 48, y: 48};
     }
     use(obj) {
         if(this.lastGrid.x != this.grid.x || this.lastGrid.y != this.grid.y || this.lastButton != mouseButton){

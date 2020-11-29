@@ -31,8 +31,10 @@ function drawInfo(){
         const c = chunkSystem.chunks[i];
         chunksInfo += 'chunk ';
         chunksInfo += i;
-        chunksInfo += ' inProcess: ';
+        chunksInfo += ' inp: ';
         chunksInfo += c.inProcess;
+        chunksInfo += ' t: ';
+        chunksInfo += (c.processEnd - c.processStart);
         chunksInfo += '\n';
     }
     text(

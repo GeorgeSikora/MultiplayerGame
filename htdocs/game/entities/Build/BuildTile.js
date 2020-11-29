@@ -15,10 +15,10 @@ class BuildTile extends Build {
             this.lastGrid = this.grid;
             this.lastButton = mouseButton;
 
-            if(mouseButton == LEFT){
+            if(mouseButton == LEFT) {
               this.setTiles(1);
             }
-            if(mouseButton == RIGHT){
+            if(mouseButton == RIGHT) {
               this.setTiles(0);
             }
             /*
@@ -31,10 +31,6 @@ class BuildTile extends Build {
               }
             }
             */
-
-
-            
-            chunkSystem.refresh();
 
             this.shake.x = cos(obj.rotation)*16;
             this.shake.y = sin(obj.rotation)*16;
@@ -53,8 +49,9 @@ class BuildTile extends Build {
         const c = chunkSystem.chunks[i];
         if(x > c.pos.x - Chunk.SIZE/2 && y > c.pos.y - Chunk.SIZE/2 && x <= c.pos.x - Chunk.SIZE/2 + Chunk.SIZE && y <= c.pos.y - Chunk.SIZE/2 + Chunk.SIZE) {
           const tile = {x: (x - c.pos.x)/Tile.SIZE + Chunk.SIZE/Tile.SIZE/2 -1, y: (y - c.pos.y)/Tile.SIZE + Chunk.SIZE/Tile.SIZE/2 -1};
-          
           c.tileMap[tile.y][tile.x] = state;
+          c.refresh = true;
+          return;
         }
       }
     }

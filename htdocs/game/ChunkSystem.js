@@ -16,6 +16,7 @@ class Chunk {
         this.inProcess = false;
         this.refresh = false;
 
+        /*
         this.tileMap = [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -48,16 +49,17 @@ class Chunk {
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         ];
+        */
 
-        /*
+        
         this.tileMap = [];
         for(var x = 0; x < Chunk.SIZE/Tile.SIZE; x++){
             this.tileMap[x] = [];
             for(var y = 0; y < Chunk.SIZE/Tile.SIZE; y++){
-                this.tileMap[x][y] = (x == 0) ? 1 : 0;
+                this.tileMap[x][y] = 0;
             }
         }
-        */
+        
     }
 
     update() {
@@ -68,6 +70,13 @@ class Chunk {
 
             this.refresh = false;
             this.inProcess = true;
+
+            // load chunk
+            for(var x = 0; x < Chunk.SIZE/Tile.SIZE; x++){
+                for(var y = 0; y < Chunk.SIZE/Tile.SIZE; y++){
+                    this.tileMap[y][x];
+                }
+            }
             
             //this.texture.clear();
             this.texture.image(tileBackground, 0, 0);
@@ -94,11 +103,12 @@ class Chunk {
 
                     if(this.tileMap[y][x] != 0) {
                         
-                        this.texture.fill(0, 255, 0);
-                        this.texture.rect(x * Tile.SIZE, y * Tile.SIZE, Tile.SIZE, Tile.SIZE);
+                        //this.texture.fill(0, 255, 0);
+                        //this.texture.rect(x * Tile.SIZE, y * Tile.SIZE, Tile.SIZE, Tile.SIZE);
+                        this.texture.image(tileStructure.grass[this.tileMap[y][x]], x * Tile.SIZE, y * Tile.SIZE, Tile.SIZE, Tile.SIZE)
 
-                        this.texture.fill(0);
-                        this.texture.text(this.tileMap[y][x], x * Tile.SIZE + Tile.SIZE/2, y * Tile.SIZE + Tile.SIZE/2);
+                        //this.texture.fill(0);
+                        //this.texture.text(this.tileMap[y][x], x * Tile.SIZE + Tile.SIZE/2, y * Tile.SIZE + Tile.SIZE/2);
                     }
                 }
             }
@@ -110,19 +120,22 @@ class Chunk {
             if(this.lastIndex == -1) {
                 this.inProcess = false;
                 this.bufferTexture.image(this.texture, 0, 0);
+                this.processEnd = millis();
             }
 
             /* draw static Objects */
             for (var i = this.lastIndex; i >= 0; i--) {
                 const lapsedTime = millis() - startTime;
-                if(lapsedTime > 8) {
+                if(lapsedTime > 5) {
                     this.lastIndex = i;
                     break;
                 }
 
                 var obj = objects[i];
 
-                if(obj.staticDraw) {
+                if(obj == null) continue;
+
+                if(obj.staticDraw != null) {
                     if(rectRect(obj.pos.x - obj.center.x, obj.pos.y - obj.center.y, obj.w, obj.h, this.pos.x - Chunk.SIZE/2, this.pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE)) {
                         obj.draw(this.texture);
                     }
@@ -131,6 +144,7 @@ class Chunk {
                     //console.log((millis() - this.processStart).toFixed(2) + 'ms complete refresh');
                     this.inProcess = false;
                     this.bufferTexture.image(this.texture, 0, 0);
+                    this.processEnd = millis();
                 }
             }
 
@@ -154,7 +168,6 @@ class Chunk {
     getAutoTile(x, y) {
 
         if(this.wrongTileTestRemove(x, y)) {
-            console.log('xdddasdioasiodasiod');
             return 0;
         }
 
@@ -243,6 +256,10 @@ class Chunk {
             return 0;
         }
     }
+
+    save() {
+        console.log('Saving chunk x' + this.pos.x/Chunk.SIZE + ' y' + this.pos.y/Chunk.SIZE);
+    }
 }
 
 
@@ -277,21 +294,25 @@ class ChunkSystem {
                 const y = floor(i/3) -1;
 
                 if(this.chunks[i].pos.x == pos.x - Chunk.SIZE*2) {
+                    this.chunks[i].save();
                     this.chunks[i].pos.x += 3 * Chunk.SIZE;
                     this.chunks[i].refresh = true;
                 }
 
                 if(this.chunks[i].pos.x == pos.x + Chunk.SIZE*2) {
+                    this.chunks[i].save();
                     this.chunks[i].pos.x -= 3 * Chunk.SIZE;
                     this.chunks[i].refresh = true;
                 }
 
                 if(this.chunks[i].pos.y == pos.y - Chunk.SIZE*2) {
+                    this.chunks[i].save();
                     this.chunks[i].pos.y += 3 * Chunk.SIZE;
                     this.chunks[i].refresh = true;
                 }
 
                 if(this.chunks[i].pos.y == pos.y + Chunk.SIZE*2) {
+                    this.chunks[i].save();
                     this.chunks[i].pos.y -= 3 * Chunk.SIZE;
                     this.chunks[i].refresh = true;
                 }

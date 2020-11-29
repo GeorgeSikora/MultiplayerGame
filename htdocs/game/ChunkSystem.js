@@ -59,24 +59,14 @@ class Chunk {
                 this.tileMap[x][y] = 0;
             }
         }
-        
     }
 
     update() {
         if(this.refresh) {
             this.processStart = millis();
 
-            //console.log('Refreshing...');
-
             this.refresh = false;
             this.inProcess = true;
-
-            // load chunk
-            for(var x = 0; x < Chunk.SIZE/Tile.SIZE; x++){
-                for(var y = 0; y < Chunk.SIZE/Tile.SIZE; y++){
-                    this.tileMap[y][x];
-                }
-            }
             
             //this.texture.clear();
             this.texture.image(tileBackground, 0, 0);
@@ -126,7 +116,7 @@ class Chunk {
             /* draw static Objects */
             for (var i = this.lastIndex; i >= 0; i--) {
                 const lapsedTime = millis() - startTime;
-                if(lapsedTime > 5) {
+                if(lapsedTime > 5000) {
                     this.lastIndex = i;
                     break;
                 }
@@ -148,21 +138,23 @@ class Chunk {
                 }
             }
 
-
             this.texture.pop();
         }
     }
 
     draw() {
+        const cx = this.pos.x - Chunk.SIZE/2;
+        const cy = this.pos.y - Chunk.SIZE/2;
+
         // draw chunk
-        image(this.bufferTexture, this.pos.x - Chunk.SIZE/2, this.pos.y - Chunk.SIZE/2);
+        image(this.bufferTexture, cx, cy);
 
         // draw chunk border
         
-        noFill();
+        fill(255, 127, 255, 100)
         stroke(255, 0, 255);
         rectMode(CORNER);
-        rect(this.pos.x - Chunk.SIZE/2, this.pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE);
+        rect(cx, cy, Chunk.SIZE, Chunk.SIZE);
     }
 
     getAutoTile(x, y) {
@@ -178,48 +170,48 @@ class Chunk {
 
         var z = 0;
 
-        if (this.getTile(x, y - 1) == 1) {
+        if (this.getTile(x, y - 1) >= 1) {
             TL += 2;
             TR += 1;
 
             z += 1;
         }
-        if (this.getTile(x, y + 1) == 1) {
+        if (this.getTile(x, y + 1) >= 1) {
             BL += 1;
             BR += 2;
 
             z += 2;
         }
-        if (this.getTile(x - 1, y) == 1) {
+        if (this.getTile(x - 1, y) >= 1) {
             TL += 1;
             BL += 2;
 
             z += 3;
         }
-        if (this.getTile(x + 1, y) == 1) {
+        if (this.getTile(x + 1, y) >= 1) {
             TR += 2;
             BR += 1;
 
             z += 4;
         }
         
-        if (this.getTile(x - 1, y + 1) == 1 && this.getTile(x - 1, y - 1) == 1 && z == 6) z = 1;
+        if (this.getTile(x - 1, y + 1) >= 1 && this.getTile(x - 1, y - 1) >= 1 && z == 6) z = 1;
 
-        if (this.getTile(x + 1, y - 1) == 1 && z == 5) z = 2;
+        if (this.getTile(x + 1, y - 1) >= 1 && z == 5) z = 2;
 
-        if (this.getTile(x - 1, y - 1) != 1 && this.getTile(x + 1, y + 1) != 1 && z == 10) z = 11;
-        if (this.getTile(x + 1, y - 1) != 1 && this.getTile(x - 1, y + 1) != 1 && z == 10) z = 12;
+        if (this.getTile(x - 1, y - 1) == 0 && this.getTile(x + 1, y + 1) == 0 && z == 10) z = 11;
+        if (this.getTile(x + 1, y - 1) == 0 && this.getTile(x - 1, y + 1) == 0 && z == 10) z = 12;
 
-        if (this.getTile(x - 1, y - 1) != 1 && z == 10) z = 3;
-        if (this.getTile(x + 1, y - 1) != 1 && z == 10) z = 13;
-        if (this.getTile(x - 1, y + 1) != 1 && z == 10) z = 14;
-        if (this.getTile(x + 1, y + 1) != 1 && z == 10) z = 15;
+        if (this.getTile(x - 1, y - 1) == 0 && z == 10) z = 3;
+        if (this.getTile(x + 1, y - 1) == 0 && z == 10) z = 13;
+        if (this.getTile(x - 1, y + 1) == 0 && z == 10) z = 14;
+        if (this.getTile(x + 1, y + 1) == 0 && z == 10) z = 15;
 
 
-        if (this.getTile(x - 1, y - 1) == 1 && TL == 3) TL = 4;
-        if (this.getTile(x + 1, y - 1) == 1 && TR == 3) TR = 4;
-        if (this.getTile(x - 1, y + 1) == 1 && BL == 3) BL = 4;
-        if (this.getTile(x + 1, y + 1) == 1 && BR == 3) BR = 4;
+        if (this.getTile(x - 1, y - 1) >= 1 && TL == 3) TL = 4;
+        if (this.getTile(x + 1, y - 1) >= 1 && TR == 3) TR = 4;
+        if (this.getTile(x - 1, y + 1) >= 1 && BL == 3) BL = 4;
+        if (this.getTile(x + 1, y + 1) >= 1 && BR == 3) BR = 4;
         
 
         //console.log(TL, TR, BL, BR);
@@ -250,11 +242,46 @@ class Chunk {
     }
 
     getTile(x, y) {
-        if(x >= 0 && y >= 0 && x < Chunk.SIZE/Tile.SIZE && y < Chunk.SIZE/Tile.SIZE) {
+
+        const TILES = Chunk.SIZE/Tile.SIZE;
+        
+        if(x >= 0 && y >= 0 && x < TILES && y < TILES) {
+            // load from this actual chunk
             if(this.tileMap[y][x] > 0) return 1; else return 0;
         } else {
+            // load from neighboring chunk
+
+            var chunkPos = {x: this.pos.x, y: this.pos.y};
+
+            if (x <      0) {chunkPos.x -= Chunk.SIZE; x += TILES;}
+            if (y <      0) {chunkPos.y -= Chunk.SIZE; y += TILES;}
+            if (x >= TILES) {chunkPos.x += Chunk.SIZE; x -= TILES;}
+            if (y >= TILES) {chunkPos.y += Chunk.SIZE; y -= TILES;}
+
+            for(var i = 0; i < 9; i++) {
+                const c = chunkSystem.chunks[i];
+                if(c.pos.x == chunkPos.x && c.pos.y == chunkPos.y) {
+                    return c.tileMap[y][x];
+                }
+            }
+
             return 0;
         }
+    }
+
+    load() {
+
+        socket.emit('get-chunk', this.pos.x/Chunk.SIZE, this.pos.y/Chunk.SIZE);
+
+        console.log('Loading chunk x' + this.pos.x/Chunk.SIZE + ' y' + this.pos.y/Chunk.SIZE);
+
+        /*
+        for(var x = 0; x < Chunk.SIZE/Tile.SIZE; x++){
+            for(var y = 0; y < Chunk.SIZE/Tile.SIZE; y++){
+                this.tileMap[y][x];
+            }
+        }
+        */
     }
 
     save() {
@@ -293,30 +320,56 @@ class ChunkSystem {
                 const x = i%3 -1;
                 const y = floor(i/3) -1;
 
+                const chunkDist = {x: pos.x - this.chunks[i].pos.x, y: pos.y - this.chunks[i].pos.y};
+                var movedX = 0, movedY = 0;
+
+                if(chunkDist.x == 2*Chunk.SIZE) movedX = 1;
+                if(chunkDist.x == -2*Chunk.SIZE) movedX = -1;
+
+                if(chunkDist.y == 2*Chunk.SIZE) movedY = 1;
+                if(chunkDist.y == -2*Chunk.SIZE) movedY = -1;
+                
+                if(movedX == 0 && movedY == 0) continue;
+
+                this.chunks[i].save();
+
+                this.chunks[i].pos.x += movedX * 3 * Chunk.SIZE;
+                this.chunks[i].pos.y += movedY * 3 * Chunk.SIZE;
+
+                this.chunks[i].load();
+                this.chunks[i].refresh = true;
+
+                // TODO: Zjednodušit tyto 4 podmínky níž
+
+                /*
                 if(this.chunks[i].pos.x == pos.x - Chunk.SIZE*2) {
                     this.chunks[i].save();
                     this.chunks[i].pos.x += 3 * Chunk.SIZE;
+                    this.chunks[i].load();
                     this.chunks[i].refresh = true;
                 }
 
                 if(this.chunks[i].pos.x == pos.x + Chunk.SIZE*2) {
                     this.chunks[i].save();
                     this.chunks[i].pos.x -= 3 * Chunk.SIZE;
+                    this.chunks[i].load();
                     this.chunks[i].refresh = true;
                 }
 
                 if(this.chunks[i].pos.y == pos.y - Chunk.SIZE*2) {
                     this.chunks[i].save();
                     this.chunks[i].pos.y += 3 * Chunk.SIZE;
+                    this.chunks[i].load();
                     this.chunks[i].refresh = true;
                 }
 
                 if(this.chunks[i].pos.y == pos.y + Chunk.SIZE*2) {
                     this.chunks[i].save();
                     this.chunks[i].pos.y -= 3 * Chunk.SIZE;
+                    this.chunks[i].load();
                     this.chunks[i].refresh = true;
                 }
-                
+                */
                 // this.chunks[i].pos.x = pos.x + x * Chunk.SIZE;
                 //this.chunks[i].pos.y = pos.y + y * Chunk.SIZE;
                 

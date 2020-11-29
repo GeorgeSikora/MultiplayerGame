@@ -178,6 +178,19 @@ class Multiplayer {
     });
 
     //socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp, kills
+
+    socket.on('chunk', (x, y, tileMap) => {
+      console.log('chunk x: ' + x + ' y: ' + y + ' comes to client!');
+      for(var i = 0; i < 9; i++) {
+        const c = chunkSystem.chunks[i];
+        if(c.pos.x == x * Chunk.SIZE && c.pos.y == y * Chunk.SIZE) {
+          c.tileMap = tileMap;
+          c.refresh = true;
+          console.log('tileMap uploaded');
+          return;
+        }
+      }
+    });
   }
 
   connected() {
@@ -275,6 +288,14 @@ function initGame(data) {
 }
 
 function loadMap(data) {
+
+  for(var i = 0; i < 9; i++) {
+    const c = chunkSystem.chunks[i];
+    socket.emit('get-chunk', c.pos.x/Chunk.SIZE, c.pos.y/Chunk.SIZE);
+  }
+
+
+
   console.log('loading map...');
 
   if(!game.started) return;

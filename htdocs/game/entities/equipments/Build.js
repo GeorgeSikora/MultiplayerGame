@@ -6,6 +6,7 @@ class Build extends Equipment {
         this.HOLDING_USE = true;
         this.GRID_SIZE = 1;
         this.GRID_SHIFT = {x: 0, y: 0};
+        this.MOUSE_SHIFT = {x: 0, y: 0};
         
         this.center = {x: 0, y: 0};
 
@@ -36,10 +37,13 @@ class Build extends Equipment {
 
         var target = cam.mouse;
         
-        target.x += this.GRID_SHIFT.x;
-        target.y += this.GRID_SHIFT.y;
+        target.x += this.MOUSE_SHIFT.x;
+        target.y += this.MOUSE_SHIFT.y;
 
         this.grid = getGrid(target, this.GRID_SIZE);
+
+        this.grid.x += this.GRID_SHIFT.x;
+        this.grid.y += this.GRID_SHIFT.y;
 
         push();
         tint(255, 100);

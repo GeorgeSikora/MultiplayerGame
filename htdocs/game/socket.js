@@ -185,12 +185,32 @@ class Multiplayer {
         const c = chunkSystem.chunks[i];
         if(c.pos.x == x * Chunk.SIZE && c.pos.y == y * Chunk.SIZE) {
           c.tileMap = tileMap;
-          c.refresh = true;
+          c.loaded = true;
+          
           console.log('tileMap uploaded');
-          return;
+          break;
         }
       }
-    });
+
+    var readyToLoad = true;
+    for(var i = 0; i < 9; i++) {
+      const c = chunkSystem.chunks[i];
+      console.log('loaded: ' + c.loaded);
+      if(!c.loaded) {
+        readyToLoad = false;
+        break;
+      };
+    }
+    
+    if(readyToLoad) {
+      console.log('Refreshing all chunks!');
+      for(var i = 0; i < 9; i++) {
+        const c = chunkSystem.chunks[i];
+        c.refresh = true;
+      }
+    }
+  });
+
   }
 
   connected() {
@@ -316,7 +336,7 @@ function loadMap(data) {
   cam.pos.y = pos.y;
   cam.target = player;
 
-  cam.targetScale = 1;
+  cam.targetScale = 0.32;
 
   splash.opacity = 255;
 

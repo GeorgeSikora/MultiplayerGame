@@ -276,9 +276,9 @@ ioClient.on('connection', socket => {
     });
     */
 
-    socket.on('get-chunk', (x, y) => {
+    socket.on('get-chunk', (chunkX, chunkY) => {
 
-        console.log('Some player want to load chunk x: ' + x + ' y: ' + y);
+        console.log('Some player want to load chunk x: ' + chunkX + ' y: ' + chunkY);
         /*
         const tileMap = [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -315,25 +315,21 @@ ioClient.on('connection', socket => {
         */
         const TILE_SIZE = 32;
         const TILES = 30;
-        const scale = 1000.0;
 
         var tileMap = [TILES];
-        for(var yy = 0; yy < TILES; yy++){
-            tileMap[yy] = [TILES];
-            for(var xx = 0; xx < TILES; xx++){
+        for(var tileY = 0; tileY < TILES; tileY++){
+            tileMap[tileY] = [TILES];
+            for(var tileX = 0; tileX < TILES; tileX++){
+                
+                const x = chunkX * 960 + tileX * TILE_SIZE;
+                const y = chunkY * 960 + tileY * TILE_SIZE;
 
-                const noise = simplex.noise2D((x*960 + xx * TILE_SIZE)/scale, (y*960 + yy * TILE_SIZE)/scale);
-          
-                if(noise > 0.5) {
-                    tileMap[yy][xx] = 1;
-                } else {
-                    tileMap[yy][xx] = 0;
-                }
+                tileMap[tileY][tileX] = getGeneratedTile(x, y);
+
             }
         }
-        //console.log(tileMap);
 
-        socket.emit('chunk', x, y, tileMap);
+        socket.emit('chunk', chunkX, chunkY, tileMap);
     });
 });
 
@@ -372,6 +368,46 @@ function gameEnd() {
         gameStarted = false;
     
     }, constants.GAME.RESTART_TIME*1000);
+}
+
+function getGeneratedTile(x, y) {
+    var tile = 0;
+
+    //const noiseX = simplex.noise2D(Math.sin(x*y)*100.0, 0);
+    //tile |= noiseX > 0.5;
+
+    //console.log(x);
+
+    var tileX = x / 32;
+    if(tileX < 0) tileX -= 2;
+
+    var absTileX = Math.abs(tileX);
+
+    if(absTileX%5 <= 2) {
+        tile = 1;
+    }
+
+    // POINTS GENERATOR
+    /*
+    const noiseX = simplex.noise2D(x * 1000, 0);
+    const noiseY = simplex.noise2D(0, y * 1000);
+
+    tile |= (noiseX.toFixed(1) == noiseY.toFixed(1));
+    */
+
+    // LINE DONGEONS GENERATOR
+    /*
+    const noise1 = simplex.noise2D(x / 1500, y / 200);
+    const noise2 = simplex.noise2D(x / 200, y / 1500);
+
+    const noise3 = simplex.noise2D(x / 9000, y / 9000);
+
+    tile |= noise1 > 0.5;
+    tile |= noise2 > 0.5;
+
+    tile &= noise3 > 0.5;
+    */
+    return tile;
 }
 
 module.exports = ioClient;

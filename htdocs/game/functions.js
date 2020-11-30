@@ -23,7 +23,7 @@ function drawInfo(){
     if(!game.showInfo) return;
 
     push();
-    fill(255);
+    fill(0);
     textSize(18);
     textAlign(LEFT, TOP);
     var chunksInfo = '';
@@ -33,6 +33,8 @@ function drawInfo(){
         chunksInfo += i;
         chunksInfo += ' inp: ';
         chunksInfo += c.inProcess;
+        chunksInfo += ' loaded: ';
+        chunksInfo += c.loaded;
         chunksInfo += ' t: ';
         chunksInfo += (c.processEnd - c.processStart);
         chunksInfo += '\n';

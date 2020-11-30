@@ -13,6 +13,8 @@ class Chunk {
         this.texture = createGraphics(Chunk.SIZE, Chunk.SIZE);
         this.bufferTexture = createGraphics(Chunk.SIZE, Chunk.SIZE);
 
+        this.loaded = false;
+
         this.inProcess = false;
         this.refresh = false;
 
@@ -51,7 +53,6 @@ class Chunk {
         ];
         */
 
-        
         this.tileMap = [];
         for(var x = 0; x < Chunk.SIZE/Tile.SIZE; x++){
             this.tileMap[x] = [];
@@ -110,6 +111,7 @@ class Chunk {
             if(this.lastIndex == -1) {
                 this.inProcess = false;
                 this.bufferTexture.image(this.texture, 0, 0);
+                console.log('Chunk update: ' + (millis() - this.processStart).toFixed(2) + 'ms');
                 this.processEnd = millis();
             }
 
@@ -134,6 +136,7 @@ class Chunk {
                     //console.log((millis() - this.processStart).toFixed(2) + 'ms complete refresh');
                     this.inProcess = false;
                     this.bufferTexture.image(this.texture, 0, 0);
+                    console.log('Chunk update: ' + (millis() - this.processStart).toFixed(2) + 'ms');
                     this.processEnd = millis();
                 }
             }
@@ -146,15 +149,8 @@ class Chunk {
         const cx = this.pos.x - Chunk.SIZE/2;
         const cy = this.pos.y - Chunk.SIZE/2;
 
-        // draw chunk
         image(this.bufferTexture, cx, cy);
-
-        // draw chunk border
-        
-        fill(255, 127, 255, 100)
-        stroke(255, 0, 255);
-        rectMode(CORNER);
-        rect(cx, cy, Chunk.SIZE, Chunk.SIZE);
+        if(game.showChunksBorder) image(chunkBorder, cx, cy);
     }
 
     getAutoTile(x, y) {
@@ -284,6 +280,11 @@ class Chunk {
         */
     }
 
+    unload() {
+        this.save();
+        this.loaded = false;
+    }
+
     save() {
         console.log('Saving chunk x' + this.pos.x/Chunk.SIZE + ' y' + this.pos.y/Chunk.SIZE);
     }
@@ -316,70 +317,69 @@ class ChunkSystem {
             //const delta = {x: (pos.x - this.lastPos.x) / Chunk.SIZE, y: (pos.y - this.lastPos.y) / Chunk.SIZE};
             const delta = {x: pos.x - this.lastPos.x, y: pos.y - this.lastPos.y};
 
-            for(var i = 0; i < 9; i++) {
-                const x = i%3 -1;
-                const y = floor(i/3) -1;
+            var move;
 
+            for(var i = 0; i < 9; i++) {
                 const chunkDist = {x: pos.x - this.chunks[i].pos.x, y: pos.y - this.chunks[i].pos.y};
                 var movedX = 0, movedY = 0;
 
-                if(chunkDist.x == 2*Chunk.SIZE) movedX = 1;
-                if(chunkDist.x == -2*Chunk.SIZE) movedX = -1;
+                if(chunkDist.x ==  2 * Chunk.SIZE) movedX =  1;
+                if(chunkDist.x == -2 * Chunk.SIZE) movedX = -1;
 
-                if(chunkDist.y == 2*Chunk.SIZE) movedY = 1;
-                if(chunkDist.y == -2*Chunk.SIZE) movedY = -1;
+                if(chunkDist.y ==  2 * Chunk.SIZE) movedY =  1;
+                if(chunkDist.y == -2 * Chunk.SIZE) movedY = -1;
                 
                 if(movedX == 0 && movedY == 0) continue;
+                move = {x: movedX, y: movedY};
 
-                this.chunks[i].save();
+                this.chunks[i].unload();
 
                 this.chunks[i].pos.x += movedX * 3 * Chunk.SIZE;
                 this.chunks[i].pos.y += movedY * 3 * Chunk.SIZE;
 
                 this.chunks[i].load();
-                this.chunks[i].refresh = true;
-
-                // TODO: Zjednodušit tyto 4 podmínky níž
-
-                /*
-                if(this.chunks[i].pos.x == pos.x - Chunk.SIZE*2) {
-                    this.chunks[i].save();
-                    this.chunks[i].pos.x += 3 * Chunk.SIZE;
-                    this.chunks[i].load();
-                    this.chunks[i].refresh = true;
-                }
-
-                if(this.chunks[i].pos.x == pos.x + Chunk.SIZE*2) {
-                    this.chunks[i].save();
-                    this.chunks[i].pos.x -= 3 * Chunk.SIZE;
-                    this.chunks[i].load();
-                    this.chunks[i].refresh = true;
-                }
-
-                if(this.chunks[i].pos.y == pos.y - Chunk.SIZE*2) {
-                    this.chunks[i].save();
-                    this.chunks[i].pos.y += 3 * Chunk.SIZE;
-                    this.chunks[i].load();
-                    this.chunks[i].refresh = true;
-                }
-
-                if(this.chunks[i].pos.y == pos.y + Chunk.SIZE*2) {
-                    this.chunks[i].save();
-                    this.chunks[i].pos.y -= 3 * Chunk.SIZE;
-                    this.chunks[i].load();
-                    this.chunks[i].refresh = true;
-                }
-                */
-                // this.chunks[i].pos.x = pos.x + x * Chunk.SIZE;
-                //this.chunks[i].pos.y = pos.y + y * Chunk.SIZE;
-                
-                //this.chunks[i].pos.x += delta.x * Chunk.SIZE;
-                //this.chunks[i].pos.y += delta.y * Chunk.SIZE;
-
-                //if(delta.x == x || delta.y == y) {
-                //    this.chunks[i].refresh = true;
-                //}
             }
+            /*
+            if(move == null) {
+                //console.log('ERROR: chunks not moved!!!');
+                return;
+            }
+            */
+            
+            /*
+            for(var i = 0; i < 9; i++) {
+                const c = this.chunks[i];
+                const chunkDist = {x: pos.x - c.pos.x, y: pos.y - c.pos.y};
+
+                if(move.x != 0) {
+                    if(pos.x == c.pos.x) {
+
+                        var column = move.x == 1 ? Chunk.SIZE/Tile.SIZE-1 : 0;
+                        console.log('x !!!', c.pos.x, c.pos.y);
+
+                        for(var y = 0; y < Chunk.SIZE/Tile.SIZE; y++) {
+                            console.log(column, y);
+                            //c.tileMap[y][column] = c.getAutoTile(column, y);
+                        }
+                        c.refresh = true;
+                        //c.refreshChunk(false);
+                    }
+                }
+
+                if(move.y != 0) {
+                    if(pos.y == c.pos.y) {
+                        var row = move.y == 1 ? Chunk.SIZE/Tile.SIZE-1 : 0;
+                        console.log('y !!!', c.pos.x, c.pos.y);
+
+                        for(var x = 0; x < Chunk.SIZE/Tile.SIZE; x++) {
+                            console.log(x, row);
+                            //c.tileMap[row][x] = c.getAutoTile(x, row);
+                        }
+                        c.refresh = true;
+                    }
+                }
+            }
+            */
         }
         
         this.lastPos = pos;
@@ -388,14 +388,12 @@ class ChunkSystem {
         for(var i = 0; i < 9; i++) {
             this.chunks[i].update();
         }
-        if(millis() - chunksUpdateStart > 0.5)
-        console.log('Chunks update: ' + (millis() - chunksUpdateStart).toFixed(2) + 'ms');
+        //console.log('Chunks update: ' + (millis() - chunksUpdateStart).toFixed(2) + 'ms');
 
         const chunksDrawStart = millis();
         for(var i = 0; i < 9; i++) {
             this.chunks[i].draw();
         }
-        //if(frameCount%60 == 1) console.log('Chunks draw: ' + (millis() - chunksDrawStart) + 'ms');
     }
 
     refresh() {

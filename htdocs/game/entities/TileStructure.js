@@ -1,9 +1,15 @@
 
-let tileStructure, tileBackground;
+let tileStructure, tileBackground, chunkBorder;
 let hsize = 32; // half size
 
 function loadTiles() {
   tileStructure = new TileStructure();
+
+  chunkBorder = createGraphics(Chunk.SIZE, Chunk.SIZE);
+  chunkBorder.noFill();
+  chunkBorder.strokeWeight(2);
+  chunkBorder.stroke(255, 0, 255);
+  chunkBorder.rect(0, 0, Chunk.SIZE, Chunk.SIZE);
 
   tileBackground = createGraphics(Chunk.SIZE, Chunk.SIZE);
 

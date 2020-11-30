@@ -104,6 +104,10 @@ function command(str) {
         case 'clear':
             objects = [];
             break;
+        case 'cb': // Chunks Border
+        case 'border':
+            game.showChunksBorder = !game.showChunksBorder;
+            break;
         default:
             break;
 

@@ -12,7 +12,9 @@ class game {
   static muted = true;
   static loaded = false;
   static started = false;
+  
   static showInfo = false;
+  static showChunksBorder = false;
   static showPlayersTarget = false
 
   static teams = {red: 0, blue: 0};

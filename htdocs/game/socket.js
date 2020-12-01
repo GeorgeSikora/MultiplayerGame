@@ -1,9 +1,3 @@
-/*
-  SOCKET
-
-  last: 6.11.2020
-  version: 0.1
-*/
 
 let multiplayer, socket;
 
@@ -18,199 +12,35 @@ class Multiplayer {
     socket = io.connect(url, {
       reconnectionDelay: 1500
     });
+
     socket.on('init',          initGame);  // send players and map
     socket.on('load-map',      loadMap);
     // built-in events
     socket.on('connect',       this.connected);
     socket.on('connect_error', this.connect_error);
-    socket.on('disconnected', () => {
-      console.log('%c Disconnected','background-color: red; color: black');
-    });
+    socket.on('disconnected',  disconnected);
     socket.on('pong',          pong);
     // Player events
-    socket.on('refPlayer',     refPlayer); // refresh player values, pos, hp
-    socket.on('newPlayer',     newPlayer); // new player connected
-    socket.on('remPlayer',     remPlayer); // some player disconnected
-
-    socket.on('shot',     shot);
-
-    socket.on('smoke-granate', (pos, rot) => {
-      objects.push(new Granate(pos.x, pos.y, rot));
-    })
-    
-    socket.on('exception', (err) => {
-      console.error('ERROR ' + err.id + ' ' + err.message);
-      window.location.replace("/?error="+err.id+"&message="+err.message);
-    });
-
-    socket.on('respawn', (shooterID, pos)=> {
-      splash.opacity = 255;
-      sound_yay.play();
-      player.pos.x = pos.x; 
-      player.pos.y = pos.y; 
-      player.enable = false;
-
-      var index = objectIndexOf(players, shooterID, 'id');
-      cam.target = players[index];
-
-      respawnTimeout = setTimeout(() => {
-        sound_drop1.play();
-        splash.opacity = 255;
-        player.enable = true;
-        cam.target = player;
-        socket.emit('respawned');
-      }, 10000);
-    });
-
-    socket.on('setPos', (pos)=> {
-      player.pos.x = pos.x;
-      player.pos.y = pos.y;
-    });
-
-    socket.on('chat-message', msg => {
-      var newMsg = new Message();
-      newMsg.str = msg.str;
-      newMsg.timeout = millis() + Chat.MESSAGE_DURATION;
-      newMsg.opacity = 255;
-      newMsg.buildImage();
-
-      chat.add(newMsg);
-    });
-    
-    socket.on('block-add', pos => {
-      sound_place.play();
-      objects.push(new Block(pos.x, pos.y));
-
-      for(var i = 0; i < 9; i++) {
-        if(rectRect(pos.x-32, pos.y-32, 64, 64, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE)) {
-          for(var o = 0; o < objects.length; o++) {
-            if(objects[o].constructor.name == 'Block') {
-              const blockPos = objects[o].pos;
-              if((pos.x-64 == blockPos.x || pos.x == blockPos.x || pos.x+64 == blockPos.x) && (pos.y-64 == blockPos.y || pos.y == blockPos.y || pos.y+64 == blockPos.y)) {
-                objects[o].autoTile();
-              }
-            }
-          }
-          chunkSystem.chunks[i].refresh = true;
-         // console.log(i);
-      }
-    }
-
-    });
-
-    socket.on('block-rem', pos => {
-      for(var i = 0; i < objects.length; i++) {
-        var obj = objects[i];
-        if(obj.constructor.name != 'Block') continue;
-
-
-        if(pos.x == obj.pos.x && pos.y == obj.pos.y) {
-          sound_pop.play();
-          removeObject(obj);
-
-          for(var i = 0; i < 9; i++) {
-              if(rectRect(pos.x-32, pos.y-32, 64, 64, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE)) {
-                for(var o = 0; o < objects.length; o++) {
-                  if(objects[o].constructor.name == 'Block') {
-                    const blockPos = objects[o].pos;
-                    if((pos.x-64 == blockPos.x || pos.x == blockPos.x || pos.x+64 == blockPos.x) && (pos.y-64 == blockPos.y || pos.y == blockPos.y || pos.y+64 == blockPos.y)) {
-                      objects[o].autoTile();
-                    }
-                  }
-                }
-                chunkSystem.chunks[i].refresh = true;
-                //console.log(i);
-            }
-          }
-        }
-      }
-    });
-
-    socket.on('flag-set', (team, captured) => {
-      for(var i = 0; i < objects.length; i++){
-        if(objects[i].constructor.name != 'Flag') continue;
-        if(objects[i].team === team) {
-            objects[i].captured = captured;
-        }
-      }
-    });
-    
-    socket.on('player-set', (id, name, value) => {
-
-      if(id == player.id){
-        player[name] = value;
-        return;
-      }
-
-      var index = objectIndexOf(players, id, 'id'); // get index by id
-      if(index == -1) return;
-      players[index][name] = value;
-    });
-
-    socket.on('DroppedFlag-add', (pos, team) => {
-      objects.push(new DroppedFlag(pos.x, pos.y, team));
-    });
-
-    socket.on('DroppedFlag-rem', team => {
-      for(var i = 0; i < objects.length; i++){
-        if(objects[i].constructor.name != 'DroppedFlag') continue;
-        if(objects[i].team == team) {
-            removeObjectIndex(i);
-            return;
-        }
-      }
-    });
-    socket.on('start', () => {
-      game.start();
-    });
-    socket.on('end', () => {
-      if(!game.started) return;
-      game.end();
-    });
-    socket.on('restart', () => {
-      if(!game.started) return;
-      game.restart();
-    });
-
-    socket.on('player-teams', (red, blue) => {
-      game.teams['red'] = red;
-      game.teams['blue'] = blue;
-    });
-
-    //socket.on('hp',       (hp) => {player.hp = hp}); // refresh player values, pos, hp, kills
-
-    socket.on('chunk', (x, y, tileMap) => {
-      console.log('chunk x: ' + x + ' y: ' + y + ' comes to client!');
-      for(var i = 0; i < 9; i++) {
-        const c = chunkSystem.chunks[i];
-        if(c.pos.x == x * Chunk.SIZE && c.pos.y == y * Chunk.SIZE) {
-          c.tileMap = tileMap;
-          c.loaded = true;
-          
-          console.log('tileMap uploaded');
-          break;
-        }
-      }
-
-    var readyToLoad = true;
-    for(var i = 0; i < 9; i++) {
-      const c = chunkSystem.chunks[i];
-      console.log('loaded: ' + c.loaded);
-      if(!c.loaded) {
-        readyToLoad = false;
-        break;
-      };
-    }
-    
-    if(readyToLoad) {
-      console.log('Refreshing all chunks!');
-      for(var i = 0; i < 9; i++) {
-        const c = chunkSystem.chunks[i];
-        c.refresh = true;
-      }
-    }
-  });
-
+    socket.on('refPlayer',        refPlayer); // refresh player values, pos, hp
+    socket.on('newPlayer',        newPlayer); // new player connected
+    socket.on('remPlayer',        remPlayer); // some player disconnected
+    socket.on('shot',             shot);
+    socket.on('smoke-granate',    addSmokeGranate);
+    socket.on('exception',        exception);
+    socket.on('respawn',          respawnPlayer);
+    socket.on('setPos',           setMyPos);
+    socket.on('chat-message',     newChatMessage);
+    socket.on('block-add',        addBlock);
+    socket.on('block-rem',        remBlock);
+    socket.on('flag-set',         setFlag);
+    socket.on('player-set',       setPlayer);
+    socket.on('DroppedFlag-add',  addDroppedFlag);
+    socket.on('DroppedFlag-rem',  remDroppedFlag);
+    socket.on('start', ()=>{game.start();});
+    socket.on('end', ()=>{if(!game.started) return; game.end();});
+    socket.on('restart', ()=>{if(!game.started) return;game.restart();});
+    socket.on('player-teams', (red, blue)=>{game.teams['red']=red;game.teams['blue']=blue;});
+    socket.on('chunk', loadChunk);
   }
 
   connected() {
@@ -235,7 +65,7 @@ class Multiplayer {
   }
 
   connect_error() {
-    console.log('%c Connection Failed', 'color: lime');
+    console.log('%c Connection Failed', 'color: red');
   }
 }
 
@@ -313,8 +143,6 @@ function loadMap(data) {
     const c = chunkSystem.chunks[i];
     socket.emit('get-chunk', c.pos.x/Chunk.SIZE, c.pos.y/Chunk.SIZE);
   }
-
-
 
   console.log('loading map...');
 
@@ -412,4 +240,163 @@ function shot(data){
     id);
   }
   objects.push(new Bullet(data.shooterID, data.pos, data.speed));
+}
+
+function respawnPlayer(shooterID, pos) {
+  splash.opacity = 255;
+  sound_yay.play();
+  player.pos.x = pos.x; 
+  player.pos.y = pos.y; 
+  player.enable = false;
+
+  var index = objectIndexOf(players, shooterID, 'id');
+  cam.target = players[index];
+
+  respawnTimeout = setTimeout(() => {
+    sound_drop1.play();
+    splash.opacity = 255;
+    player.enable = true;
+    cam.target = player;
+    socket.emit('respawned');
+  }, 10000);
+}
+
+function newChatMessage(msg) {
+  var newMsg = new Message();
+  newMsg.str = msg.str;
+  newMsg.timeout = millis() + Chat.MESSAGE_DURATION;
+  newMsg.opacity = 255;
+  newMsg.buildImage();
+
+  chat.add(newMsg);
+}
+
+function setMyPos(pos) {
+  player.pos.x = pos.x;
+  player.pos.y = pos.y;
+}
+
+function exception(err) {
+  console.error('ERROR ' + err.id + ' ' + err.message);
+  window.location.replace("/?error="+err.id+"&message="+err.message);
+}
+
+function addBlock(pos) {
+  sound_place.play();
+  objects.push(new Block(pos.x, pos.y));
+
+  for(var i = 0; i < 9; i++) {
+    if(rectRect(pos.x-32, pos.y-32, 64, 64, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE)) {
+      for(var o = 0; o < objects.length; o++) {
+        if(objects[o].constructor.name == 'Block') {
+          const blockPos = objects[o].pos;
+          if((pos.x-64 == blockPos.x || pos.x == blockPos.x || pos.x+64 == blockPos.x) && (pos.y-64 == blockPos.y || pos.y == blockPos.y || pos.y+64 == blockPos.y)) {
+            objects[o].autoTile();
+          }
+        }
+      }
+      chunkSystem.chunks[i].refresh = true;
+    }
+  }
+}
+
+function remBlock(pos) {
+  for(var i = 0; i < objects.length; i++) {
+    var obj = objects[i];
+    if(obj.constructor.name != 'Block') continue;
+
+    if(pos.x == obj.pos.x && pos.y == obj.pos.y) {
+      sound_pop.play();
+      removeObject(obj);
+
+      for(var i = 0; i < 9; i++) {
+        if(rectRect(pos.x-32, pos.y-32, 64, 64, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE)) {
+          for(var o = 0; o < objects.length; o++) {
+            if(objects[o].constructor.name == 'Block') {
+              const blockPos = objects[o].pos;
+              if((pos.x-64 == blockPos.x || pos.x == blockPos.x || pos.x+64 == blockPos.x) && (pos.y-64 == blockPos.y || pos.y == blockPos.y || pos.y+64 == blockPos.y)) {
+                objects[o].autoTile();
+              }
+            }
+          }
+          chunkSystem.chunks[i].refresh = true;
+        }
+      }
+    }
+  }
+}
+
+function setFlag(team, captured) {
+  for(var i = 0; i < objects.length; i++){
+    if(objects[i].constructor.name != 'Flag') continue;
+    if(objects[i].team === team) {
+        objects[i].captured = captured;
+    }
+  }
+}
+
+function setPlayer(id, name, value) {
+
+  if(id == player.id){
+    player[name] = value;
+    return;
+  }
+
+  var index = objectIndexOf(players, id, 'id'); // get index by id
+  if(index == -1) return;
+  players[index][name] = value;
+}
+
+function addDroppedFlag(pos, team) {
+  objects.push(new DroppedFlag(pos.x, pos.y, team));
+}
+
+function remDroppedFlag(team) {
+  for(var i = 0; i < objects.length; i++) {
+    if(objects[i].constructor.name != 'DroppedFlag') continue;
+    if(objects[i].team == team) {
+        removeObjectIndex(i);
+        return;
+    }
+  }
+}
+
+function addSmokeGranate(pos, rot) {
+  objects.push(new Granate(pos.x, pos.y, rot));
+}
+
+function disconnected() {
+  console.log('%c Disconnected','background-color: red; color: black');
+}
+
+function loadChunk(x, y, tileMap) {
+  console.log('chunk x: ' + x + ' y: ' + y + ' comes to client!');
+  for(var i = 0; i < 9; i++) {
+    const c = chunkSystem.chunks[i];
+    if(c.pos.x == x * Chunk.SIZE && c.pos.y == y * Chunk.SIZE) {
+      c.tileMap = tileMap;
+      c.loaded = true;
+      
+      console.log('tileMap uploaded');
+      break;
+    }
+  }
+
+  var readyToLoad = true;
+  for(var i = 0; i < 9; i++) {
+    const c = chunkSystem.chunks[i];
+    console.log('loaded: ' + c.loaded);
+    if(!c.loaded) {
+      readyToLoad = false;
+      break;
+    };
+  }
+
+  if(readyToLoad) {
+    console.log('Refreshing all chunks!');
+    for(var i = 0; i < 9; i++) {
+      const c = chunkSystem.chunks[i];
+      c.refresh = true;
+    }
+  }
 }

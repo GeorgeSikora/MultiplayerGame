@@ -33,15 +33,16 @@
 
 <!-- EQUIPMENT -->
 <script src="entities/Equipment.js"></script>
-<script src="entities/equipments/Build.js"></script>
 <script src="entities/equipments/Knife.js"></script>
 <script src="entities/equipments/Rifle.js"></script>
 <script src="entities/equipments/Shotgun.js"></script>
 <script src="entities/equipments/HandGranate.js"></script>
 
-<script src="entities/Build/BuildBlock.js"></script>
-<script src="entities/Build/BuildTile.js"></script>
-<script src="entities/Build/BuildFlag.js"></script>
+<!-- BUILD EQUIPMENT -->
+<script src="entities/equipments/Build.js"></script>
+<script src="entities/equipments/Build/Block.js"></script>
+<script src="entities/equipments/Build/Tile.js"></script>
+<script src="entities/equipments/Build/Flag.js"></script>
 
 <!-- USER INTERFACE -->
 <script src="ui/ScreenFlash.js"></script>
@@ -60,6 +61,7 @@
 <script src="camera.js"></script>
 <script src="socket.js"></script>
 <script src="ChunkSystem.js"></script>
+<script src="Chunk.js"></script>
 
 <!-- GAME ENGINE -->
 <script src="Game.js"></script>

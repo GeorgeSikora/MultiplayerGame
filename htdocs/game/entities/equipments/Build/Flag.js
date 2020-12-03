@@ -1,9 +1,9 @@
 
 class BuildFlag extends Build {
-    constructor(team){
-      super('flag', null);
-      
-      this.GRID_SIZE = 64;
+    constructor(team) {
+        super('flag', null);
+
+        this.GRID_SIZE = 64;
 
         this.team = team;
         if(team == null) this.team = 'white';
@@ -20,14 +20,14 @@ class BuildFlag extends Build {
         
     }
     use(obj) {
-        if(this.lastGrid.x != this.grid.x || this.lastGrid.y != this.grid.y || this.lastButton != mouseButton){
+        if(this.lastGrid.x != this.grid.x || this.lastGrid.y != this.grid.y || this.lastButton != mouseButton) {
             this.lastGrid = this.grid;
             this.lastButton = mouseButton;
 
-            if(mouseButton == LEFT){
+            if(mouseButton == LEFT) {
                 //objects.push(new Flag(this.grid.x, this.grid.y, this.team));
             }
-            if(mouseButton == RIGHT){
+            if(mouseButton == RIGHT) {
             }
             
             var removed = false;

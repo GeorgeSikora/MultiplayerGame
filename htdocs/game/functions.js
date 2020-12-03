@@ -58,10 +58,11 @@ function drawInfo(){
 }
 
 /* safe zone at the spawn */
-function drawSavezone(){
-    if(constants.GAME == null) return;
-    var zone = constants.GAME.SAFE_ZONE; // size of the zone
+function drawSavezone() {
+    if(server.constants.GAME == null) return;
+    var zone = server.constants.GAME.SAFE_ZONE; // size of the zone
     if(zone == 0) return;
+
     push();
     /* draw rectangle with border */
     rectMode(CENTER);

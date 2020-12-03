@@ -1,25 +1,37 @@
 
 /* GLOBAL VARIABLES */
-
-let constants = []; // server constants
-
 const SEND_GAP = 90; // player pos sender
 
 class game {
 
+  /* MAIN VARIABLES */
   static fps = 0;
-  static menuOpened = false;
+  static constants = {
+
+    SHOW_TILE_ID: false,
+    
+    SHOW_INFO: false,
+    SHOW_CHUNKS_BORDER: false,
+  };
+
   static muted = true;
+
   static loaded = false;
   static started = false;
   
+  /* STATMENTS */
+  static menuOpened = false;
+  
+  /* SHOW & ENABLE */
   static showInfo = false;
   static showChunksBorder = false;
+  static buildingEnable = false;
   static showPlayersTarget = false
 
+  /* TEAMS COUNT */
   static teams = {red: 0, blue: 0};
 
-  static buildingEnable = false;
+  /* TIMERS */
   static drawTime = 0;
 
   static setup() {
@@ -31,8 +43,6 @@ class game {
     chat    = new Chat();
     splash  = new ScreenFlash();
     minimap = new Minimap();
-
-
 
     player.enable = false;
     player.show = false;
@@ -47,6 +57,7 @@ class game {
 
     sound_drop2.play();
   }
+  
   static start() {
     //Howler.stop();
 
@@ -56,6 +67,7 @@ class game {
     //music_menu.rate(3, music_menu_id);
     music_menu.fade(volumeMusic, 0, 2000, this.music_menu_id);
   }
+
   static end() {
     this.music_end_id = music_end.play();
     music_end.volume(volumeMusic, this.music_end_id);
@@ -70,10 +82,12 @@ class game {
 
     minimap.enable = false;
   }
+
   static restart() {
+    //console.clear();
 
     /* KVŮLI OBNOVY PROVEDENÝCH ZMĚN U KLIENTŮ, KTEŘÍ NEZNAJÍ F5 :) */
-    if(game.started && constants.GAME.REFRESH_PAGE_ON_RESTART) location.reload();
+    if(game.started && server.constants.GAME.REFRESH_PAGE_ON_RESTART) location.reload();
 
     setTimeout(()=>{
       if(game.started) return;

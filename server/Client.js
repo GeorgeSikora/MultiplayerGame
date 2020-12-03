@@ -1,6 +1,8 @@
 
 const ioClient = io.of('/client');
 
+const game = require('./gameEvents');
+
 var SimplexNoise = require('simplex-noise');
 simplex = new SimplexNoise(Math.random);
 
@@ -52,27 +54,7 @@ ioClient.on('connection', socket => {
         if(startTimeoutHandle != null) clearTimeout(startTimeoutHandle);
 
         if(players.length >= 2) {
-            
-            ioClient.emit('chat-message', new Message('&3Game will start after 10 seconds!'));
-
-            startTimeoutHandle = setTimeout(() => {
-
-                loadMap('map_flags');
-
-                console.log(players.length);
-                for(var i = 0; i < players.length; i++) {
-                    const spawnPos = players[i].team == 'red' ? spawnRed : spawnBlue;
-
-                    players[i].pos = spawnPos; 
-                    players[i].hp = constants.PLAYER.HP;
-                    players[i].kills = 0;
-
-                    ioClient.to(players[i].id).emit('load-map', {objects: objects, spawn: spawnPos});
-                }
-
-                ioClient.emit('chat-message', new Message('&3Game started!'));
-                gameStarted = true;
-            }, 10000);
+            game.start();
         }
         
         sendTeams();
@@ -92,7 +74,7 @@ ioClient.on('connection', socket => {
             const winnerTeam = teams.red != 0 ? 'red' : 'blue';
 
             ioClient.emit('chat-message', new Message('&3The &' + Message.getColorToken(winnerTeam) + winnerTeam + '&3 team won the match!'));
-            gameEnd();
+            game.end();
         }
     });
 
@@ -145,7 +127,6 @@ ioClient.on('connection', socket => {
     });
 
     socket.on('block-add', pos => {
-        
         for(var i = 0; i < objects.length; i++) {
           var obj = objects[i];
           if(pos.x == obj.pos.x && pos.y == obj.pos.y) {
@@ -154,10 +135,8 @@ ioClient.on('connection', socket => {
             return;
           }
         }
-        
         ioClient.emit('block-add', pos);
         objects.push(new Block(pos.x, pos.y));
-        
     });
     
     socket.on('block-rem', pos => {
@@ -168,14 +147,12 @@ ioClient.on('connection', socket => {
               ObjManager.remove(obj);
               return;
             }
-          }
+        }
     });
 
     socket.on('chat-message', msg => {
         var id = ObjManager.getPlayer(socket.id);
         if(id == -1) return;
-
-        //io.of('/spec').emit('chat-message', new Message(msg, players[id]));
         socket.broadcast.emit('chat-message', new Message(msg, players[id]));
     });
     
@@ -204,19 +181,18 @@ ioClient.on('connection', socket => {
         // TODO: Udělat kontrolu, že hráčova pozice je poblíž vlajky
         
         // TODO: Zjistí jestli v proměnných serveru hráč je držitelem vlajky
-        
+
         players[id].capturedFlag = null;
         ioClient.emit('player-set', socket.id, 'capturedFlag', null);
-        //ioSpectator.emit('player-set', socket.id, 'capturedFlag', null);
 
         // TODO: Udělat aby se i ze strany serveru vlajka změnila
+
         ioClient.emit('flag-set', team, false);
 
         console.log(players[id].team + ' team accepted ' + team + ' team flag');
         ioClient.emit('chat-message', new Message('&3Player &'+Message.getColorToken(players[id].team) + players[id].name + '&3 accepted &' + Message.getColorToken(team) + team + '\'s&3 flag'));
  
-        /* !!! CALL THE GAME END !!! */
-        gameEnd();
+        game.end();
     });
 
     socket.on('DroppedFlag-pick', team => {
@@ -246,8 +222,9 @@ ioClient.on('connection', socket => {
 
         // TODO: Ověřit zda se nachází v blízkosti
 
-        // Reset the flag of team
         // TODO: Udělat aby se i ze strany serveru vlajka změnila
+
+        // Reset the flag of team
         ioClient.emit('flag-set', team, false);
 
         // Remove dropped flag from objects
@@ -265,16 +242,6 @@ ioClient.on('connection', socket => {
     socket.on('get-player-teams', () => {
         sendTeams();
     });
-    /*
-    socket.on('get-player-teams', () => {
-        var red = 0, blue = 0;
-        for(var i = 0; i < players.length; i++){
-            if(players[i].team == 'red')    red++;
-            if(players[i].team == 'blue')   blue++;
-        }
-        socket.emit('player-teams', red, blue);
-    });
-    */
 
     socket.on('get-chunk', (chunkX, chunkY) => {
 
@@ -350,26 +317,6 @@ function countTeams() {
     return teams;
 }
 
-function gameEnd() {
-    
-    ioClient.emit('end');
-    ioClient.emit('chat-message', new Message('&3Game ends!'));
-    ioClient.emit('chat-message', new Message('&6Game will be restarted after '+constants.GAME.RESTART_TIME+' seconds.'));
-
-    setTimeout(() => {
-        ioClient.emit('chat-message', new Message('&5Game restarted'));
-        ioClient.emit('restart');
-
-        players = [];
-        objects = [];
-
-        loadMap('lobby');
-
-        gameStarted = false;
-    
-    }, constants.GAME.RESTART_TIME*1000);
-}
-
 function getGeneratedTile(x, y) {
     var tile = 0;
 
@@ -386,6 +333,8 @@ function getGeneratedTile(x, y) {
     if(absTileX%5 <= 2) {
         tile = 1;
     }
+
+    tile = 1;
 
     // POINTS GENERATOR
     /*

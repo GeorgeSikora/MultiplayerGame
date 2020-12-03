@@ -3,7 +3,12 @@ let multiplayer, socket;
 
 var respawnTimeout;
 
+class server {
+  static constants = [];
+}
+
 class Multiplayer {
+
   constructor(url) {
     // main vals
     this.latency = 0;
@@ -99,9 +104,9 @@ function initGame(data) {
   sound_drop1.play();
 
   /* INIT GAME CONSTANTS & SETTINGS */
-  constants = data.constants;
-  console.log(constants);
-  player.maxSpeed = constants.PLAYER.SPEED;
+  server.constants = data.constants;
+  console.log(server.constants);
+  player.maxSpeed = server.constants.PLAYER.SPEED;
 
   // log size of players
   console.log('%c Players size: %c' + data.players.length,'color: lime','color: yellow');
@@ -139,12 +144,12 @@ function initGame(data) {
 
 function loadMap(data) {
 
-  for(var i = 0; i < 9; i++) {
+  for(var i = 0; i < chunkSystem.chunks.length; i++) {
     const c = chunkSystem.chunks[i];
     socket.emit('get-chunk', c.pos.x/Chunk.SIZE, c.pos.y/Chunk.SIZE);
   }
 
-  console.log('loading map...');
+  //console.log('loading map...');
 
   if(!game.started) return;
 
@@ -194,7 +199,7 @@ function loadMap(data) {
 
   chunkSystem.refresh();
   
-  console.log('loaded !');
+  //console.log('loaded !');
 }
 
 // When new player is connected
@@ -285,7 +290,7 @@ function addBlock(pos) {
   sound_place.play();
   objects.push(new Block(pos.x, pos.y));
 
-  for(var i = 0; i < 9; i++) {
+  for(var i = 0; i < chunkSystem.chunks.length; i++) {
     if(rectRect(pos.x-32, pos.y-32, 64, 64, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE)) {
       for(var o = 0; o < objects.length; o++) {
         if(objects[o].constructor.name == 'Block') {
@@ -295,7 +300,7 @@ function addBlock(pos) {
           }
         }
       }
-      chunkSystem.chunks[i].refresh = true;
+      chunkSystem.chunks[i].refresh();
     }
   }
 }
@@ -309,7 +314,7 @@ function remBlock(pos) {
       sound_pop.play();
       removeObject(obj);
 
-      for(var i = 0; i < 9; i++) {
+      for(var i = 0; i < chunkSystem.chunks.length; i++) {
         if(rectRect(pos.x-32, pos.y-32, 64, 64, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE)) {
           for(var o = 0; o < objects.length; o++) {
             if(objects[o].constructor.name == 'Block') {
@@ -319,7 +324,7 @@ function remBlock(pos) {
               }
             }
           }
-          chunkSystem.chunks[i].refresh = true;
+          chunkSystem.chunks[i].refresh();
         }
       }
     }
@@ -370,22 +375,22 @@ function disconnected() {
 }
 
 function loadChunk(x, y, tileMap) {
-  console.log('chunk x: ' + x + ' y: ' + y + ' comes to client!');
-  for(var i = 0; i < 9; i++) {
+//console.log('chunk x: ' + x + ' y: ' + y + ' comes to client!');
+  for(var i = 0; i < chunkSystem.chunks.length; i++) {
     const c = chunkSystem.chunks[i];
     if(c.pos.x == x * Chunk.SIZE && c.pos.y == y * Chunk.SIZE) {
       c.tileMap = tileMap;
       c.loaded = true;
       
-      console.log('tileMap uploaded');
+      //console.log('tileMap uploaded');
       break;
     }
   }
 
   var readyToLoad = true;
-  for(var i = 0; i < 9; i++) {
+  for(var i = 0; i < chunkSystem.chunks.length; i++) {
     const c = chunkSystem.chunks[i];
-    console.log('loaded: ' + c.loaded);
+    //console.log('loaded: ' + c.loaded);
     if(!c.loaded) {
       readyToLoad = false;
       break;
@@ -393,10 +398,10 @@ function loadChunk(x, y, tileMap) {
   }
 
   if(readyToLoad) {
-    console.log('Refreshing all chunks!');
-    for(var i = 0; i < 9; i++) {
+    //console.log('Refreshing all chunks!');
+    for(var i = 0; i < chunkSystem.chunks.length; i++) {
       const c = chunkSystem.chunks[i];
-      c.refresh = true;
+      c.refresh();
     }
   }
 }

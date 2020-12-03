@@ -106,7 +106,26 @@ function command(str) {
             break;
         case 'cb': // Chunks Border
         case 'border':
+        case 'borders':
             game.showChunksBorder = !game.showChunksBorder;
+            break;
+        case 'ti': // Tile ID
+        case 'tileid':
+            game.constants.SHOW_TILE_ID = !game.constants.SHOW_TILE_ID;
+            chunkSystem.refresh();
+            break;
+        case 'cs': // Camera Scale
+        case 'camscale':
+        case 'camerascale':
+
+            if(!isNumeric(parseInt(param[0]))) {
+                chat.add(new Message().message('&4param[0] must be number!').build());
+                break;
+            }
+
+            cam.targetScale = parseFloat(param[0]);
+            chat.add(new Message().message('&4Cam scale set to ' + cam.targetScale).build());
+            
             break;
         default:
             break;

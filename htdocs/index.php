@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
     <title>Capture the flag</title>
     <link rel="stylesheet" href="style/main.css">
-  <link rel="icon" type="image/png" href="/style/favicon.ico"/>
-    
-
+    <link rel="icon" type="image/png" href="style/favicon.ico"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/validateForm.js"></script>
-
 </head>
-
 <body>
 <div class="content">
 
@@ -31,20 +26,19 @@
         <button id="color6" onclick="selectColor(6);" class="purple">  </button>
     </div>
     -->
-
-    <form class="input-play" name="play-form" action="/game/" onsubmit="return validateForm()" method="post">
+    <form class="input-play" name="play-form" action="game/" onsubmit="return validateForm()" method="post">
         <input type="text" id="name" name="name" placeholder="jméno nebo přezdívka" autocomplete="off"></input>
         <!-- <input type="hidden" id="selected-color" name="color"></input> -->
         <br><br>
 		<button class="play-button" type="submit">Play</button>
     </form>
-    
     <p id="error" class="error-message"></p>
 </div>
 
 <div class="bottom-text">
-        <p>Created by George Sikora © 2020</p>
-    </div>
+    <p>Created by George Sikora © 2020</p>
+</div>
+
 </body>
 </html>
 

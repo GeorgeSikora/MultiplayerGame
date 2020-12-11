@@ -82,10 +82,9 @@ button.play:hover {
   color: red;
 }
 
-
 .input-play {
   margin: auto;
-  width: 50vh;
+  width: 100%;
   padding: 10px;
 
   display: flex;
@@ -141,6 +140,11 @@ input:focus {
   background-color: #808000; /* Green */
   color: #eee;
 }
+
+
+
+
+
 
 div.bottom-text {
   left: 50%;

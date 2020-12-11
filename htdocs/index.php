@@ -29,7 +29,6 @@
     <form class="input-play" name="play-form" action="game/" onsubmit="return validateForm()" method="post">
         <input type="text" id="name" name="name" placeholder="jméno nebo přezdívka" autocomplete="off"></input>
         <!-- <input type="hidden" id="selected-color" name="color"></input> -->
-        <br><br>
 		<button class="play-button" type="submit">Play</button>
     </form>
     <p id="error" class="error-message"></p>
@@ -46,7 +45,7 @@
 <script src="js/colorSelect.js"></script>
 -->
 
-<?php if(isset($_GET['error'])){ ?>
+<?php if(isset($_GET['error'])) { ?>
     <script>
         $('#error').html('<?php echo($_GET["message"]."<br>Error: ".$_GET["error"]); ?>');
     </script>

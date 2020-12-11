@@ -11,7 +11,7 @@ function validateForm() {
     
     if (name == "") error_message = "Zadej jméno nebo přezdívku!";
     
-    if(error_message  != null){
+    if (error_message  != null) {
         $('#error').text(error_message);
         return false;
     }

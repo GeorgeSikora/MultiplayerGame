@@ -1,4 +1,5 @@
 
+
 body {
   margin: 0;
 
@@ -11,11 +12,6 @@ body {
 
   font-family: "Courier New", Courier, monospace;
   color: white;
-}
-
-h1 {
-  margin-top: 45%;
-  font-size: 4.2vh;
 }
 
 .content {
@@ -38,33 +34,16 @@ h1 {
   transform: translate(-50%, 0);
 }
 
-.colorselect button {
-  display: inline;
-  padding: 2.0vh;
-  
-  text-align: center;
-  font-size: 1.6vh;
-  margin: .4vh .2vh;
-  cursor: pointer;
-  
-  border: none;
-  outline:none;
-  text-decoration: none;
+/* title name */
+
+.title {
+  margin-top: 45%;
+  font-size: 4.2vh;
 }
 
-.colorselect .red    {background-color: #DF0000;}
-.colorselect .orange {background-color: #FF8000;}
-.colorselect .yellow {background-color: #FFFF00;}
-.colorselect .green  {background-color: #00FF00;}
-.colorselect .aqua   {background-color: #00D4D4;}
-.colorselect .blue   {background-color: #0000FF;}
-.colorselect .purple {background-color: #50007F;}
+/* input form */
 
-#error {
-  color: red;
-}
-
-.input-play {
+.input-form {
   margin: auto;
   width: 100%;
   padding: 1.0vh;
@@ -73,38 +52,39 @@ h1 {
   flex-direction: row;
 }
 
-input {
+.input-form input {
+
   color: #333;
   font-size: 1.9vh;
-  border: none;
-
+  
   width: 100%;
-  padding: 1.1vh 2.0vh;
   background-color: #ccc;
-  outline: none;
-
+  padding: 1.1vh 2.0vh;
   border-radius: .5vh 0 0 .5vh;
+
+  border: none;
+  outline: none;
 }
 
-input:focus {
+.input-form input:focus {
   background-color: #dde;
 }
 
+/* play button */
+
 .play-button {
-  display: inline-block;
+
+  font-size: 2.3vh;
+  font-family: arial;
+  text-align: center;
+
 	width: 13.8vh;
   background-color: #FFFF00;
-
-  outline: none;
-  border: none;
   border-radius: 0 .5vh .5vh 0;
-
+  
+  border: none;
+  outline: none;
   text-decoration: none;
-
-  font-family: arial;
-  font-size: 2.3vh;
-
-  text-align: center;
 }
 
 .play-button:hover {
@@ -112,10 +92,14 @@ input:focus {
   color: #eee;
 }
 
+/* error text */
+
+#error {
+  color: red;
+}
 
 
-
-
+/* bottom copyright text */
 
 div.bottom-text {
   left: 50vw;

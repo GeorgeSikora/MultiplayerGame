@@ -15,13 +15,13 @@ body {
 
 h1 {
   margin-top: 45%;
-  font-size: 42px;
+  font-size: 4.2vh;
 }
 
 .content {
   text-align: center;
 
-  box-shadow: 0 0 50px 100px rgba(0.1, 0.1, 0.1, 0.7);
+  box-shadow: 0 0 8vh 16vh rgba(0.1, 0.1, 0.1, 0.7);
 	background-color:rgba(0.1, 0.1, 0.1, 0.7);
 
   outline: none;
@@ -31,8 +31,8 @@ h1 {
 	margin-right: auto;
 
   position: absolute;
-  width: 30%;
-  height: 100%;
+  width: 30vw;
+  height: 100vh;
 
   left: 50%;
   transform: translate(-50%, 0);
@@ -40,11 +40,11 @@ h1 {
 
 .colorselect button {
   display: inline;
-  padding: 20px;
+  padding: 2.0vh;
   
   text-align: center;
-  font-size: 16px;
-  margin: 4px 2px;
+  font-size: 1.6vh;
+  margin: .4vh .2vh;
   cursor: pointer;
   
   border: none;
@@ -60,24 +60,6 @@ h1 {
 .colorselect .blue   {background-color: #0000FF;}
 .colorselect .purple {background-color: #50007F;}
 
-/*
-button.play {
-  background-color: #222222;
-  border: none;
-  color: white;
-  padding: 10px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-    
-  outline: 2px solid #555544;
-}
-button.play:hover {
-  background-color: #334455;
-  outline: 2px solid #ccddee;
-}
-*/
 #error {
   color: red;
 }
@@ -85,7 +67,7 @@ button.play:hover {
 .input-play {
   margin: auto;
   width: 100%;
-  padding: 10px;
+  padding: 1.0vh;
 
   display: flex;
   flex-direction: row;
@@ -93,51 +75,40 @@ button.play:hover {
 
 input {
   color: #333;
-  font-size: 18px;
+  font-size: 1.9vh;
   border: none;
 
   width: 100%;
-  padding: 8px 20px;
-  margin: 0px 0px;
+  padding: 1.1vh 2.0vh;
   background-color: #ccc;
   outline: none;
 
-  border-radius: 5px 0px 0px 5px;
+  border-radius: .5vh 0 0 .5vh;
 }
 
 input:focus {
-  /*
-  -webkit-box-shadow: 0px 5px 20px 0px rgba(0,0,0,1);
-  -moz-box-shadow: 0px 5px 20px 0px rgba(0,0,0,1);
-  box-shadow: 0px 5px 20px 0px rgba(0,0,0,1);
-  */
-
   background-color: #dde;
 }
 
 .play-button {
   display: inline-block;
-	
-	width: 128px;
-	height: 42px;
-
-  background-color: #FFFF00; /* Green */
+	width: 13.8vh;
+  background-color: #FFFF00;
 
   outline: none;
   border: none;
-  border-radius: 0px 5px 5px 0px;
+  border-radius: 0 .5vh .5vh 0;
 
   text-decoration: none;
 
   font-family: arial;
-  font-size: 18px;
+  font-size: 2.3vh;
 
-  color:black;
   text-align: center;
 }
 
 .play-button:hover {
-  background-color: #808000; /* Green */
+  background-color: #808000;
   color: #eee;
 }
 
@@ -147,12 +118,12 @@ input:focus {
 
 
 div.bottom-text {
-  left: 50%;
+  left: 50vw;
   transform: translateX(-50%);
 
   position: absolute;
 
-  bottom: 16px;
+  bottom: 1.6vh;
   color: #eee;
-  font-size: 16px;
+  font-size: 1.7vh;
 }

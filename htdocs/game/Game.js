@@ -86,6 +86,14 @@ class game {
   static restart() {
     //console.clear();
 
+    // clear chunks
+    /*
+    for(var i = 0; i < chunkSystem.chunks.length; i++) {
+      const c = chunkSystem.chunks[i];
+      c.clear();
+    }
+    */
+
     /* KVŮLI OBNOVY PROVEDENÝCH ZMĚN U KLIENTŮ, KTEŘÍ NEZNAJÍ F5 :) */
     if(game.started && server.constants.GAME.REFRESH_PAGE_ON_RESTART) location.reload();
 

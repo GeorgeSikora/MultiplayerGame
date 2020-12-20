@@ -27,24 +27,23 @@
 
 <script>
 
-  function loadScreen(screen){
-    switch(screen){
-      case 'menu':
-        $('#content').load("menu/main.html");
-        break;
-      case 'settings':
-        $('#content').load("menu/settings.html");
-        break;
-      case 'credits':
-        $('#content').load("menu/credits.html");
-        break;
-    }
+/* function for loading */
+function loadScreen (screen) {
+  switch (screen){
+    case 'menu':
+      $('#content').load("menu/main.html");
+      break;
+    case 'settings':
+      $('#content').load("menu/settings.html");
+      break;
+    case 'credits':
+      $('#content').load("menu/credits.html");
+      break;
   }
+}
 
-  //loadScreen('menue');
-
-  /* set default volumes */
-  Howler.volume(0.3);
-  let volumeMusic = 0.5; 
+/* set default volumes */
+Howler.volume(0.3);
+let volumeMusic = 0.5; 
 
 </script>

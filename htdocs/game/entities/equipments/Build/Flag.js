@@ -20,7 +20,7 @@ class BuildFlag extends Build {
         
     }
     use(obj) {
-        if(this.lastGrid.x != this.grid.x || this.lastGrid.y != this.grid.y || this.lastButton != mouseButton) {
+        if (this.lastGrid.x != this.grid.x || this.lastGrid.y != this.grid.y || this.lastButton != mouseButton) {
             this.lastGrid = this.grid;
             this.lastButton = mouseButton;
 
@@ -36,6 +36,7 @@ class BuildFlag extends Build {
                 if(o.constructor.name == 'Flag' && o.team == this.team) {removeObject(o); removed = true;}
             }
 
+            /* ADD MESSAGE TO CHAT
             if(!removed) {
                 if(this.team == 'blue'){
                     chat.add(new Message().message('&7Modrá vlajka položena !').build());
@@ -43,6 +44,7 @@ class BuildFlag extends Build {
                     chat.add(new Message().message('&2Červená vlajka položena !').build());
                 }
             }
+            */
             
             sound_place.play();
             objects.push(new Flag(this.grid.x, this.grid.y, this.team));
@@ -50,21 +52,5 @@ class BuildFlag extends Build {
             this.shake.x = cos(obj.rotation)*16;
             this.shake.y = sin(obj.rotation)*16;
         }
-         /*
-            var searched = false;
-            for(var i = 0; i < objects.length; i++) {
-                var obj = objects[i];
-                if(obj.constructor.name != 'Flag') continue;
-                if(this.grid.x == obj.pos.x && this.grid.y == obj.pos.y) {
-                    removeObject(obj);
-                    searched = true;
-                    break;
-                }
-            }
-            if(!searched) {
-                sound_place.play();
-                objects.push(new Flag(this.grid.x, this.grid.y, this.team));
-            }
-            */
     }
 }

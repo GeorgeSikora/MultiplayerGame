@@ -74,7 +74,8 @@ function draw() {
   }
 
   /********************************************************************************************/
-  chunkSystem.update();
+  if(game.started)
+    chunkSystem.update();
   /********************************************************************************************/
 
   /* add my player to render */
@@ -131,7 +132,7 @@ function draw() {
     }
   }
 
-  if(frameCount%50 == 0) game.drawTime = (millis() - drawTime).toFixed(2);
+  if (frameCount % 50 == 0) game.drawTime = (millis() - drawTime).toFixed(2);
 }
 
 setInterval(() => {

@@ -9,6 +9,9 @@ class game {
   static constants = {
     SEND_GAP: 90, // player pos sender
 
+    MENU_SCALE: 1.5,
+    DEFAULT_SCALE: 1.0,
+
     SHOW_TILE_ID: false,
     
     SHOW_INFO: false,
@@ -36,6 +39,10 @@ class game {
   static drawTime = 0;
 
   static setup() {
+    /* connect to the multiplayer server */
+    multiplayer = new Multiplayer(SERVER_URL);
+    socket.emit('get-player-teams');
+
     chunkSystem = new ChunkSystem();
     loadTiles();
     
@@ -48,15 +55,14 @@ class game {
     player.enable = false;
     player.show = false;
 
-    /* connect to the multiplayer server */
-    multiplayer = new Multiplayer(SERVER_URL);
-    socket.emit('get-player-teams');
+    console.log(cam.targetScale, cam.scale);
 
     game.restart();
 
-    Howler.mute(game.muted);
-
     sound_drop2.play();
+  
+    /* JUST FOR DEVELOP, UNDER THIS */
+    Howler.mute(game.muted);
   }
   
   static start() {
@@ -119,6 +125,8 @@ class game {
     player.show = false;
 
     cam = new Camera(player);
+    cam.targetScale = game.constants.MENU_SCALE;
+    cam.scale = 0.5;
 
     /* connect to the multiplayer server */
     multiplayer = new Multiplayer(SERVER_URL);

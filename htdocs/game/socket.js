@@ -169,7 +169,7 @@ function loadMap(data) {
   cam.pos.y = pos.y;
   cam.target = player;
 
-  cam.targetScale = 0.32;
+  cam.targetScale = game.constants.DEFAULT_SCALE;
 
   splash.opacity = 255;
 

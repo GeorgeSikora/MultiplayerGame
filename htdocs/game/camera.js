@@ -2,15 +2,15 @@
 let cam;
 
 class Camera {
-    constructor(target){
+    constructor(target) {
 
         this.target = target;
         
         this.pos        = {x: target.pos.x, y: target.pos.y};
         this.targetPos  = {x: target.pos.x, y: target.pos.y};
 
-        this.targetScale = 1.5;
-        this.scale = 0.5;
+        this.targetScale = 1.0;
+        this.scale = 1.0;
         
         this.easing = 0.1;
         
@@ -18,7 +18,7 @@ class Camera {
   
     }
     
-    ortho(){
+    ortho() {
         if(this.target != null) 
         this.targetPos = {  x: this.target.pos.x, 
                             y: this.target.pos.y};

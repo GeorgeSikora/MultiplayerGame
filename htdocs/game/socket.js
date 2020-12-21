@@ -65,7 +65,7 @@ class Multiplayer {
         rotation: player.rotation, 
         selected: sel
       });
-      this.sendTimer = millis() + game.SEND_GAP;
+      this.sendTimer = millis() + game.constants.SEND_GAP;
     }
   }
 
@@ -77,10 +77,6 @@ class Multiplayer {
 function pong(latency) {
   multiplayer.latency = latency;
 }
-
-setInterval(function(){
-  game.fps = parseInt(frameRate());
-}, 500);
 
 /********* SOCKET IO EVENTS *********/
 
@@ -263,7 +259,7 @@ function respawnPlayer(shooterID, pos) {
     player.enable = true;
     cam.target = player;
     socket.emit('respawned');
-  }, 10000);
+  }, 3500);
 }
 
 function newChatMessage(msg) {

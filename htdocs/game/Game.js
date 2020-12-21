@@ -1,6 +1,6 @@
 
 /* is just ... "IP:PORT/NAMESPACE" */
-let SERVER_URL = 'localhost:3031/client';  // 185.221.124.205
+let SERVER_URL = '185.221.124.205:3031/client';  // 
 
 class game {
 
@@ -18,7 +18,7 @@ class game {
     SHOW_CHUNKS_BORDER: false,
   };
 
-  static muted = true;
+  static muted = false;
 
   static loaded = false;
   static started = false;
@@ -45,7 +45,7 @@ class game {
 
     chunkSystem = new ChunkSystem();
     loadTiles();
-    
+
     player  = new MyPlayer(0, post.name, 0, 0, 'lobby');
     cam     = new Camera(player);
     chat    = new Chat();
@@ -55,14 +55,18 @@ class game {
     player.enable = false;
     player.show = false;
 
-    console.log(cam.targetScale, cam.scale);
-
     game.restart();
 
     sound_drop2.play();
   
     /* JUST FOR DEVELOP, UNDER THIS */
-    Howler.mute(game.muted);
+    //Howler.mute(game.muted);
+
+        
+    setInterval(function(){
+      if (frameRate() != null)
+      game.fps = parseInt(frameRate());
+    }, 500);
   }
   
   static start() {

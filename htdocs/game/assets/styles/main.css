@@ -72,6 +72,6 @@ h2 {
   margin: 10px 12px;
   cursor: pointer;
 
-  background: url('/game/assets/images/menu/button.png') no-repeat 50% 50%;
+  background: url('../images/menu/button.png') no-repeat 50% 50%;
   background-size:cover;
 }

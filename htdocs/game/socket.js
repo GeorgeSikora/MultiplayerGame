@@ -65,7 +65,7 @@ class Multiplayer {
         rotation: player.rotation, 
         selected: sel
       });
-      this.sendTimer = millis() + SEND_GAP;
+      this.sendTimer = millis() + game.SEND_GAP;
     }
   }
 

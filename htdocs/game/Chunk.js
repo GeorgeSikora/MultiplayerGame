@@ -39,6 +39,7 @@ class Chunk {
         }
 
         /* draw tilemap */
+        /*
         for(var x = 0; x < Chunk.SIZE/Tile.SIZE; x++) {
             for(var y = 0; y < Chunk.SIZE/Tile.SIZE; y++) {
                 var tile = this.tileMap[y][x];
@@ -59,6 +60,7 @@ class Chunk {
                 }
             }
         }
+        */
 
         this.texture.translate(-this.pos.x, -this.pos.y);
         this.texture.translate(Chunk.SIZE/2, Chunk.SIZE/2);
@@ -66,6 +68,7 @@ class Chunk {
         //console.log(this.lastIndex);
         if(this.lastIndex == -1) {
             this.inProcess = false;
+            this.bufferTexture.clear();
             this.bufferTexture.image(this.texture, 0, 0);
             console.log('Chunk update: ' + (millis() - this.refreshStartTime).toFixed(2) + 'ms');
             this.processEnd = millis();
@@ -91,6 +94,7 @@ class Chunk {
             if(i == 0) {
                 //console.log('Chunk update: ' + (millis() - this.refreshStartTime).toFixed(2) + 'ms');
                 this.inProcess = false;
+                this.bufferTexture.clear();
                 this.bufferTexture.image(this.texture, 0, 0);
                 this.processEnd = millis();
             }
@@ -239,8 +243,8 @@ class Chunk {
         this.refreshStartTime = millis();
         this.inProcess = true;
         
-        //this.texture.clear();
-        this.texture.image(tileBackground, 0, 0);
+        this.texture.clear();
+        //this.texture.image(tileBackground, 0, 0);
 
         this.lastIndex = objects.length - 1;
     }

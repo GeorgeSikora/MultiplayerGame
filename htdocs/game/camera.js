@@ -15,7 +15,6 @@ class Camera {
         this.easing = 0.1;
         
         this.mouse = {x: 0, y: 0};
-  
     }
     
     ortho() {

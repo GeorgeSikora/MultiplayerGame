@@ -1,7 +1,12 @@
 
+    let startTimeoutHandle;
+
     function start() {
     
         ioClient.emit('chat-message', new Message('&3Game will start after 10 seconds!'));
+
+
+        if (startTimeoutHandle != null) clearTimeout(startTimeoutHandle);
     
         startTimeoutHandle = setTimeout(() => {
 

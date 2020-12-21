@@ -1,7 +1,4 @@
 
-/* SERVER IP WITH ':' PORT AND '/' NAMESPACE */
-let SERVER_URL = 'localhost:3031/client';  // 185.221.124.205
-
 /*** SETUP ***/
 function setup() {
   /* create as window screen size */
@@ -18,17 +15,17 @@ function setup() {
 
 /*** LOOP ***/
 function draw() {
-
   /* FPS drop check */
   if(frameRate() < 15){
     //chat.add("fps drop " + frameRate() + " fps");
     return;
   }
-
   if(frameCount%60 == 0){
    // console.log(frameRate());
   }
+  /*** IMPORTANT THINGS FOR THE GAME UNDER THIS COMMENT ***/
 
+  /* draw start time value */
   var drawTime = millis();
 
   /* calc player move */
@@ -66,17 +63,14 @@ function draw() {
     if(objects[i] != obj) continue;
     if(obj.staticDraw) continue;
   
-    /* draw only when it is on screen */
+    /* push to draw only when it is on screen */
     if(rectRect(obj.pos.x-obj.center.x, obj.pos.y-obj.center.y, obj.w, obj.h, cam.pos.x-width/cam.scale/2, cam.pos.y-height/cam.scale/2, width/cam.scale, height/cam.scale)) {
-      //obj.draw();
       objectsRender.push(obj);
     }
   }
 
-  /********************************************************************************************/
-  if(game.started)
-    chunkSystem.update();
-  /********************************************************************************************/
+  /* chunks update check */
+  if(game.started) chunkSystem.update();
 
   /* add my player to render */
   objectsRender.push(player);
@@ -109,17 +103,23 @@ function draw() {
   /* informations corner */
   drawInfo();
 
-  tint(255);
-  if(game.muted) {
-    image(ico_sounds_off, width-32, 0);
-  }else{
-    image(ico_sounds_on, width-32, 0);
-  }
+  /* FPS corner */
+  fill(255, 255, 0);
+  textSize(12);
+  textAlign(LEFT, TOP);
+  text(game.fps, 5, 5);
 
+  /* mute button */
+  tint(255);
+  image(game.muted ? ico_sounds_off : ico_sounds_on, width-32, 0);
+
+  /* chat */
   chat.draw(10, height-10);
 
+  /* splash effect */
   splash.draw();
 
+  /* server con error showcase */
   if(!socket.connected) {
     if(game.started) {
       game.restart();
@@ -132,6 +132,7 @@ function draw() {
     }
   }
 
+  /* calculate drawTime */
   if (frameCount % 50 == 0) game.drawTime = (millis() - drawTime).toFixed(2);
 }
 

@@ -42,7 +42,6 @@ class Chat {
         /* setup properties */
         translate(x, int(y +this.chatPosY), 0);
         textAlign(LEFT, BOTTOM);
-        textSize(this.TEXT_SIZE);
         imageMode(CORNER);
 
         /* go through each chat line */

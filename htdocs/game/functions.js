@@ -26,6 +26,7 @@ function drawInfo(){
     fill(0);
     textSize(18);
     textAlign(LEFT, TOP);
+    /*
     var chunksInfo = '';
     for(var i = 0; i < chunkSystem.chunks.length; i++) {
         const c = chunkSystem.chunks[i];
@@ -39,6 +40,8 @@ function drawInfo(){
         chunksInfo += (c.processEnd - c.processStart);
         chunksInfo += '\n';
     }
+    */
+
     text(
       'connected: '         + socket.connected
     + '\ngame.started: '    + game.started
@@ -47,12 +50,15 @@ function drawInfo(){
     + '\nloop time: '       + game.drawTime + ' ms'
     + '\nkills: '           + player.kills 
     + '\nx: '               + round(player.pos.x) + ' y: ' + round(player.pos.y) 
-    + "\nPlayers online: "  + (players.length+1) 
+    + "\nPlayers online: "  + (players.length+1)
     + "\nObjects: "         + objects.length
+    /*
     + '\nmute: '            + game.muted
     + '\nMaster-vol: '      + int(Howler.volume()*100) + '%'
     + '\nMusic-vol: '       + int(volumeMusic*100) + '%'
-    + '\n' + chunksInfo
+    */
+    
+    // + '\n' + chunksInfo
     ,5, 5);
     pop();
 }

@@ -4,6 +4,7 @@
     <title>Capture the flag</title>
     <link rel="stylesheet" href="style/main.css">
     <link rel="icon" type="image/png" href="./style/favicon.ico"/>
+    <script src="js/introduction.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/validateForm.js"></script>
 </head>

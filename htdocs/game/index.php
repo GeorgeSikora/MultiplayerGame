@@ -9,6 +9,7 @@
 
   <title>Capture the flag</title>
 
+  <script src="../js/introduction.js"></script>
   <?php require('php/scripts.php') ?>
 
   <link rel="stylesheet" href="assets/styles/main.css">

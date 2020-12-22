@@ -63,6 +63,13 @@ function drawInfo(){
     pop();
 }
 
+function drawFPS() {
+  fill(255, 255, 0);
+  textSize(12);
+  textAlign(LEFT, TOP);
+  text(game.fps, 5, 5);
+}
+
 /* safe zone at the spawn */
 function drawSavezone() {
     if(server.constants.GAME == null) return;

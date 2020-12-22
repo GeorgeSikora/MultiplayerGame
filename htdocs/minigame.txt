@@ -16,12 +16,3 @@
 	- vlajka se obnovi na nepřátelské straně
 > když se přinese dostatečný počet nepřátelských vlajek
 	- hra tímto končí a vítězí tým s nejrychleji dosaženým počket vlajek
-	
-	
-	
-	
-	
-	
-	
-	
-	

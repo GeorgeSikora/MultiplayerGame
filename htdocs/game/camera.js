@@ -17,10 +17,9 @@ class Camera {
         this.mouse = {x: 0, y: 0};
     }
     
-    ortho() {
-        if(this.target != null) 
-        this.targetPos = {  x: this.target.pos.x, 
-                            y: this.target.pos.y};
+    refresh() {
+        if (this.target != null) 
+            this.targetPos = { x: this.target.pos.x, y: this.target.pos.y };
 
         this.pos.x += (this.targetPos.x - this.pos.x) * this.easing;
         this.pos.y += (this.targetPos.y - this.pos.y) * this.easing;

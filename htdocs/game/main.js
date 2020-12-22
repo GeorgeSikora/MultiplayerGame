@@ -16,12 +16,12 @@ function setup() {
 /*** LOOP ***/
 function draw() {
   /* FPS drop check */
-  if(frameRate() < 15){
+  if(frameRate() < 15) {
     //chat.add("fps drop " + frameRate() + " fps");
     return;
   }
-  if(frameCount%60 == 0){
-   // console.log(frameRate());
+  if(frameCount%60 == 0) {
+    //console.log(frameRate());
   }
   /*** IMPORTANT THINGS FOR THE GAME UNDER THIS COMMENT ***/
 
@@ -43,8 +43,8 @@ function draw() {
   /* chceck and repair positions of coliding objects */
   checkCollisions();
 
-  /* cam ortho */
-  cam.ortho();
+  /* cam refresh */
+  cam.refresh();
 
   /* background color */
   background(12); //background(100, 155, 74);
@@ -104,10 +104,7 @@ function draw() {
   drawInfo();
 
   /* FPS corner */
-  fill(255, 255, 0);
-  textSize(12);
-  textAlign(LEFT, TOP);
-  text(game.fps, 5, 5);
+  drawFPS();
 
   /* mute button */
   tint(255);

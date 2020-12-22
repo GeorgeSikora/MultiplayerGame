@@ -1,0 +1,32 @@
+
+.sidebar {
+    position: absolute;
+    width: 0;
+    height: 100%;
+    z-index: 1;
+    overflow-x: hidden;
+    right: 0;
+    background-color: #000a;
+    transition: width 0.4s;
+}
+
+.sidebar .content {
+    margin: 10px;
+    color: white;
+}
+
+.sidebar-toggle {
+    z-index: 1;
+    position: absolute;
+    
+    right: 0;
+    font-size: 20px;
+    padding: 16px 8px 16px 8px;
+
+    border-radius: 10px 0 0 10px;
+    color: #fff;
+    background-color: #52a;
+    text-decoration: none;
+
+    transition: right 0.4s;
+}

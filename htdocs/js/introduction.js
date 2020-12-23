@@ -22,7 +22,7 @@ console.log('%c' + (s => s.raw)`
     Jiří Sikora / 2020 - 2021 / MultiplayerGame Project
 `[0], "font-family:monospace; color: coral;");
 
-consoleImage('https://media.giphy.com/media/IgQjFbW0Zn1PIZqEQm/giphy.gif');
+//consoleImage('https://media.giphy.com/media/IgQjFbW0Zn1PIZqEQm/giphy.gif');
 
 function consoleImage(url) {
     // Create a new `Image` instance

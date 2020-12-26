@@ -1,8 +1,8 @@
 # MultiplayerGame
 
-![Game gif](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/shooting.gif)
-
 This is 2D JavaScript Multiplayer game, where you can shoot and move on the map with other players.
+
+![Game gif](https://github.com/GeorgeSikora/MultiplayerGame/blob/master/screenshots/shooting.gif)
 
 What I use:
 - [Node.js](https://nodejs.org/en/) for server run.

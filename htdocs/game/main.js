@@ -2,7 +2,8 @@
 /*** SETUP ***/
 function setup() {
   /* create as window screen size */
-  createCanvas(window.screen.width, window.screen.height, WEBGL);
+  //createCanvas(window.screen.width, window.screen.height, WEBGL);
+  createCanvas(0, 0, WEBGL);
   /* ckeck display resolution, optionally resize */
   windowResized();
   /* set some default stuff */

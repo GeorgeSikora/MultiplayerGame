@@ -96,5 +96,12 @@ function windowResized() {
     if(window.screen.width < window.innerWidth || window.screen.height < window.innerHeight) {
         return;
     }
-    resizeCanvas(window.innerWidth, window.innerHeight);
+
+    //var resRatio = 1;
+    //resizeCanvas(window.innerWidth/resRatio, window.innerHeight/resRatio);
+
+    resizeCanvas(game.resolution.width, game.resolution.height);
+
+    document.getElementById('defaultCanvas0').style.width = window.innerWidth + "px";
+    document.getElementById('defaultCanvas0').style.height = window.innerHeight + "px";
 }

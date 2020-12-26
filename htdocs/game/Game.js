@@ -6,6 +6,11 @@ class game {
 
   /* MAIN VARIABLES */
   static fps = 0;
+  static resolution = {
+    width: innerWidth, 
+    height: innerHeight
+  };
+
   static constants = {
     SEND_GAP: 90, // player pos sender
 

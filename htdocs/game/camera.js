@@ -24,7 +24,7 @@ class Camera {
         this.pos.x += (this.targetPos.x - this.pos.x) * this.easing;
         this.pos.y += (this.targetPos.y - this.pos.y) * this.easing;
 
-        this.scale += (this.targetScale - this.scale) * this.easing;
+        this.scale += ((this.targetScale * width / innerWidth) - this.scale) * this.easing;
 
         const left   = -width  / (this.scale*2);
         const right  =  width  / (this.scale*2);

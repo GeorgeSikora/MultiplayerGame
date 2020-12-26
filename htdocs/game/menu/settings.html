@@ -23,11 +23,10 @@
 
 <script>
 
-
-$("#volume-master").val(Howler.volume()*100);
-$("#volume-music").val(volumeMusic*100);
-$("#masterVolume").html(Howler.volume()*100);
-$("#musicVolume").html(volumeMusic*100);
+$("#volume-master").val(Howler.volume() * 100);
+$("#volume-music").val(volumeMusic * 100);
+$("#masterVolume").html(Howler.volume() * 100);
+$("#musicVolume").html(volumeMusic * 100);
 
 $("#volume-master").on("input change", function() {
     Howler.volume(this.value/100.0);

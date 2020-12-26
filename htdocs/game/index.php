@@ -30,6 +30,8 @@
 
 /* function for loading */
 function loadScreen (screen) {
+      $('#content').load("menu/" + screen + ".html");
+  /*
   switch (screen){
     case 'menu':
       $('#content').load("menu/main.html");
@@ -41,6 +43,7 @@ function loadScreen (screen) {
       $('#content').load("menu/credits.html");
       break;
   }
+  */
 }
 
 /* set default volumes */

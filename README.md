@@ -52,17 +52,17 @@ I just like this tree, called Wisteria and also it has very nice name. So far, i
 
 ## Bugs to fix
 - When a player moves on according to blocks placed next to each other, he stops.
-> WAITING: The collision system needs to be improved.
+  - WAITING: The collision system needs to be improved.
 - Rotation easing of enemies tools goes along the full reverse angle, when angle value dropped to start, just looks weird.
-> WAITING: Bit of a math puzzle, I'll think about how to fix it, it's not that important yet.
+  - WAITING: Bit of a math puzzle, I'll think about how to fix it, it's not that important yet.
 - players emit with pos etc. have very big delay, needs to sending only variables that have changed.
-> WAITING: It has been improved, but it still wants to improve.
+  - WAITING: It has been improved, but it still wants to improve.
 - when someone disconnects when restarting, the music starts playing again
-> WAITING: I know this is due to the server side, sends multiple restarts to clients, needs to be handled by the server.
+  - WAITING: I know this is due to the server side, sends multiple restarts to clients, needs to be handled by the server.
 - in the menu I hear gunfire, sometimes I see bullets
-> WAITING: Easy to fix, I'm just too lazy, just make sure the server sends bullets only to players in the game, or players would regulate the bullets, depending on whether they are in the game.
+  - WAITING: Easy to fix, I'm just too lazy, just make sure the server sends bullets only to players in the game, or players would regulate the bullets, depending on whether they are in the game.
 - bug with the end, the player can move even if the game ends
-> WAITING: I have to figure out why this is so, maybe just the player didn't get the socket that the game was over.
+  - WAITING: I have to figure out why this is so, maybe just the player didn't get the socket that the game was over.
 - when I kill someone in the lobby, the killed person then shows no contact with the server, I can't kill him, nor can I see him moving
-> FIXED: The player was in respawning mode, so he was frozen and could not be eliminated.
+  - FIXED: The player was in respawning mode, so he was frozen and could not be eliminated.
 

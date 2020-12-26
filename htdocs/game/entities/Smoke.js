@@ -5,7 +5,7 @@ class Smoke extends GameObject {
     super(x, y, 0, 0);
 
     this.diameter = 5;
-    this.targetDiameter = random(150, 500);
+    this.targetDiameter = random(150, 500); 
 
     this.direction = random(TWO_PI);
     this.directionSpeed = random(0.6, 1.4);
@@ -65,19 +65,8 @@ class Smoke extends GameObject {
   }
   
   draw() {
-    push()
     noStroke();
     fill(255, this.opacity);
-
-    /*
-    tint(this.opacity);
-    blendMode(LIGHTEST);
-    imageMode(CENTER);
-    image(img_particles_smoke, this.pos.x, this.pos.y, this.w, this.h);
-    */
     ellipse(this.pos.x, this.pos.y, this.diameter);
-
-    pop();
-    //blendMode(ADD);
   }
 }

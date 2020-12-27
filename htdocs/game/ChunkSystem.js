@@ -71,12 +71,19 @@ class ChunkSystem {
         for(var i = 0; i < this.chunks.length; i++) {
             this.chunks[i].update();
         }
-        //console.log('Chunks update: ' + (millis() - chunksUpdateStart).toFixed(2) + 'ms');
+        console.log('Chunks update: ' + (millis() - chunksUpdateStart).toFixed(2) + 'ms');
 
+        var drawingChunks = 0;
         const chunksDrawStart = millis();
         for(var i = 0; i < this.chunks.length; i++) {
-            this.chunks[i].draw();
+            var c = this.chunks[i];
+            if(rectRect(cam.pos.x - width / cam.scale / 2, cam.pos.y - height / cam.scale /2, width / cam.scale, height / cam.scale, c.pos.x - Chunk.SIZE/2, c.pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE)) {
+                this.chunks[i].draw();
+                drawingChunks ++;
+            }
         }
+        console.log('redrawing no. of: ' + drawingChunks);
+        console.log('Chunks draw: ' + (millis() - chunksDrawStart).toFixed(2) + 'ms');
     }
 
     refresh() {

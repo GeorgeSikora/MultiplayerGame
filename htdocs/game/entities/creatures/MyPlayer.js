@@ -120,17 +120,19 @@ class MyPlayer extends GameObject {
     this.equipment[this.selectedEquipment].draw(this);
     /* name and hp */ 
     textSize(16);
-    fill(255,255,0);
+    fill(255, 255, 0);
     textAlign(CENTER, BOTTOM);
     text(this.name +'\n' +this.hp +'hp', this.pos.x, this.pos.y-5 -this.h/2);
   }
 
   equipmentUsage() {
-    if(this.equipment[this.selectedEquipment].BUTTON_USE == 0 || this.equipment[this.selectedEquipment].BUTTON_USE == mouseButton) this.equipment[this.selectedEquipment].use(this);
+    if ( this.equipment[this.selectedEquipment].BUTTON_USE == 0 
+      || this.equipment[this.selectedEquipment].BUTTON_USE == mouseButton) 
+      this.equipment[this.selectedEquipment].use(this);
   }
 
   mousePressed() {
-    if(!this.enable) return;
+    if (!this.enable) return;
     this.equipmentUsage();
   }
   

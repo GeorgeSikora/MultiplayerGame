@@ -9,12 +9,10 @@ class ScreenFlash {
     draw(){
         if(this.opacity <= 1) return;
 
-        push();
         rectMode(CORNER);
-        fill(0,this.opacity);
+        fill(0, this.opacity);
         noStroke();
-        rect(0,0,width,height);
-        pop();
+        rect(0, 0, innerWidth, innerHeight);
 
         this.opacity += (this.targetOpacity - this.opacity) * 0.04;
     }

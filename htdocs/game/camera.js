@@ -26,14 +26,14 @@ class Camera {
 
         this.scale += ((this.targetScale * width / innerWidth) - this.scale) * this.easing;
 
-        const left   = -width  / (this.scale*2);
-        const right  =  width  / (this.scale*2);
-        const bottom = -height / (this.scale*2);
-        const top    =  height / (this.scale*2);
-        
-        this.mouse.x = map(mouseX, 0.0, width, left+this.pos.x, right+this.pos.x);
-        this.mouse.y = map(mouseY, 0.0, height, bottom+this.pos.y, top+this.pos.y);
+        const left   = -width  / (this.scale * 2);
+        const right  =  width  / (this.scale * 2);
+        const bottom = -height / (this.scale * 2);
+        const top    =  height / (this.scale * 2);
 
         ortho(left + this.pos.x, right + this.pos.x, bottom - this.pos.y, top - this.pos.y);
+        
+        this.mouse.x = map(mouseX, 0, width,  this.pos.x + left,   this.pos.x + right);
+        this.mouse.y = map(mouseY, 0, height, this.pos.y + bottom, this.pos.y + top  );
     }
 }

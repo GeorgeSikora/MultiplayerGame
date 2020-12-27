@@ -18,34 +18,48 @@ class Multiplayer {
       reconnectionDelay: 1500
     });
 
-    socket.on('init',          initGame);  // send players and map
-    socket.on('load-map',      loadMap);
     // built-in events
     socket.on('connect',       this.connected);
     socket.on('connect_error', this.connect_error);
     socket.on('disconnected',  disconnected);
     socket.on('pong',          pong);
-    // Player events
-    socket.on('refPlayer',        refPlayer); // refresh player values, pos, hp
+
+    // Init
+    socket.on('init',             initGame);  // send players and map
+
+    // Player
     socket.on('newPlayer',        newPlayer); // new player connected
+    socket.on('refPlayer',        refPlayer); // refresh player values, pos, hp
+    socket.on('player-set',       setPlayer);
     socket.on('remPlayer',        remPlayer); // some player disconnected
+
+    socket.on('setPos',           setMyPos);
+    socket.on('player-teams', (red, blue)=>{ game.teams['red'] = red; game.teams['blue'] = blue; });
+    socket.on('respawn',          respawnPlayer);
+
+    // Chat
+    socket.on('chat-message',     newChatMessage);
+
+    // Objects
     socket.on('shot',             shot);
     socket.on('smoke-granate',    addSmokeGranate);
-    socket.on('exception',        exception);
-    socket.on('respawn',          respawnPlayer);
-    socket.on('setPos',           setMyPos);
-    socket.on('chat-message',     newChatMessage);
     socket.on('block-add',        addBlock);
     socket.on('block-rem',        remBlock);
     socket.on('flag-set',         setFlag);
-    socket.on('player-set',       setPlayer);
     socket.on('DroppedFlag-add',  addDroppedFlag);
     socket.on('DroppedFlag-rem',  remDroppedFlag);
-    socket.on('start', ()=>{game.start();});
-    socket.on('end', ()=>{if(!game.started) return; game.end();});
-    socket.on('restart', ()=>{if(!game.started) return;game.restart();});
-    socket.on('player-teams', (red, blue)=>{game.teams['red']=red;game.teams['blue']=blue;});
-    socket.on('chunk', loadChunk);
+
+    // Events
+    socket.on('start', ()=>{ game.start(); });
+    socket.on('end', ()=>{ if(!game.started) return; game.end(); });
+    socket.on('restart', ()=>{ if(!game.started) return;game.restart(); });
+
+    // Chunks & map
+    socket.on('chunk',            loadChunk);
+    socket.on('load-map',         loadMap);
+
+    // Errors
+    socket.on('exception',        exception);
   }
 
   connected() {
@@ -139,23 +153,18 @@ function initGame(data) {
 }
 
 function loadMap(data) {
+  if(!game.started) return;
 
   for(var i = 0; i < chunkSystem.chunks.length; i++) {
     const c = chunkSystem.chunks[i];
     socket.emit('get-chunk', c.pos.x/Chunk.SIZE, c.pos.y/Chunk.SIZE);
   }
 
-  //console.log('loading map...');
-
-  if(!game.started) return;
-
   clearTimeout(respawnTimeout);
 
   var pos = {x: 0, y: 0};
-
-  if(data.spawn != null) {
+  if(data.spawn != null)
     pos = data.spawn;
-  }
 
   player.enable = true;
   player.pos.x = pos.x;
@@ -194,17 +203,15 @@ function loadMap(data) {
   minimap.build();
 
   chunkSystem.refresh();
-  
-  //console.log('loaded !');
 }
 
-// When new player is connected
+// when new player is connected
 function newPlayer(player) {
   players.push(new Player(player.id, player.name, player.pos.x, player.pos.y, player.col));
   console.log('%c New player, size: %c' + players.length, 'color: lime','color: yellow');
 }
 
-// When player leaves
+// when player leaves
 function remPlayer(id) {
   if(id == player.id) { return; }
   var removeIndex = objectIndexOf(players, id, 'id'); // get index by id
@@ -212,7 +219,7 @@ function remPlayer(id) {
   players.splice(removeIndex, 1);
 }
 
-// Refresh player data
+// refresh player data
 function refPlayer(p) {
   if(!game.loaded) return;
   if(p.id == player.id) { 
@@ -228,10 +235,8 @@ function refPlayer(p) {
   players[index].selectedEquipment = p.selected;
 }
 
-/*** SHOOT ***/
-function shot(data){
-  //if(!focused) return;
-
+// when someone shoot
+function shot(data) {
   if(data.shooterID != player.id) {
     var id = sound_rifle.play();
     sound_rifle.pos(
@@ -253,7 +258,7 @@ function respawnPlayer(shooterID, pos) {
   var index = objectIndexOf(players, shooterID, 'id');
   cam.target = players[index];
 
-  respawnTimeout = setTimeout(() => {
+  respawnTimeout = setTimeout(()=>{
     sound_drop1.play();
     splash.opacity = 255;
     player.enable = true;
@@ -310,6 +315,8 @@ function remBlock(pos) {
       sound_pop.play();
       removeObject(obj);
 
+      // AUTOTILE AROUND
+      /*
       for(var i = 0; i < chunkSystem.chunks.length; i++) {
         if(rectRect(pos.x-32, pos.y-32, 64, 64, chunkSystem.chunks[i].pos.x - Chunk.SIZE/2, chunkSystem.chunks[i].pos.y - Chunk.SIZE/2, Chunk.SIZE, Chunk.SIZE)) {
           for(var o = 0; o < objects.length; o++) {
@@ -322,7 +329,7 @@ function remBlock(pos) {
           }
           chunkSystem.chunks[i].refresh();
         }
-      }
+      }*/
     }
   }
 }
@@ -371,14 +378,11 @@ function disconnected() {
 }
 
 function loadChunk(x, y, tileMap) {
-//console.log('chunk x: ' + x + ' y: ' + y + ' comes to client!');
   for(var i = 0; i < chunkSystem.chunks.length; i++) {
     const c = chunkSystem.chunks[i];
     if(c.pos.x == x * Chunk.SIZE && c.pos.y == y * Chunk.SIZE) {
       c.tileMap = tileMap;
       c.loaded = true;
-      
-      //console.log('tileMap uploaded');
       break;
     }
   }
@@ -386,7 +390,6 @@ function loadChunk(x, y, tileMap) {
   var readyToLoad = true;
   for(var i = 0; i < chunkSystem.chunks.length; i++) {
     const c = chunkSystem.chunks[i];
-    //console.log('loaded: ' + c.loaded);
     if(!c.loaded) {
       readyToLoad = false;
       break;
@@ -394,7 +397,6 @@ function loadChunk(x, y, tileMap) {
   }
 
   if(readyToLoad) {
-    //console.log('Refreshing all chunks!');
     for(var i = 0; i < chunkSystem.chunks.length; i++) {
       const c = chunkSystem.chunks[i];
       c.refresh();

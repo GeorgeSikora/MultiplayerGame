@@ -1,7 +1,7 @@
 
 /* COLLISION */
 
-let col = [];
+//let col = [];
 
 class Collision {
   constructor(obj){

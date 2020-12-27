@@ -3,7 +3,7 @@ let chunkSystem;
 
 class ChunkSystem {
 
-    // LENGTH = only 1, 3, 5, 7, 9, 11, 13, 15 ... etc.
+    // LENGTH = only 1, 3(default), 5, 7, 9, 11, 13, 15 ... etc.
     static LENGTH = 3; // count of chunks side of grid ... 3 x 3
 
     constructor() {

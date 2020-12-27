@@ -1,9 +1,12 @@
 
+/* set default volumes */
+Howler.volume(0.3);
+let volumeMusic = 0.5; 
+
 /*** SETUP ***/
 function setup() {
   /* create as window screen size */
-  //createCanvas(window.screen.width, window.screen.height, WEBGL);
-  createCanvas(0, 0, WEBGL);
+  createCanvas(innerWidth, innerHeight, WEBGL);
   /* ckeck display resolution, optionally resize */
   windowResized();
   /* set some default stuff */
@@ -91,12 +94,9 @@ function draw() {
   for (var i = 0; i < objectsRender.length; i++) {
     objectsRender[i].draw();
   }
-
-  /* draw my player */
-  //player.draw();
   
   /* set left top corner ortho pos x0 y0 */
-  ortho(0, width, -height, 0);
+  ortho(0, innerWidth, -innerHeight, 0);
 
   /* minimap */
   minimap.draw();
@@ -109,10 +109,10 @@ function draw() {
 
   /* mute button */
   tint(255);
-  image(game.muted ? ico_sounds_off : ico_sounds_on, width-32, 0);
+  image(game.muted ? ico_sounds_off : ico_sounds_on, innerWidth - 32, 0);
 
   /* chat */
-  chat.draw(10, height-10);
+  chat.draw(10, innerHeight - 10);
 
   /* splash effect */
   splash.draw();
@@ -123,17 +123,10 @@ function draw() {
       game.restart();
       chat.add(new Message().message('&2Server crashed!').build());
     } else {
-      fill(255, 16, 16);
-      textSize(32);
-      textAlign(CENTER, TOP);
-      text('Cannot connect to the server', width/2, 32);
+      drawCannotConnect();
     }
   }
 
   /* calculate drawTime */
   if (frameCount % 50 == 0) game.drawTime = (millis() - drawTime).toFixed(2);
 }
-
-setInterval(() => {
-  //staticDrawEnd = false;
-}, 3000);

@@ -1,15 +1,13 @@
 
 /* is just ... "IP:PORT/NAMESPACE" */
-let SERVER_URL = '185.221.124.205:3031/client';  // 
+let SERVER_URL = 'localhost:3031/client';  // 185.221.124.205
 
 class game {
 
   /* MAIN VARIABLES */
   static fps = 0;
-  static resolution = {
-    width: innerWidth, 
-    height: innerHeight
-  };
+  static resolution = 0; // height of target resolution
+  static smoothPixels = true;
 
   static constants = {
     SEND_GAP: 90, // player pos sender

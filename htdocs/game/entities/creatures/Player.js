@@ -2,7 +2,7 @@
 let players = []; // other players
 
 /* other players */
-class Player extends GameObject{
+class Player extends GameObject {
 
   static moveEasing = 0.3;
 
@@ -52,10 +52,22 @@ class Player extends GameObject{
       tint(this.capturedFlag);
       image(img_headband, -img_headband.width/2, -img_headband.height/2);
     }
+
+    /* name */
+    fill(255); 
+    textSize(16);
+    textAlign(CENTER, BOTTOM);
+    text(this.name +'\n' +this.hp +'hp', 0, -5 -this.h/2);
+
     pop();
 
-    
-    // TEST
+    /* equipment */
+    if(this.selectedEquipment != 0){
+      var myObject = eval("new " + this.selectedEquipment + "()");
+      myObject.draw(this);
+    }
+
+    /* target non smoothed pos */
     if(game.showPlayersTarget) {
       push();
       rectMode(CORNER);
@@ -64,33 +76,5 @@ class Player extends GameObject{
       rect(-this.center.x, -this.center.y, this.w, this.h);
       pop();
     }
-
-    /* equipment */
-    if(this.selectedEquipment != 0){
-      var myObject = eval("new " + this.selectedEquipment + "()");
-      myObject.draw(this);
-    }
-
-    /*
-    if(this.guns[this.selectedGun] != null) {
-    const gun = (new Build).img;
-
-    push();
-    translate(this.pos.x, this.pos.y);
-    rotate(this.rotation);
-    translate(-gun.width/2, -12);
-    tint(255);
-    if(this.rotation < -PI/2 || this.rotation > PI/2) {
-      translate(0, gun.height/2);
-      scale(1.0,-1.0);
-    }
-    image(gun,0,0);
-    pop();
-  }
-  */
-    /* name */
-    fill(255);
-    textAlign(CENTER, BOTTOM);
-    text(this.name +'\n' +this.hp +'hp', this.pos.x, this.pos.y-5 -this.h/2);
   }
 }

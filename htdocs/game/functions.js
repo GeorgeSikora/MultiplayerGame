@@ -1,6 +1,4 @@
 
-/********* GLOBAL GAME FUNCTIONS *********/
-
 /* get index of specific value */
 function objectIndexOf(arr, searchTerm, property) {
     for(var i = 0, len = arr.length; i < len; i++) {
@@ -18,12 +16,15 @@ function getGrid(pos, gridSize) {
     return out;
 }
 
+/* function for loading screens in menu */
+function loadScreen(screen) {
+    $('#content').load("menu/" + screen + ".html");
+}  
+
 /* left top corner text */
 function drawInfo(){
     if(!game.showInfo) return;
-
-    push();
-    fill(0);
+    fill(85, 255, 85);
     textSize(18);
     textAlign(LEFT, TOP);
     /*
@@ -41,7 +42,6 @@ function drawInfo(){
         chunksInfo += '\n';
     }
     */
-
     text(
       'connected: '         + socket.connected
     + '\ngame.started: '    + game.started
@@ -59,8 +59,7 @@ function drawInfo(){
     */
     
     // + '\n' + chunksInfo
-    ,5, 5);
-    pop();
+    ,5, 15);
 }
 
 function drawFPS() {
@@ -68,6 +67,13 @@ function drawFPS() {
   textSize(12);
   textAlign(LEFT, TOP);
   text(game.fps, 5, 5);
+}
+
+function drawCannotConnect() {
+    fill(255, 16, 16);
+    textSize(32);
+    textAlign(CENTER, TOP);
+    text('Cannot connect to the server', innerWidth/2, 32);
 }
 
 /* safe zone at the spawn */
@@ -91,17 +97,33 @@ function drawSavezone() {
     pop();
 }
 
+function setResolution(selected) {
+    game.resolution = int(selected);
+    windowResized();
+}
+
+function setSmoothPixels(state) {
+    if (state == "true") {
+        $('canvas').css('image-rendering', 'auto');
+        game.smoothPixels = true;
+    } else {
+        $('canvas').css('image-rendering', 'pixelated');
+        game.smoothPixels = false;
+    }
+}
+
 /* window automatic resize */
 function windowResized() {
     if(window.screen.width < window.innerWidth || window.screen.height < window.innerHeight) {
         return;
     }
 
-    //var resRatio = 1;
-    //resizeCanvas(window.innerWidth/resRatio, window.innerHeight/resRatio);
-
-    resizeCanvas(game.resolution.width, game.resolution.height);
+    var ratio = game.resolution == 0 ? 1 : innerHeight / game.resolution;
+    resizeCanvas(innerWidth / ratio, innerHeight / ratio);
 
     document.getElementById('defaultCanvas0').style.width = window.innerWidth + "px";
     document.getElementById('defaultCanvas0').style.height = window.innerHeight + "px";
+
+    // fixing camera scale tearing
+    if (cam) cam.scale = (cam.targetScale * width / innerWidth);
 }

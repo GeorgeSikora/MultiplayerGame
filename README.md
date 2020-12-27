@@ -61,7 +61,7 @@ I just like this tree, called Wisteria and also it has very nice name. So far, i
 - Animated player move
 
 ## Bugs to fix
-### WAITING to fix:
+### - WAITING to fix:
 When a player moves on according to blocks placed next to each other, he stops.
   > The collision system needs to be improved.
   
@@ -79,7 +79,7 @@ in the menu I hear gunfire, sometimes I see bullets
   
 bug with the end, the player can move even if the game ends
   > I have to figure out why this is so, maybe just the player didn't get the socket that the game was over.
-### FIXED already:
+### - FIXED already:
 when I kill someone in the lobby, the killed person then shows no contact with the server, I can't kill him, nor can I see him moving
   > The player was in respawning mode, so he was frozen and could not be eliminated.
 

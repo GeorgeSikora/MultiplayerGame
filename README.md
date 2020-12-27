@@ -16,7 +16,7 @@ What I use:
 - [socket.io](https://socket.io/)
 - [jQuery](https://jquery.com/)
 - [howler.js](https://howlerjs.com/)
-#### [Node.js](./?whatisnodejs) / Server
+#### [Node.js](https://github.com/GeorgeSikora/MultiplayerGame/#what-is-nodejs) / Server
 - [socket.io](https://socket.io/)
 - [simplex-noise](https://www.npmjs.com/package/simplex-noise)
 
@@ -78,5 +78,5 @@ I just like this tree, called Wisteria and also it has very nice name. So far, i
 - when I kill someone in the lobby, the killed person then shows no contact with the server, I can't kill him, nor can I see him moving
   > The player was in respawning mode, so he was frozen and could not be eliminated.
 
-## What is Node.js ?
+## What is [Node.js](https://nodejs.org/)?
 Software system designed for writing highly scalable Internet applications, especially web servers. Programs for Node.js are written in JavaScript, making extensive use of the event model and asynchronous I / O operations to minimize CPU overhead and maximize performance.

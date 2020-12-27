@@ -1,24 +1,70 @@
 
+<style>
+select {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -webkit-padding-end: 20px;
+  -moz-padding-end: 20px;
+  -webkit-padding-start: 2px;
+  -moz-padding-start: 2px;
+
+  background-color: khaki !important;
+  border: 1px solid #AAA;
+  border-radius: 2px;
+  color: #000;
+  font-size: inherit;
+  margin: 0;
+  overflow: hidden;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  outline: none;
+}
+
+select option {
+  background-color: darkkhaki !important;
+}
+
+</style>
+
 <h1>Graphics</h1>
 
 <div class="center">
 
 <label for="resolution">Game resolution </label>
-  <select name="resolution" id="resolution" onchange="setResolution(this.options[this.selectedIndex].value)">
-    <option value="0">Auto</option>
-    <option value="360">360p</option>
-    <option value="480">480p SD</option>
-    <option value="720">720p HD</option>
-    <option value="1080">1080p FHD</option>
-    <option value="2160">2160p 4K</option>
-  </select>
+<select name="resolution" id="resolution" onchange="setResolution(this.options[this.selectedIndex].value)">
+  <option value="0">Auto</option>
+  <option value="480">480p SD</option>
+  <option value="720">720p HD</option>
+  <option value="1080">1080p FHD</option>
+  <option value="2160">2160p 4K</option>
+</select>
+
+<br>
+<p style="color: #aaa; font-size: 12px;">"Auto" automatically scaling pixels to 1:1 scale</p>
+<br>
+
+<label for="smoothPixels">Smooth pixels </label>
+<select name="smoothPixels" id="smoothPixels" onchange="setSmoothPixels(this.options[this.selectedIndex].value)">
+  <option value="true">enable</option>
+  <option value="false">disable</option>
+</select>
+
+<br>
+<p style="color: #aaa; font-size: 12px;">usable with lower game resolution than the screen</p>
+
 </div>
 
 <script>
+
 if (game.resolution != innerHeight) {
   console.log(game.resolution, innerHeight);
   $("#resolution").val(game.resolution).change();
 }
+
+$("#smoothPixels").val(str(game.smoothPixels)).change();
+
 </script>
 
 <div class="back-button-position">

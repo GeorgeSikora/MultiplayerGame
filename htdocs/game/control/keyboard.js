@@ -1,5 +1,5 @@
 
-function keyPressed(){
+function keyPressed() {
     if(keyCode == 27) toggleMenu(); // Esc
     if(game.menuOpened) return;
     
@@ -10,13 +10,13 @@ function keyPressed(){
     for(var i = 0; i < objects.length; i++) if(objects[i].keyPressed != null) objects[i].keyPressed();
 }
 
-function keyReleased(){
+function keyReleased() {
     if(game.menuOpened) return;
     player.keyReleased();
     for(var i = 0; i < objects.length; i++) if(objects[i].keyReleased != null) objects[i].keyReleased();
 }
 
-function toggleMenu(){
+function toggleMenu() {
     var menu = $("#menu");
     if (menu.css('display') === "none") {
         loadScreen('menu');

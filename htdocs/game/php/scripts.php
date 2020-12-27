@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <!-- LIBRARIES -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!--<script src="libraries/p5.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
 <script src="libraries/howler.core.js"></script>
@@ -57,15 +58,20 @@
 <script src="chat/commands.js"></script>
 <script src="chat/colors.js"></script>
 
-<!-- OTHER SKETCHES -->
-<script src="functions.js"></script>
-<script src="camera.js"></script>
-<script src="socket.js"></script>
+<!-- CHUNKS -->
 <script src="ChunkSystem.js"></script>
 <script src="Chunk.js"></script>
 
-<!-- GAME ENGINE -->
+<!-- GAME CLASS -->
 <script src="Game.js"></script>
+
+<!-- MULTIPLAYER -->
+<script src="multiplayer/player.js"></script>
+<script src="socket.js"></script>
+
+<!-- OTHER -->
+<script src="functions.js"></script>
+<script src="camera.js"></script>
 
 <!-- MAIN SKETCH -->
 <script src="main.js"></script>

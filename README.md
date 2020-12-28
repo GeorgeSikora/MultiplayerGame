@@ -1,5 +1,5 @@
 # MultiplayerGame
-[Wiki](https://github.com/GeorgeSikora/MultiplayerGame/wiki)
+[CodeWiki](https://github.com/GeorgeSikora/MultiplayerGame/wiki)
 
 This is 2D JavaScript Multiplayer game, where you can shoot and move on the map with other players.
 
@@ -10,6 +10,13 @@ What I use:
 - [JavaScript](https://www.javascript.com/) and [p5.js](https://p5js.org/) for client side game and [Howler.js](https://howlerjs.com/) library for 3D sounds.
 - [Socket.io](https://socket.io/) for the networking between server and clients.
 - and also [Apache](http://www.apache.org/) server, or [Xampp](https://www.apachefriends.org/index.html), for running web server.
+
+<div style="float: left">
+<img src="https://seeklogo.com/images/O/open-source-logo-55C3B4FF7B-seeklogo.com.png" width="8%">
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" width="7%">
+<img src="https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png" width="6%">
+<img src="https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_960_720.png" width="7%">
+</div>
 
 ## JavaScript Libraries
 #### Client / Game

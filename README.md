@@ -1,4 +1,5 @@
-# MultiplayerGame [Wiki](https://github.com/GeorgeSikora/MultiplayerGame/wiki)
+# MultiplayerGame
+[Wiki](https://github.com/GeorgeSikora/MultiplayerGame/wiki)
 
 This is 2D JavaScript Multiplayer game, where you can shoot and move on the map with other players.
 

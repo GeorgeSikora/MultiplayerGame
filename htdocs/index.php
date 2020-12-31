@@ -1,49 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Capture the flag</title>
-    <link rel="stylesheet" href="style/main.css">
-    <link rel="icon" type="image/png" href="./style/favicon.ico"/>
-    <script src="js/introduction.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="js/validateForm.js"></script>
-</head>
-<body>
-<div class="content">
 
-    <img src="style/images/flags-logo.png" width="100%" alt="Banner">
+<link rel="icon" type="image/ico" href="style/favicon.ico"/>
 
+<?php
 
-    <h1 class="title">Capture the flag</h1>
+// Include router class
+include('Route.php');
 
-    <form class="input-form" name="play-form" action="game/" onsubmit="return validateForm()" method="post">
-    
-        <label class="input-name" for="name">Nickname</label>
-        <input type="text" id="name" name="name" autocomplete="off"></input>
+// Add base route (startpage)
+Route::add('/',function(){
+  echo 'Routered from /';
+	include('login.php');
+});
 
-        
-        <label class="input-name" for="password">Password</label>
-        <input type="password" id="password" name="password" autocomplete="off"></input>
+Route::add('/play',function(){
+  echo 'Routered from /play';
+	include('login.php');
+});
 
-		<button class="play-button" type="submit">Login</button>
-    </form>
+Route::add('/login',function(){
+  echo 'Routered from /login';
+	include('login.php');
+});
 
-    <div class="link">
-        <a href="./register.php" class="link">Registration</a>
-    </div>
+Route::add('/test.html',function(){
+  echo 'Hello from test.html';
+});
 
-    <p id="error" class="error-message"></p>
-</div>
+// Post route example
+Route::add('/contact-form',function(){
+    echo 'xddd<form method="post"><input type="text" name="test" /><input type="submit" value="send" /></form>';
+},'get');
 
-<div class="bottom-text">
-    <p>Created by George Sikora © 2020</p>
-</div>
+// Post route example
+Route::add('/contact-form',function(){
+    echo 'Hey! The form has been sent:<br/>';
+    print_r($_POST);
+},'post');
 
-</body>
-</html>
+// Accept only numbers as parameter. Other characters will result in a 404 error
+Route::add('/foo/([0-9]*)/bar/([0-9]*)',function($var1, $var2){
+    echo $var1.' is a great number! and also '.$var2;
+});
 
-<?php if(isset($_GET['error'])) { ?>
-    <script>
-        $('#error').html('<?php echo($_GET["message"]."<br>Error: ".$_GET["error"]); ?>');
-    </script>
-<?php } ?>
+Route::run('/');
+
+?>

@@ -1,13 +1,20 @@
 
+* {
+  padding: 0;
+  margin: 0;
+}
+
 body {
   margin: 0;
 
-  background-color: #0f0f0f;
+  /*background-color: #0f0f0f;*/
+  background-color: #000;
   image-rendering: pixelated;
   -ms-interpolation-mode: nearest-neighbor;
-  background-image: url('../game/assets/images/login/flags-logo.png');
+  /*background-image: url('../game/assets/images/login/flags-logo.png');*/
+  background-image: url('images/wallpaper.jpg');
   background-size: cover;
-  
+  background-repeat: no-repeat;
 
   font-family: "Courier New", Courier, monospace;
   color: white;
@@ -15,9 +22,12 @@ body {
 
 .content {
   text-align: center;
-
+  /*
   box-shadow: 0 0 8vh 16vh rgba(0.1, 0.1, 0.1, 0.7);
-	background-color:rgba(0.1, 0.1, 0.1, 0.7);
+  background-color:rgba(0.1, 0.1, 0.1, 0.7);
+  */
+  background-color:#12122aaa;
+  border-radius: 0.9vh;
 
   outline: none;
   border: none;
@@ -27,59 +37,83 @@ body {
 
   position: absolute;
   width: 30vw;
-  height: 100vh;
+  /*height: 50vh;*/
 
   left: 50%;
-  transform: translate(-50%, 0);
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* title name */
-
 .title {
-  margin-top: 45%;
-  font-size: 4.2vh;
+  margin-top: 5%;
+  font-size: 3.4vh;
+  padding: 1vh;
+  margin-bottom: 3vh;
 }
 
 /* input form */
-
 .input-form {
+  width: 70%;
   margin: auto;
-  width: 100%;
-  padding: 1.0vh;
+}
 
-  display: flex;
-  flex-direction: row;
+.input-name {
+  display: block;
+  text-align: left;
+  color: #dde;
 }
 
 .input-form input {
+  
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
 
-  color: #333;
+  margin-bottom: 3vh;
+
+  width: 100%;
+
+  color: #eee;
   font-size: 1.9vh;
   
-  width: 100%;
-  background-color: #ccc;
-  padding: 1.1vh 2.0vh;
-  border-radius: .5vh 0 0 .5vh;
+  background-color: transparent;
 
-  border: none;
-  outline: none;
+  padding: 0.8vh;
+
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: #cce;
 }
 
+.link {
+  color: #eef;
+  text-decoration: none;
+  padding-bottom: 2vh;
+}
+
+.link:hover {
+  color: #cce;
+  text-decoration: underline;
+}
+
+
 .input-form input:focus {
-  background-color: #dde;
+  background-color: #0005;
 }
 
 /* play button */
-
 .play-button {
+  width: 100%;
+
+  margin-bottom: 3vh;
+  padding: 1.2vh;
 
   font-size: 2.3vh;
   font-family: arial;
   text-align: center;
 
-	width: 13.8vh;
-  background-color: #FFFF00;
-  border-radius: 0 .5vh .5vh 0;
+  background-color: #aabbdd;
   
   border: none;
   outline: none;
@@ -87,19 +121,16 @@ body {
 }
 
 .play-button:hover {
-  background-color: #808000;
+  background-color: #8899cc;
   color: #eee;
 }
 
 /* error text */
-
 #error {
   color: red;
 }
 
-
 /* bottom copyright text */
-
 div.bottom-text {
   left: 50vw;
   transform: translateX(-50%);

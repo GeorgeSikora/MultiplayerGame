@@ -11,12 +11,27 @@
 <body>
 <div class="content">
 
+    <img src="style/images/flags-logo.png" width="100%" alt="Banner">
+
+
     <h1 class="title">Capture the flag</h1>
 
     <form class="input-form" name="play-form" action="game/" onsubmit="return validateForm()" method="post">
-        <input type="text" id="name" name="name" placeholder="jméno nebo přezdívka" autocomplete="off"></input>
-		<button class="play-button" type="submit">Play</button>
+    
+        <label class="input-name" for="name">Nickname</label>
+        <input type="text" id="name" name="name" autocomplete="off"></input>
+
+        
+        <label class="input-name" for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="off"></input>
+
+		<button class="play-button" type="submit">Login</button>
     </form>
+
+    <div class="link">
+        <a href="./register.php" class="link">Registration</a>
+    </div>
+
     <p id="error" class="error-message"></p>
 </div>
 

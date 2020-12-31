@@ -7,11 +7,9 @@
 body {
   margin: 0;
 
-  /*background-color: #0f0f0f;*/
   background-color: #000;
   image-rendering: pixelated;
   -ms-interpolation-mode: nearest-neighbor;
-  /*background-image: url('../game/assets/images/login/flags-logo.png');*/
   background-image: url('images/wallpaper.jpg');
   background-size: cover;
   background-repeat: no-repeat;
@@ -22,10 +20,6 @@ body {
 
 .content {
   text-align: center;
-  /*
-  box-shadow: 0 0 8vh 16vh rgba(0.1, 0.1, 0.1, 0.7);
-  background-color:rgba(0.1, 0.1, 0.1, 0.7);
-  */
   background-color:#12122aaa;
   border-radius: 0.9vh;
 
@@ -36,8 +30,7 @@ body {
 	margin-right: auto;
 
   position: absolute;
-  width: 30vw;
-  /*height: 50vh;*/
+  width: 60vh;
 
   left: 50%;
   top: 50%;
@@ -54,7 +47,7 @@ body {
 
 /* input form */
 .input-form {
-  width: 70%;
+  width: 60%;
   margin: auto;
 }
 
@@ -62,6 +55,7 @@ body {
   display: block;
   text-align: left;
   color: #dde;
+  font-size: 1.8vh;
 }
 
 .input-form input {
@@ -82,7 +76,7 @@ body {
   padding: 0.8vh;
 
   outline: 0;
-  border-width: 0 0 2px;
+  border-width: 0 0 0.2vh;
   border-color: #cce;
 }
 
@@ -90,6 +84,7 @@ body {
   color: #eef;
   text-decoration: none;
   padding-bottom: 2vh;
+  font-size: 2.1vh;
 }
 
 .link:hover {
@@ -128,6 +123,7 @@ body {
 /* error text */
 #error {
   color: red;
+  margin-bottom: 2vh;
 }
 
 /* bottom copyright text */

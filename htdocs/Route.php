@@ -92,8 +92,8 @@ class Route{
         }
       }else{
         //header("HTTP/1.0 404 Not Found");
-				
-				echo "404 error";
+			
+        include('php/404.php');
 				
         if(self::$pathNotFound){
           call_user_func_array(self::$pathNotFound, Array($path));

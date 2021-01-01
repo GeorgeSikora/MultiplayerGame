@@ -9,17 +9,28 @@ include('Route.php');
 // Add base route (startpage)
 Route::add('/',function(){
   echo 'Routered from /';
-	include('login.php');
+  //include('php/login.php');
+  header('location: ./home');
+});
+
+Route::add('/home',function(){
+  echo 'Routered from /home';
+	include('php/login.php');
 });
 
 Route::add('/play',function(){
   echo 'Routered from /play';
-	include('login.php');
+	include('php/login.php');
+});
+
+Route::add('/register',function(){
+  echo 'Routered from /register';
+	include('php/register.php');
 });
 
 Route::add('/login',function(){
   echo 'Routered from /login';
-	include('login.php');
+	include('php/login.php');
 });
 
 Route::add('/test.html',function(){

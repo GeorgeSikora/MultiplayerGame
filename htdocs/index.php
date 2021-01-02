@@ -1,58 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
 
-<link rel="icon" type="image/ico" href="style/favicon.ico"/>
+<?php 
+// header of site, background, styles, scripts
+include('php/header.php');
+?>
+
+</head>
+<body>
 
 <?php
-
-// Include router class
-include('Route.php');
-
-// Add base route (startpage)
-Route::add('/',function(){
-  echo 'Routered from /';
-  //include('php/login.php');
-  header('location: ./home');
-});
-
-Route::add('/home',function(){
-  echo 'Routered from /home';
-	include('php/login.php');
-});
-
-Route::add('/play',function(){
-  echo 'Routered from /play';
-	include('php/login.php');
-});
-
-Route::add('/register',function(){
-  echo 'Routered from /register';
-	include('php/register.php');
-});
-
-Route::add('/login',function(){
-  echo 'Routered from /login';
-	include('php/login.php');
-});
-
-Route::add('/test.html',function(){
-  echo 'Hello from test.html';
-});
-
-// Post route example
-Route::add('/contact-form',function(){
-    echo 'xddd<form method="post"><input type="text" name="test" /><input type="submit" value="send" /></form>';
-},'get');
-
-// Post route example
-Route::add('/contact-form',function(){
-    echo 'Hey! The form has been sent:<br/>';
-    print_r($_POST);
-},'post');
-
-// Accept only numbers as parameter. Other characters will result in a 404 error
-Route::add('/foo/([0-9]*)/bar/([0-9]*)',function($var1, $var2){
-    echo $var1.' is a great number! and also '.$var2;
-});
-
-Route::run('/');
-
+// include Router class
+include('php/Route.php');
+// route the page link
+include('php/routing.php');
+// footer of site, copyright
+include('php/footer.php');
 ?>
+
+</body>
+</html>

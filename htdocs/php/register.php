@@ -1,47 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Capture the flag</title>
-    <link rel="stylesheet" href="style/main.css">
-    <script src="js/introduction.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="js/validateForm.js"></script>
-</head>
-<body>
+
 <div class="content">
 
     <img src="style/images/flags-logo.png" width="80%" alt="Banner">
 
     <h1 class="title">Capture the flag</h1>
 
-    <form class="input-form" name="play-form" action="game/" onsubmit="return validateForm()" method="post">
+    <form class="input-form" name="play-form" action="php/registerGate" onsubmit="return validateForm()" method="post">
     
         <label class="input-name" for="name">Nickname <span style="color:red">*</span></label>
-        <input type="text" id="name" name="name" autocomplete="off"></input>
+        <input class="text-input" type="text" id="name" onkeypress="return event.charCode != 32" name="name" spellcheck="false" autocomplete="off"></input>
 
         <label class="input-name" for="password">Enter password <span style="color:red">*</span></label>
-        <input type="password" id="password" name="password" autocomplete="off"></input>
+        <input class="text-input" type="password" id="password" name="password"></input>
         
-        <label class="input-name" for="password">Starter pack coupon</label>
-        <input onkeypress="return event.charCode != 32" maxlength="5" style="text-transform:uppercase" type="text" id="token" name="token" autocomplete="off"></input>
+        <label class="input-name" for="token">Starter pack token</label>
+        <input class="text-input" id="token-input" onkeypress="return event.charCode != 32" maxlength="5" style="text-transform:uppercase" type="text" id="token" name="token" autocomplete="off"></input>
+
+        <div class="confirm-check">
+            <input type="checkbox" id="confirm" name="confirm">
+            <label for="confirm">I agree with the <a style="color:#bbf" href="/rules" target="_blank">game rules<a></label>
+        </div>
 
 		<button class="play-button" type="submit">Register</button>
     </form>
 
     <p id="error" class="error-message"></p>
     
-    <div class="link">
-        <a href="./login" class="link">Login</a>
+    <div class="links">
+        <a href="login">Login</a>
     </div>
 
 </div>
-
-<div class="bottom-text">
-    <p>Copyright © George Sikora 2020</p>
-</div>
-
-</body>
-</html>
 
 <?php if(isset($_GET['error'])) { ?>
     <script>

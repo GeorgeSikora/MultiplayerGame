@@ -42,7 +42,7 @@ body {
   margin-top: 5%;
   font-size: 3.4vh;
   padding: 1vh;
-  margin-bottom: 3vh;
+  margin-bottom: 2.5vh;
 }
 
 /* input form */
@@ -54,21 +54,17 @@ body {
 .input-name {
   display: block;
   text-align: left;
-  color: #dde;
   font-size: 1.8vh;
+  color: #dde;
 }
 
-.input-form input {
-  
+.text-input {
   left: 50%;
-  position: relative;
-  transform: translateX(-50%);
-
-  margin-bottom: 3vh;
+  margin-bottom: 2.5vh;
 
   width: 100%;
 
-  color: #eee;
+  color: #dde;
   font-size: 1.9vh;
   
   background-color: transparent;
@@ -80,18 +76,25 @@ body {
   border-color: #cce;
 }
 
-.link {
-  color: #eef;
-  text-decoration: none;
-  padding-bottom: 2vh;
-  font-size: 2.1vh;
+#token-input {
+  width: 50%;
+  float: left;
 }
 
-.link:hover {
+.links {
+  margin-bottom: 2.5vh;
+}
+
+.links a {
+  color: #eef;
+  text-decoration: none;
+  font-size: 2.6vh;
+}
+
+.links a:hover {
   color: #cce;
   text-decoration: underline;
 }
-
 
 .input-form input:focus {
   background-color: #0005;
@@ -101,7 +104,7 @@ body {
 .play-button {
   width: 100%;
 
-  margin-bottom: 3vh;
+  margin-bottom: 2.5vh;
   padding: 1.2vh;
 
   font-size: 2.3vh;
@@ -123,7 +126,8 @@ body {
 /* error text */
 #error {
   color: red;
-  margin-bottom: 2vh;
+  margin-bottom: 2.5vh;
+  display: none;
 }
 
 /* bottom copyright text */
@@ -136,4 +140,54 @@ div.bottom-text {
   bottom: 1.6vh;
   color: #eee;
   font-size: 1.7vh;
+}
+
+
+.error-title {
+  color: white;
+  font-size: 3.5vh;
+  margin-bottom: 1.5vh;
+}
+.error-description {
+  color: red;
+  font-size: 2.8vh;
+  margin-bottom: 1.5vh;
+}
+
+
+.confirm-check {
+  float: left;
+  font-size: 2vh;
+  margin-bottom: 2.5vh;
+}
+
+
+/* RULES */
+
+.rules-title {
+  margin-top: 2.5vh;
+  margin-bottom: 2.5vh;
+}
+.rules-text {
+  margin-left: 1.25vh;
+
+  padding: 0.5vh;
+
+  text-align: left;
+  overflow: auto;
+  height: 60vh;
+  font-size: 2vh;
+  margin-bottom: 2.5vh;
+}
+.rules-text::-webkit-scrollbar {
+  width: 1.25vh; /* width */
+}
+.rules-text::-webkit-scrollbar-track {
+  background: #0007; /* Track */
+}
+.rules-text::-webkit-scrollbar-thumb {
+  background: rgb(161, 170, 38); /* Handle */
+}
+.rules-text::-webkit-scrollbar-thumb:hover {
+  background: rgb(205, 218, 29); /* Handle on hover */
 }

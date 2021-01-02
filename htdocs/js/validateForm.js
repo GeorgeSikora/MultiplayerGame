@@ -13,6 +13,11 @@ function validateForm() {
     
     if (error_message  != null) {
         $('#error').text(error_message);
+        if($('#error').is(":visible")) {
+            $('#error').effect("shake", {times: 2, distance: 10}, 300);
+        } else {
+            $('#error').show("fast");
+        }
         return false;
     }
 }

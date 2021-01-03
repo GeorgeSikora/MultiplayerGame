@@ -36,6 +36,11 @@ Route::add('/test.html',function(){
   echo 'Hello from test.html';
 });
 
+Route::add('/error/registration',function(){
+    include('php/error_registration.php');
+});
+
+
 Route::add('/error/db/([0-9]*)',function($error){
     include('php/error_db.php');
 });

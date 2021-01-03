@@ -13,6 +13,8 @@
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
 <!-- introduction for console -->
 <script src="/js/introduction.js"></script>
 <script src="/js/validateForm.js"></script>

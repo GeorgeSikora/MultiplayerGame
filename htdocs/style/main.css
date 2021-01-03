@@ -50,35 +50,41 @@ body {
   width: 60%;
   margin: auto;
 }
+.input-form input:focus {
+  background-color: #0005;
+}
 
 .input-name {
   display: block;
   text-align: left;
   font-size: 1.8vh;
   color: #dde;
+  position: relative;
+  left: -0.8vh;
 }
 
 .text-input {
+  position: relative;
   left: 50%;
-  margin-bottom: 2.5vh;
+  transform: translateX(-50%);
 
   width: 100%;
-
-  color: #dde;
-  font-size: 1.9vh;
-  
-  background-color: transparent;
-
   padding: 0.8vh;
-
+  margin-bottom: 2.5vh;
+  font-size: 1.9vh;
   outline: 0;
   border-width: 0 0 0.2vh;
+
+  color: #dde;
   border-color: #cce;
+  background-color: transparent;
 }
 
 #token-input {
   width: 50%;
+  left: -0.8vh;
   float: left;
+  transform: none;
 }
 
 .links {
@@ -94,10 +100,6 @@ body {
 .links a:hover {
   color: #cce;
   text-decoration: underline;
-}
-
-.input-form input:focus {
-  background-color: #0005;
 }
 
 /* play button */
@@ -142,6 +144,7 @@ div.bottom-text {
   font-size: 1.7vh;
 }
 
+/* ERRORS */
 
 .error-title {
   color: white;
@@ -160,7 +163,6 @@ div.bottom-text {
   font-size: 2vh;
   margin-bottom: 2.5vh;
 }
-
 
 /* RULES */
 

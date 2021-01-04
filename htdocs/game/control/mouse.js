@@ -4,7 +4,7 @@ function mousePressed(){
 
     /* right top corner mute icon click action */
     const ratio = game.resolution == 0 ? 1 : game.resolution / innerHeight;
-    if(mouseX > height - 32 * ratio && mouseX < width && mouseY < 32 * ratio && mouseY > 0){
+    if(mouseX > width - 32 * ratio && mouseX < width && mouseY < 32 * ratio && mouseY > 0){
         Howler.mute(game.muted = !game.muted);
     }
 

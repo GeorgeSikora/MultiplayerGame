@@ -27,7 +27,7 @@ function validateForm(form) {
         } else {
             $('#error').show("fast");
         }
-        //return false;
+        return false;
     }
 
     // Password hashing

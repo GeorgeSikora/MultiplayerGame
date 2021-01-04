@@ -7,11 +7,11 @@
 
     <script>
         const post = {
-            name:    '<?php echo $_SESSION['name'];?>'
+            name:       '<?php echo $_SESSION['name'];?>'
+            password:   '<?php echo $_SESSION['password'];?>'
         };
 
         console.log(post);
-
     </script>
 
     <?php } else {

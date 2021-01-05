@@ -1,1 +1,2 @@
 1049 - db is not exists
+2002 - db is not running, cannot connect

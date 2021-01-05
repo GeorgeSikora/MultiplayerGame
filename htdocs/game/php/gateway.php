@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
 <?php
-    session_start();  
 
-    if(isset($_SESSION['name'])) { ?>
+    session_start();
+    if(isset($_SESSION['name']) && isset($_SESSION['password'])) { ?>
 
     <script>
         const post = {

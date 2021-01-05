@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `errors` (
   `id` int(11) NOT NULL,
-  `type` text NOT NULL,
-  `description` text NOT NULL,
-  `ip` text NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `ip` varchar(50) NOT NULL,
   `time` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -53,8 +53,8 @@ INSERT INTO `errors` (`id`, `type`, `description`, `ip`, `time`) VALUES
 CREATE TABLE `players` (
   `id` int(11) NOT NULL,
   `clanId` int(11) DEFAULT NULL,
-  `name` tinytext DEFAULT NULL,
-  `password` tinytext DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
   `permissionLevel` int(11) NOT NULL DEFAULT 0,
   `coins` int(11) NOT NULL,
   `posX` int(11) NOT NULL DEFAULT 0,

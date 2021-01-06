@@ -3,12 +3,12 @@
 <?php
 
     session_start();
-    if(isset($_SESSION['name']) && isset($_SESSION['password'])) { ?>
+    if(isset($_SESSION['name']) && isset($_SESSION['hashpswrd'])) { ?>
 
     <script>
         const post = {
-            name:       '<?php echo $_SESSION['name'];?>'
-            password:   '<?php echo $_SESSION['password'];?>'
+            name:       '<?php echo $_SESSION['name'];?>',
+            hashpswrd:  '<?php echo $_SESSION['hashpswrd'];?>'
         };
 
         console.log(post);
@@ -17,4 +17,5 @@
     <?php } else {
         header('Location: /');
     }
+    //session_destroy();
 ?>

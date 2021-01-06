@@ -5,7 +5,7 @@
 
     <h1 class="title">Capture the flag</h1>
 
-    <form class="input-form" name="play-form" action="php/registerGate" onsubmit="return validateForm(this)" method="post">
+    <div class="input-form" id="register-form" name="play-form" action="php/registerGate" onsubmit="" method="post">
     
         <label class="input-name" for="nickname">Nickname <span style="color:red">*</span></label>
         <input class="text-input" type="text" id="nickname" onkeypress="return event.charCode != 32" name="nickname" spellcheck="false" autocomplete="off"></input>
@@ -16,15 +16,15 @@
         <input type="hidden" name="hashpswrd" id="hashpswrd" value=""></input>
 
         <label class="input-name" for="token">Starter pack token</label>
-        <input class="text-input" id="token-input" onkeypress="return event.charCode != 32" maxlength="12" style="text-transform:uppercase" type="text" id="token" name="token" autocomplete="off"></input>
+        <input class="text-input" id="token" onkeypress="return event.charCode != 32" maxlength="12" style="text-transform:uppercase" type="text" name="token" autocomplete="off"></input>
 
         <div class="confirm-check">
             <input type="checkbox" id="confirm" name="confirm"></input>
             <label for="confirm">I agree with the <a style="color:#bbf" href="/rules" target="_blank">game rules</a></label>
         </div>
 
-		<button class="play-button" type="submit">Register</button>
-    </form>
+		<button class="play-button" onclick="if(validateRegisterForm()) sendRegistration()">Register</button> <!-- type="submit" -->
+    </div>
 
     <p id="error" class="error-message"></p>
     
@@ -34,8 +34,50 @@
 
 </div>
 
-<?php if(isset($_GET['error'])) { ?>
+<script>
+
+document.addEventListener("keydown", function(event) {
+    console.log('Button pressed!');
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    // Trigger the button element with a click
+    document.getElementById("login-button").click();
+  }
+});
+
+function sendRegistration() {
+    request = $.ajax({
+        url: "/php/registerGate",
+        type: "post",
+        data: {
+            nickname: $('#nickname').val(),
+            hashpswrd: $('#hashpswrd').val(),
+            token: $('#token').val(),
+            confirm: $('#confirm').is(':checked')
+        },
+        success: function(result) {
+            if (result) {
+                alert(result);
+            } else {
+                window.location.href = "/game";
+            }
+        }
+    });
+}
+
+</script>
+
+<?php 
+/*
+session_start();
+if (isset($_SESSION['err'])) { ?>
     <script>
-        $('#error').html('<?php echo($_GET["message"]."<br>Error: ".$_GET["error"]); ?>');
+    $('#error').html('<?php echo $_SESSION["err"] ?>');
+    $('#error').show();
+    $('#error').effect("shake", {times: 2, distance: 10}, 300);
     </script>
-<?php } ?>
+<?php } 
+
+
+    */
+    ?>

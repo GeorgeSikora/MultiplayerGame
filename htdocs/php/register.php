@@ -23,7 +23,7 @@
             <label for="confirm">I agree with the <a style="color:#bbf" href="/rules" target="_blank">game rules</a></label>
         </div>
 
-		<button class="play-button" onclick="if(validateRegisterForm()) sendRegistration()">Register</button> <!-- type="submit" -->
+		<button class="play-button" id="register-button" onclick="if(validateRegisterForm()) sendRegistration()">Register</button> <!-- type="submit" -->
     </div>
 
     <p id="error" class="error-message"></p>
@@ -37,11 +37,10 @@
 <script>
 
 document.addEventListener("keydown", function(event) {
-    console.log('Button pressed!');
   // Number 13 is the "Enter" key on the keyboard
   if (event.keyCode === 13) {
     // Trigger the button element with a click
-    document.getElementById("login-button").click();
+    document.getElementById("register-button").click();
   }
 });
 
@@ -57,7 +56,7 @@ function sendRegistration() {
         },
         success: function(result) {
             if (result) {
-                alert(result);
+                showError(result);
             } else {
                 window.location.href = "/game";
             }
@@ -65,19 +64,30 @@ function sendRegistration() {
     });
 }
 
+function showError(err) {
+    $('#error').html(err);
+    $('#error').show();
+    $('#error').effect("shake", {times: 2, distance: 10}, 300);
+}
+
 </script>
 
 <?php 
-/*
+
 session_start();
-if (isset($_SESSION['err'])) { ?>
-    <script>
-    $('#error').html('<?php echo $_SESSION["err"] ?>');
-    $('#error').show();
-    $('#error').effect("shake", {times: 2, distance: 10}, 300);
-    </script>
-<?php } 
 
+require('checkLoginStatus.php');
 
-    */
+if (isset($_SESSION['err'])) 
+{
     ?>
+        <script>
+        $('#error').html('<?php echo $_SESSION["err"] ?>');
+        $('#error').show();
+        $('#error').effect("shake", {times: 2, distance: 10}, 300);
+        </script>
+    <?php 
+    unset($_SESSION['err']);
+}
+
+?>

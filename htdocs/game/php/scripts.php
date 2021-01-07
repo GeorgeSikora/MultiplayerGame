@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <!-- LIBRARIES -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!--<script src="libraries/p5.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
 <script src="libraries/howler.core.js"></script>

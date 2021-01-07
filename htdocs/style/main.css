@@ -178,7 +178,7 @@ div.bottom-text {
   text-align: left;
   overflow: auto;
   height: 60vh;
-  font-size: 2vh;
+  font-size: 1.8vh;
   margin-bottom: 2.5vh;
 }
 .rules-text::-webkit-scrollbar {

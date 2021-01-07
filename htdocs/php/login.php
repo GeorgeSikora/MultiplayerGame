@@ -9,13 +9,13 @@
     
         <label class="input-name" for="name">Nickname</label>
         <input class="text-input" type="text" id="nickname" name="name" onkeypress="return event.charCode != 32" spellcheck="false" autocomplete="off"></input>
-        
+
         <label class="input-name" for="password">Password</label>
         <input class="text-input" type="password" id="password" name="password"></input>
         
         <input type="hidden" name="hashpswrd" id="hashpswrd" value=""></input>
         
-		<button class="play-button" id="login-button" type="submit" onclick="if(validateLoginForm()) sendLogin()">Login</button>
+		<button class="play-button" id="login-button" type="submit" onclick="if(validateLoginForm())sendLogin()">Login</button>
     </div>
 
     <p id="error" class="error-message"></p>
@@ -26,11 +26,9 @@
 
 </div>
 
-
 <script>
 
 document.addEventListener("keydown", function(event) {
-    console.log('Button pressed!');
   // Number 13 is the "Enter" key on the keyboard
   if (event.keyCode === 13) {
     // Trigger the button element with a click
@@ -48,18 +46,39 @@ function sendLogin() {
         },
         success: function(result) {
             if (result) {
-                alert(result);
+                showError(result);
             } else {
                 window.location.href = "/game";
             }
         }
     });
 }
+
+function showError(err) {
+    $('#error').html(err);
+    $('#error').show();
+    $('#error').effect("shake", {times: 2, distance: 10}, 300);
+}
+
 </script>
 
 
-<?php if(isset($_GET['error'])) { ?>
-    <script>
-        $('#error').html('<?php echo($_GET["message"]."<br>Error: ".$_GET["error"]); ?>');
-    </script>
-<?php } ?>
+<?php 
+
+session_start();
+
+require('checkLoginStatus.php');
+
+if (isset($_SESSION['err'])) 
+{
+    ?>
+        <script>
+        $('#error').html('<?php echo $_SESSION["err"] ?>');
+        $('#error').show();
+        $('#error').effect("shake", {times: 2, distance: 10}, 300);
+        </script>
+    <?php 
+    unset($_SESSION['err']);
+}
+
+?>

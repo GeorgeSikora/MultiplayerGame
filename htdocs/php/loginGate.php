@@ -1,16 +1,21 @@
 <?php
 
+// sending errors to db
+define("enable_error_sending", true);
+
+if (!isset($_POST['nickname'])) sendError('login', 'Name is not set!');
+if (!isset($_POST['hashpswrd'])) sendError('login', 'Password is not set!');
+
 $name = $_POST['nickname'];
 $password = $_POST['hashpswrd'];
 
-if (!isset($name)) exitError('Name is not set!');
-if (!isset($password)) exitError('Name is not set!');
+session_start();
 
 if (!isUserExists($name)) exitError('Name is not existing!');
 if (!isUserPasswordCorrect($name, $password)) exitError('Password is not correct!');
+if (isUserConnected($name)) exitError('User already connected!');
 
 // session vars for game
-session_start();
 $_SESSION['name'] = $name;
 $_SESSION['hashpswrd'] = $password;
 
@@ -37,7 +42,41 @@ function isUserPasswordCorrect($name, $password) {
     return $rows == 0 ? false : true;
 }
 
+function isUserConnected($name) {
+    include('db_connect.php');
+    $sql =  "SELECT connected as status FROM players WHERE name='$name'";
+    $result = $mysqli -> query($sql);
+    $status = mysqli_fetch_assoc($result)['status'];
+    mysqli_close($mysqli);
+    return $status == 0 ? false : true;
+}
+
+// SELECT COUNT(*) as total FROM `errors` WHERE ip='::1' AND time >= DATE_SUB(NOW(), INTERVAL 1 HOUR);
+
+function sendError($type, $desc) {
+    if (!enable_error_sending) return;
+
+    $ip = $_SERVER['REMOTE_ADDR'];
+
+    include('db_connect.php');
+
+    $sql =  "SELECT count(*) as total FROM errors WHERE ip='$ip' AND dateCreated >= DATE_SUB(NOW(), INTERVAL 1 HOUR)";
+    $result = $mysqli -> query($sql);
+    $rows = mysqli_fetch_assoc($result)['total'];
+
+    if ($rows < 10) {
+        $sql = "INSERT INTO errors (type, description, ip) VALUES ('$type', '$desc', '$ip')";
+        $result = $mysqli->query($sql);
+        exitError($rows . "#" . $desc);
+    }
+
+    exitError($desc);
+    mysqli_close($mysqli);
+    die();
+}
+
 function exitError($error) {
+    session_destroy();
     echo $error;
     die();
 }

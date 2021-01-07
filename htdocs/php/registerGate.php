@@ -65,7 +65,9 @@ die();
 // apply token
 applyToken($token);
 
-$sql = "INSERT INTO players (name, password) VALUES ('$nickname', '$hashpswrd')";
+$ip = $_SERVER['REMOTE_ADDR'];
+
+$sql = "INSERT INTO players (name, password, ip) VALUES ('$nickname', '$hashpswrd', '$ip')";
 $result = $mysqli->query($sql);
 
 if ($result === TRUE) {

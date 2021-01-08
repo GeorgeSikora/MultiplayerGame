@@ -7,7 +7,7 @@ function validateLoginForm() {
     // Password check
     if(!pswrd.match(/^[a-zA-Z0-9_-\s]*$/)) error_message = "Heslo obsahuje nepovolené znaky!";
     if (pswrd.length > 25) error_message = "Heslo může mít maximálně 25 znaků!";
-    if (pswrd.length < 8) error_message = "Heslo musí mít minimálně 8 znaků!";
+    if (pswrd.length < 5) error_message = "Heslo musí mít minimálně 5 znaků!";
     if (pswrd == "") error_message = "Zadej přihlašovací heslo!";
     
     // Nickname check
@@ -47,7 +47,7 @@ function validateRegisterForm() {
     // Password check
     if(!pswrd.match(/^[a-zA-Z0-9_-\s]*$/)) error_message = "Heslo obsahuje nepovolené znaky!";
     if (pswrd.length > 25) error_message = "Heslo může mít maximálně 25 znaků!";
-    if (pswrd.length < 8) error_message = "Heslo musí mít minimálně 8 znaků!";
+    if (pswrd.length < 5) error_message = "Heslo musí mít minimálně 5 znaků!";
     if (pswrd == "") error_message = "Zadej heslo!";
     
     // Nickname check

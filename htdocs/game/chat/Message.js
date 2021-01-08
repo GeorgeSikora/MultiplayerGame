@@ -26,18 +26,21 @@ class Message {
     }
     buildImage() {
 
-        textSize(Chat.TEXT_SIZE);
+        var img = createGraphics(0, 0);
+        img.textSize(Chat.TEXT_SIZE);
+
         var strWidth = 0;
         for(var i = 0; i < this.str.length; i++){
             if(this.str[i] != '&') {
-                strWidth += textWidth(this.str[i]);
+                strWidth += img.textWidth(this.str[i]);
             } else {
                 i++;
             }
         }
 
-        var img = createGraphics(strWidth, Chat.LINE_HEIGHT);
-        
+        img.remove();
+        img = createGraphics(strWidth, Chat.LINE_HEIGHT);
+
         img.textAlign(LEFT, TOP);
         img.textSize(Chat.TEXT_SIZE);
         img.stroke(0);
@@ -55,7 +58,7 @@ class Message {
 
             img.fill(token.color);
             img.text(c, 0, 0);
-            img.translate(img.textWidth(c),0);
+            img.translate(img.textWidth(c), 0);
         }
 
         this.img = img;

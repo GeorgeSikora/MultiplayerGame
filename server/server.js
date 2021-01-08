@@ -1,5 +1,5 @@
 constants = require('./constants');
-const {RESET,BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE} = require('./colors.js');
+c = require('./colors.js'); // const {RESET,BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE}
 
 /********* SERVER CONFIG *********/
 const SERVER_PORT = 3031; // main socket.io server port
@@ -12,6 +12,9 @@ app = express();
 var server = app.listen(process.env.PORT || SERVER_PORT); // set PORT=3216 && node server.js
 io = require('socket.io')(server, {pingInterval: PING_INTERVAL});
 console.log('Socket.io server started port: ' + process.env.PORT || SERVER_PORT);
+
+mysql = require('mysql');
+require('./mysql/main.js');
 
 /********* SERVICE HTML PAGE *********/
 //if(process.env.MAIN == 1){
@@ -79,10 +82,10 @@ setInterval(refresh, TICK_DURATION);
 
 function logInfo() {
     console.log(
-         MAGENTA +' players: '   +YELLOW +players.length.toString().padStart(2)
-        +MAGENTA +' objects: '  +YELLOW +objects.length.toString().padStart(4)
-        +MAGENTA +' lapse: '    +YELLOW +lapseTime.toFixed(2).padStart(8)           +' ms'
-        +MAGENTA +' delta: '    +YELLOW +deltaTime.toFixed(1).padStart(5)           +' ms'
+         c.MAGENTA +' players: '  +c.YELLOW +players.length.toString().padStart(2)
+        +c.MAGENTA +' objects: '  +c.YELLOW +objects.length.toString().padStart(4)
+        +c.MAGENTA +' lapse: '    +c.YELLOW +lapseTime.toFixed(2).padStart(8)           +' ms'
+        +c.MAGENTA +' delta: '    +c.YELLOW +deltaTime.toFixed(1).padStart(5)           +' ms'
     );
 }
 

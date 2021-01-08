@@ -73,7 +73,7 @@ function drawCannotConnect() {
     fill(255, 16, 16);
     textSize(32);
     textAlign(CENTER, TOP);
-    text('Cannot connect to the server', innerWidth/2, 32);
+    text('Cannot connect to the server', innerWidth/2, innerHeight - 64);
 }
 
 /* safe zone at the spawn */

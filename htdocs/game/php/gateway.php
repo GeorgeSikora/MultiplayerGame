@@ -8,26 +8,25 @@
 
     <script>
 
-        const post = {
+        const session = {
             name:       '<?php echo $_SESSION['name'];?>',
             hashpswrd:  '<?php echo $_SESSION['hashpswrd'];?>'
         };
 
-        console.log(post);
+        console.log(session);
 
         request = $.ajax({
         url: "/php/loginGate",
         type: "post",
         data: {
-            nickname: post.name,
-            hashpswrd: post.hashpswrd
+            nickname: session.name,
+            hashpswrd: session.hashpswrd
         },
         success: function(result) {
             if (result) {
                 window.location.href = "/login";
             }
         }
-
     });
 
     </script>

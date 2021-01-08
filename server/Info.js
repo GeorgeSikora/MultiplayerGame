@@ -16,5 +16,5 @@ ioInfo.use((socket, next) => {
 });
 
 ioInfo.on('connection', socket => {
-    console.log('New client connected');
+    //console.log('New client connected');
 });

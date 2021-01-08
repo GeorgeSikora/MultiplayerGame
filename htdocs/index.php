@@ -3,6 +3,9 @@
 <head>
 
 <?php 
+
+include('php/functions.php');
+
 // header of site, background, styles, scripts
 include('php/header.php');
 ?>
@@ -11,7 +14,6 @@ include('php/header.php');
 <body>
 
 <?php
-
 // include Router class
 include('php/Route.php');
 // route the page link

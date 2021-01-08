@@ -24,17 +24,16 @@ ioClient.use((socket, next) => {
 });
 
 ioClient.on('connection', socket => {
-    console.log('New client connected');
 
     socket.on('initReq', data => { // init request
 
-        if(gameStarted) {
+        if (gameStarted) {
             socket.emit('chat-message', new Message('&2Game already started!'));
             return;
         }
         const teams = countTeams();
 
-        if((data.team == 'red' && teams.red != 0 && teams.blue == 0)
+        if ((data.team == 'red' && teams.red != 0 && teams.blue == 0)
         || (data.team == 'blue' && teams.red == 0  && teams.blue != 0)){
             socket.emit('chat-message', new Message('&2Tento tým by byl v přesile, vyber si nějaký jiný!'));
             return;
@@ -46,6 +45,8 @@ ioClient.on('connection', socket => {
         socket.emit('load-map', {objects: objects});
 
         players.push(new Player(socket.id, data.name, pos.x, pos.y, data.team));
+        
+        console.log(c.GREEN + 'New client: ' + c.YELLOW + data.name + c.GREEN + ' team: ' + c.YELLOW + data.team + c.RESET);
 
         for(var i = 0; i < players.length; i++) {
             socket.to(players[i].id).emit('newPlayer', players[players.length-1]);
@@ -69,7 +70,7 @@ ioClient.on('connection', socket => {
         console.log('removing index: ' + removeIndex + ' now size is: ' + players.length);
 
         const teams = countTeams();
-        if(gameStarted && (teams.red == 0 || teams.blue == 0)) {
+        if (gameStarted && (teams.red == 0 || teams.blue == 0)) {
             
             const winnerTeam = teams.red != 0 ? 'red' : 'blue';
 
@@ -244,8 +245,9 @@ ioClient.on('connection', socket => {
     });
 
     socket.on('get-chunk', (chunkX, chunkY) => {
+        //return;
 
-        console.log('Some player want to load chunk x: ' + chunkX + ' y: ' + chunkY);
+        //console.log('Some player want to load chunk x: ' + chunkX + ' y: ' + chunkY);
         /*
         const tileMap = [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],

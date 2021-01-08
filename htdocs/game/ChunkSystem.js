@@ -71,7 +71,7 @@ class ChunkSystem {
         for(var i = 0; i < this.chunks.length; i++) {
             this.chunks[i].update();
         }
-        console.log('Chunks update: ' + (millis() - chunksUpdateStart).toFixed(2) + 'ms');
+        //console.log('Chunks update: ' + (millis() - chunksUpdateStart).toFixed(2) + 'ms');
 
         var drawingChunks = 0;
         const chunksDrawStart = millis();
@@ -82,8 +82,8 @@ class ChunkSystem {
                 drawingChunks ++;
             }
         }
-        console.log('redrawing no. of: ' + drawingChunks);
-        console.log('Chunks draw: ' + (millis() - chunksDrawStart).toFixed(2) + 'ms');
+        //console.log('redrawing no. of: ' + drawingChunks);
+        //console.log('Chunks draw: ' + (millis() - chunksDrawStart).toFixed(2) + 'ms');
     }
 
     refresh() {

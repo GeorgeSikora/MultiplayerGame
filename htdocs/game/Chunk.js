@@ -70,7 +70,7 @@ class Chunk {
             this.inProcess = false;
             this.bufferTexture.clear();
             this.bufferTexture.image(this.texture, 0, 0);
-            console.log('Chunk update: ' + (millis() - this.refreshStartTime).toFixed(2) + 'ms');
+            //console.log('Chunk update: ' + (millis() - this.refreshStartTime).toFixed(2) + 'ms');
             this.processEnd = millis();
         }
 

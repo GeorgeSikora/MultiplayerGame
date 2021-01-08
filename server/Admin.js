@@ -1,4 +1,3 @@
-const {RESET,BLACK,RED,GREEN,YELLOW,BLUE,MAGENTA,CYAN,WHITE} = require('./colors.js');
 
 const ioAdmin = io.of('/admin');
 
@@ -12,7 +11,6 @@ ioAdmin.use((socket, next) => {
         return next();
     }
     return next(new Error('Authentication error'));
-    console.log('!!! Někdo se snažil přihlásit jako admin !!!');
 });
 
 ioAdmin.on('connection', socket => {
@@ -30,7 +28,7 @@ ioAdmin.on('connection', socket => {
             var receivedConst = receivedTables[i].array;
             var tableName = receivedTables[i].name;
 
-            console.log(MAGENTA+tableName+RESET);
+            console.log(c.MAGENTA + tableName + c.RESET);
             console.log(receivedConst);
             
             for(var j = 0; j < receivedConst.length; j++) {

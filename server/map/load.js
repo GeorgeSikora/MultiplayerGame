@@ -1,3 +1,4 @@
+
 const fs = require('fs');
 
 function loadMap(map){
@@ -8,7 +9,7 @@ function loadMap(map){
         const data = fs.readFileSync('map/'+map+'.txt', 'utf8');
         const lines = data.split(/\r?\n/);
 
-        console.log('loading ' + lines.length + ' lines');
+        console.log(c.BLUE + 'loading map ' + c.MAGENTA + map + c.BLUE + ' ' + c.CYAN + lines.length + c.BLUE + ' lines' + c.RESET);
 
         if(map != 'lobby') {
             const redFlag = getPos(lines, 0);

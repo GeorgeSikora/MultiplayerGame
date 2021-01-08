@@ -31,6 +31,7 @@ function preload() {
   /* Icons */
   ico_sounds_on = loadImage('assets/images/icons/sounds_on.png');
   ico_sounds_off = loadImage('assets/images/icons/sounds_off.png');
+  ico_coin = loadImage('assets/images/icons/coin.png');
   
   /* Sounds*/
   sound_rifle = new Howl({src: ['assets/sounds/riflegun.mp3']});

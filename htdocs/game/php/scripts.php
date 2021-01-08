@@ -71,6 +71,7 @@
 <!-- OTHER -->
 <script src="functions.js"></script>
 <script src="camera.js"></script>
+<script src="Screen.js"></script>
 
 <!-- MAIN SKETCH -->
 <script src="main.js"></script>

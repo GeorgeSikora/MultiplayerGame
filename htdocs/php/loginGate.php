@@ -76,7 +76,7 @@ function sendError($type, $desc) {
 }
 
 function exitError($error) {
-    session_destroy();
+    if (session_status() == PHP_SESSION_ACTIVE) session_destroy();
     echo $error;
     die();
 }

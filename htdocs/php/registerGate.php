@@ -15,6 +15,7 @@ if (enable_display_errors) {
 // get post values
 $nickname   = $_POST['nickname'];
 $hashpswrd  = $_POST['hashpswrd'];
+$token      = $_POST['token'];
 $confirm    = $_POST['confirm'];
 
 /*
@@ -62,21 +63,24 @@ mysqli_close($mysqli);
 die();
 */
 
-// apply token
-applyToken($token);
-
 $ip = $_SERVER['REMOTE_ADDR'];
 
-$sql = "INSERT INTO players (name, password, ip) VALUES ('$nickname', '$hashpswrd', '$ip')";
+$sql = "INSERT INTO players (name, password, token, ip) VALUES ('$nickname', '$hashpswrd', '$token', '$ip')";
 $result = $mysqli->query($sql);
+$id = mysqli_insert_id($mysqli);
 
+applyToken($token, $id);
+
+/*
+// apply token
 if ($result === TRUE) {
     //echo 'ERROR 1!';
     //header('location: /error/'.$type); // Player sucsesfully registered
 } else {
-    echo 'ERROR 2!';
+    //echo 'ERROR 2!';
     //header('location: /error/db/9902'); // Cannot add player to db
 }
+*/
 
 // exit db connection
 mysqli_close($mysqli);
@@ -112,19 +116,28 @@ function sendError($type, $desc) {
     die();
 }
 
-function applyToken($token) {
+function applyToken($token, $id) {
     if (isset($token)) {
         if ($token == "") return;
 
         $token = strtoupper($token);
-        echo 'Token: '. $token . '<br>';
+
+        // UPDATE players SET coins=coins+100 WHERE id=1
 
         switch($token) {
-            case "JUREK":
-                echo 'Jurkuv kouzelný token<br>';
+            case "JUREK": // JURKUV KOUZELNÝ TOKEN !
+            
+                include('db_connect.php');
+                $sql = "UPDATE players SET coins=coins+100 WHERE id='$id'";
+                $result = $mysqli->query($sql);
+                if ($result !== TRUE) {
+                    echo 'Token error with database!';
+                }
+                mysqli_close($mysqli);
+                
                 break;
             default: 
-                echo 'Neplatný token<br>';
+
                 break;
         }
     }

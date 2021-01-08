@@ -1,7 +1,7 @@
 
 let minimap;
 
-/*
+/* AUTOREFRESH
 setInterval(() => {
     minimap.build();
 }, 3000);
@@ -18,7 +18,7 @@ class Minimap {
         this.targetOpacity = 0;
 
         /* AUTOMATIC SCALE */
-        this.autoScale = true;
+        this.autoScale = false;
         this.MAX_WIDTH = 400;
         this.MAX_HEIGHT = 300;
     }
@@ -50,12 +50,12 @@ class Minimap {
             var c = color(p.team)
             c.setAlpha(this.opacity);
             fill(c);
-            rect(p.pos.x/this.scale, p.pos.y/this.scale, 6, 6);
+            rect(p.pos.x/this.scale, p.pos.y/this.scale, 64/this.scale, 64/this.scale);
         }
             
         /* my player */
         fill(255, 255, 0, this.opacity);
-        rect(player.pos.x/this.scale, player.pos.y/this.scale, 6, 6);
+        rect(player.pos.x/this.scale, player.pos.y/this.scale, 64/this.scale, 64/this.scale);
         
         imageMode(CENTER);
 
@@ -117,6 +117,8 @@ class Minimap {
         this.img.translate(this.center.x, this.center.y);
 
         // border weight and color
+        this.img.imageMode(CENTER);
+        this.img.rectMode(CENTER);
         this.img.strokeWeight(1);
         this.img.stroke(0);
 
@@ -124,9 +126,9 @@ class Minimap {
         for(var i = 0; i < objects.length; i++) {
             const o = objects[i];
             if(o instanceof Block) {
-                this.img.rectMode(CENTER);
                 this.img.fill('#564064');
                 this.img.rect(o.pos.x/this.scale, o.pos.y/this.scale, o.w/this.scale, o.h/this.scale);
+                //this.img.image(img_block, o.pos.x/this.scale, o.pos.y/this.scale, o.w/this.scale, o.h/this.scale);
             }
         }
 

@@ -1,9 +1,9 @@
 <?php
 
-
 // Add base route (startpage)
 Route::add('/',function(){
     echo 'Routered from /';
+    increaseStatistic('page_entry');
     header('location: /login');
 });
 
@@ -11,6 +11,7 @@ Route::add('/home',function(){
     echo 'Routered from /home';
     header('location: /login');
 });
+
 
 Route::add('/play',function(){
     echo 'Routered from /play';

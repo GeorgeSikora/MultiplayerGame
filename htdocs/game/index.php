@@ -21,6 +21,14 @@
 </head>
 <body oncontextmenu="return false;">
 
+  <div id="lobbymenu">
+    <div class="buttons-group">
+      <a href="#" class="button active">Lobby</a>
+      <a href="#" class="button">Profile</a>
+      <a href="#" class="button">Events</a>
+  </div>
+  </dov>
+
   <div id="menu">
     <div id="content"></div>
   </div>

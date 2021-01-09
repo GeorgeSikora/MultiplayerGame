@@ -46,7 +46,7 @@ ioClient.on('connection', socket => {
 
         players.push(new Player(socket.id, data.name, pos.x, pos.y, data.team));
         
-        console.log(c.GREEN + 'New client: ' + c.YELLOW + data.name + c.GREEN + ' team: ' + c.YELLOW + data.team + c.RESET);
+        console.log(c.GREEN + 'Player ' + c.YELLOW + data.name + c.GREEN + ' joined ' + c.YELLOW + data.team + c.GREEN + ' team' + c.RESET);
 
         for(var i = 0; i < players.length; i++) {
             socket.to(players[i].id).emit('newPlayer', players[players.length-1]);
@@ -66,8 +66,8 @@ ioClient.on('connection', socket => {
         if(removeIndex == -1) return;
         ioClient.emit('remPlayer', socket.id);
         //ioSpectator.emit('remPlayer', socket.id);
+        console.log(c.RED + 'Player ' + c.YELLOW + players[removeIndex].name + c.RED + ' leaves the game' + c.RESET);
         players.splice(removeIndex, 1);
-        console.log('removing index: ' + removeIndex + ' now size is: ' + players.length);
 
         const teams = countTeams();
         if (gameStarted && (teams.red == 0 || teams.blue == 0)) {

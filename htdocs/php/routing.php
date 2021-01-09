@@ -1,5 +1,7 @@
 <?php
 
+include('functions.php');
+
 // [TODO]: Add base route (startpage)
 
 Route::add('/',function(){
@@ -9,10 +11,6 @@ Route::add('/',function(){
 
 Route::add('/home',function(){
     header('location: /login');
-});
-
-Route::add('/play',function(){
-    include('php/login.php');
 });
 
 Route::add('/rules',function(){
@@ -29,11 +27,10 @@ Route::add('/register',function(){
 
 /* ERRORS */
 Route::add('/error/registration',function(){
-    include('php/error_registration.php');
+    include('php/errors/registration.php');
 });
-
 Route::add('/error/db/([0-9]*)',function($error){
-    include('php/error_db.php');
+    include('php/errors/db.php');
 });
 
 

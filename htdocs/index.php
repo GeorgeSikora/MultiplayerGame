@@ -1,26 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<?php 
-
-include('php/functions.php');
-
-// header of site, background, styles, scripts
-include('php/header.php');
-?>
-
+    <?php 
+    // header of site, background, styles, scripts
+    include('php/header.php');
+    ?>
 </head>
 <body>
-
-<?php
-// include Router class
-include('php/Route.php');
-// route the page link
-include('php/routing.php');
-// footer of site, copyright
-include('php/footer.php');
-?>
-
+    <?php
+    // include Router class
+    include('php/Route.php');
+    // route the page link
+    include('php/routing.php');
+    // footer of site, copyright
+    include('php/footer.php');
+    ?>
 </body>
 </html>

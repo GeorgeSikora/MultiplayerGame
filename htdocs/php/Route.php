@@ -92,9 +92,9 @@ class Route{
         }
       }else{
         //header("HTTP/1.0 404 Not Found");
-        include('php/header.php');
-        include('php/404.php');
-        include('php/footer.php');
+        include('header.php');
+        include('errors/404.php');
+        include('footer.php');
 				
         if(self::$pathNotFound){
           call_user_func_array(self::$pathNotFound, Array($path));

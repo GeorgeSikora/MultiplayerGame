@@ -15,6 +15,7 @@ What I use:
 <img src="https://seeklogo.com/images/O/open-source-logo-55C3B4FF7B-seeklogo.com.png" width="8%">
 <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" width="7%">
 <img src="https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png" width="6%">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/711px-PHP-logo.svg.png" width="8%">
 <img src="https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_960_720.png" width="7%">
 </div>
 

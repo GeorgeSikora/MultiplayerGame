@@ -5,7 +5,7 @@
 
     <h1 class="title">Capture the flag</h1>
 
-    <div class="input-form" id="register-form" name="play-form" action="php/registerGate" onsubmit="" method="post">
+    <div class="input-form" id="register-form">
     
         <label class="input-name" for="nickname">Nickname <span style="color:red">*</span></label>
         <input class="text-input" type="text" id="nickname" onkeypress="return event.charCode != 32" name="nickname" spellcheck="false" autocomplete="off"></input>

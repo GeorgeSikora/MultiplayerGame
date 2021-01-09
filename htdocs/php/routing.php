@@ -1,50 +1,49 @@
 <?php
 
-// Add base route (startpage)
+// [TODO]: Add base route (startpage)
+
 Route::add('/',function(){
-    echo 'Routered from /';
     increaseStatistic('page_entry');
     header('location: /login');
 });
 
 Route::add('/home',function(){
-    echo 'Routered from /home';
     header('location: /login');
 });
 
-
 Route::add('/play',function(){
-    echo 'Routered from /play';
     include('php/login.php');
 });
 
 Route::add('/rules',function(){
-    echo 'Routered from /rules';
     include('php/rules.php');
 });
 
+Route::add('/login',function(){
+    include('php/login.php');
+});
+
 Route::add('/register',function(){
-    echo 'Routered from /register';
     include('php/register.php');
 });
 
-Route::add('/login',function(){
-  echo 'Routered from /login';
-  include('php/login.php');
-});
-
-Route::add('/test.html',function(){
-  echo 'Hello from test.html';
-});
-
+/* ERRORS */
 Route::add('/error/registration',function(){
     include('php/error_registration.php');
 });
 
-
 Route::add('/error/db/([0-9]*)',function($error){
     include('php/error_db.php');
 });
+
+
+
+
+/* TESTS, TESTS.... TESTS */
+
+Route::add('/test.html',function(){
+    echo 'Hello from test.html';
+  });
 
 // Post route example
 Route::add('/contact-form',function(){

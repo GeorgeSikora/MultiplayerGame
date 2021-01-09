@@ -11,7 +11,9 @@ class Chunk {
         
         this.pos = {x: x, y: y};
         this.texture = createGraphics(Chunk.SIZE, Chunk.SIZE);
+        this.texture.remove();
         this.bufferTexture = createGraphics(Chunk.SIZE, Chunk.SIZE);
+        this.bufferTexture.remove();
 
         this.loaded = false;
 

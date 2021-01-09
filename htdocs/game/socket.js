@@ -63,6 +63,11 @@ class Multiplayer {
   }
 
   connected() {
+
+    if (game.started) {
+      game.restart();
+    }
+
     game.loaded = false;
     console.log('%c Connected, your id: %c'+socket.id,'color: lime','color: aqua');
     player.id = '/client#' + socket.id;

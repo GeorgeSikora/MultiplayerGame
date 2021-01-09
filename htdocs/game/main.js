@@ -20,8 +20,12 @@ function setup() {
 /*** LOOP ***/
 function draw() {
 
+  if (game.started) {
+    $('#lobbymenu').hide();
+  } else {
+    $('#lobbymenu').show();
+  }
 
   Screen.draw();
-
 
 }

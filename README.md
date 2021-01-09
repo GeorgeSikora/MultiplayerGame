@@ -19,7 +19,7 @@ What I use:
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Apache_HTTP_server_logo_%282016%29.svg/1200px-Apache_HTTP_server_logo_%282016%29.svg.png" width="17%">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/711px-PHP-logo.svg.png" width="10%">
 <img src="https://mariadb.com/wp-content/uploads/2019/11/mariadb-logo-vert_blue-transparent.png" width="8%">
-<img src="https://download.logo.wine/logo/MySQL/MySQL-Logo.wine.png" width="17%">
+<img src="https://upload.wikimedia.org/wikipedia/labs/8/8e/Mysql_logo.png" width="17%">
 </div>
 
 ## JavaScript Libraries

@@ -1,4 +1,5 @@
 
+
 <div class="content">
 
     <img src="style/images/flags-logo.png" width="80%" alt="Banner">
@@ -26,7 +27,10 @@
 
 </div>
 
+
 <script>
+
+var coockieAuth = false;
 
 document.addEventListener("keydown", function(event) {
   // Number 13 is the "Enter" key on the keyboard
@@ -46,6 +50,7 @@ function sendLogin() {
         },
         success: function(result) {
             if (result) {
+                if (coockieAuth) window.location.href = "/php/logout.php";
                 showError(result);
             } else {
                 window.location.href = "/game";
@@ -62,11 +67,24 @@ function showError(err) {
 
 </script>
 
+<?php
 
-<?php 
 
+// check coockie
+if (isset($_COOKIE["name"]) && isset($_COOKIE["hashpswrd"])) {
+    ?>
+    <script>
+        $('#nickname').val('<?php echo $_COOKIE["name"] ?>');
+        $('#hashpswrd').val('<?php echo $_COOKIE["hashpswrd"] ?>');
+        coockieAuth = true;
+        sendLogin();
+    </script>
+    <?php
+}
+
+
+// check session
 session_start();
-
 require('checkLoginStatus.php');
 
 if (isset($_SESSION['err'])) 
@@ -82,3 +100,4 @@ if (isset($_SESSION['err']))
 }
 
 ?>
+

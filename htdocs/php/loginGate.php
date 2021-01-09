@@ -19,13 +19,16 @@ if (isUserConnected($name)) exitError('User already connected!');
 $_SESSION['name'] = $name;
 $_SESSION['hashpswrd'] = $password;
 
+setcookie("name", $name, time() + (360 * 86400 * 30), "/"); // 86400 = 1 day
+setcookie("hashpswrd", $password, time() + (360 * 86400 * 30), "/"); // 86400 = 1 day
+
 die();
 
 // LOGIN SQL
 // SELECT name, password FROM players WHERE name='Jurkos' AND password='0145d27b4e419b49063c2d9cfbf06177'
 
 function isUserExists($name) {
-    include('db_connect.php');
+    include('db/connect.php');
     $sql =  "SELECT count(*) AS total FROM players WHERE name='$name'";
     $result = $mysqli -> query($sql);
     $rows = mysqli_fetch_assoc($result)['total'];
@@ -34,7 +37,7 @@ function isUserExists($name) {
 }
 
 function isUserPasswordCorrect($name, $password) {
-    include('db_connect.php');
+    include('db/connect.php');
     $sql =  "SELECT count(*) AS total FROM players WHERE name='$name' AND password='$password'";
     $result = $mysqli -> query($sql);
     $rows = mysqli_fetch_assoc($result)['total'];
@@ -43,7 +46,7 @@ function isUserPasswordCorrect($name, $password) {
 }
 
 function isUserConnected($name) {
-    include('db_connect.php');
+    include('db/connect.php');
     $sql =  "SELECT connected as status FROM players WHERE name='$name'";
     $result = $mysqli -> query($sql);
     $status = mysqli_fetch_assoc($result)['status'];
@@ -58,7 +61,7 @@ function sendError($type, $desc) {
 
     $ip = $_SERVER['REMOTE_ADDR'];
 
-    include('db_connect.php');
+    include('db/connect.php');
 
     $sql =  "SELECT count(*) as total FROM errors WHERE ip='$ip' AND dateCreated >= DATE_SUB(NOW(), INTERVAL 1 HOUR)";
     $result = $mysqli -> query($sql);
@@ -69,10 +72,8 @@ function sendError($type, $desc) {
         $result = $mysqli->query($sql);
         exitError($rows . "#" . $desc);
     }
-
-    exitError($desc);
     mysqli_close($mysqli);
-    die();
+    exitError($desc);
 }
 
 function exitError($error) {

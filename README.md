@@ -18,8 +18,8 @@ What I use:
 <img src="https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_960_720.png" width="7%">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Apache_HTTP_server_logo_%282016%29.svg/1200px-Apache_HTTP_server_logo_%282016%29.svg.png" width="17%">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/711px-PHP-logo.svg.png" width="10%">
-<img src="https://mariadb.com/wp-content/uploads/2019/11/mariadb-logo-vert_blue-transparent.png" width="8%">
-<img src="https://upload.wikimedia.org/wikipedia/labs/8/8e/Mysql_logo.png" width="17%">
+<img src="https://mariadb.com/wp-content/uploads/2019/11/mariadb-logo-vert_blue-transparent.png" width="9%">
+<img src="https://upload.wikimedia.org/wikipedia/labs/8/8e/Mysql_logo.png" width="12%">
 </div>
 
 ## JavaScript Libraries

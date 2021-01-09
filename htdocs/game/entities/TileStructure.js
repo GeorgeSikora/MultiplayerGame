@@ -10,6 +10,7 @@ function loadTiles() {
   chunkBorder.strokeWeight(2);
   chunkBorder.stroke(255, 0, 255);
   chunkBorder.rect(0, 0, Chunk.SIZE, Chunk.SIZE);
+  chunkBorder.remove();
 
   tileBackground = createGraphics(Chunk.SIZE, Chunk.SIZE);
 
@@ -18,6 +19,7 @@ function loadTiles() {
       tileBackground.image(tileset_background, x, y);
     }
   }
+  tileBackground.remove();
 }
 
 class TileStructure {

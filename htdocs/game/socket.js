@@ -8,13 +8,16 @@ class server {
 }
 
 class Multiplayer {
-
   constructor(url) {
     // main vals
     this.latency = 0;
     this.sendTimer = 0;
     // connect to server
     socket = io.connect(url, {
+      query: {
+          user: session.name,
+          pass: session.hashpswrd
+      },
       reconnectionDelay: 1500
     });
 

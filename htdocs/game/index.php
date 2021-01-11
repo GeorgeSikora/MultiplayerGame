@@ -26,8 +26,8 @@
       <a href="#" class="button active">Lobby</a>
       <a href="#" class="button">Profile</a>
       <a href="#" class="button">Events</a>
+    </div>
   </div>
-  </dov>
 
   <div id="menu">
     <div id="content"></div>

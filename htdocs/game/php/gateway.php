@@ -7,12 +7,11 @@
     if(isset($_SESSION['name']) && isset($_SESSION['hashpswrd'])) { ?>
 
     <script>
-
+        
         const session = {
             name:       '<?php echo $_SESSION['name'];?>',
             hashpswrd:  '<?php echo $_SESSION['hashpswrd'];?>'
         };
-
         console.log(session);
 
         request = $.ajax({

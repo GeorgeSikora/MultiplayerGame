@@ -9,19 +9,31 @@ simplex = new SimplexNoise(Math.random);
 var startTimeoutHandle;
 
 // middleware
-ioClient.use((socket, next) => {
+ioClient.use(async (socket, next) => {
     const query = socket.handshake.query;
     const user = query.user;
     const pass = query.pass;
 
-    /* TODO: Ověří přihlašovací údaje z MySQL databáze */
-    return next();
+    // SELECT name, password FROM players WHERE name='Jurkos' AND password='0145d27b4e419b49063c2d9cfbf06177'
+    var userExists = await isUserExists(user, pass);
 
-    if (user === 'admin' && pass === 's8j2m6x4n1') {
-        return next();
-    }
-    return next(new Error('Authentication error'));
+    console.log(`user: ${user} pass: ${pass}`);
+
+    if (!userExists) return next(new Error('Authentication error'));
+
+    console.log('passed AuthGate');
+    return next();
 });
+
+function isUserExists(user, pass) {
+    var promise = new Promise(function(resolve, reject) {
+        mysqlCon.query('SELECT name, password FROM players WHERE name=? AND password=?', [user, pass], (error, results, fields)=>{
+            resolve(results.length == 1);
+        });
+    });
+    return promise;
+}
+  
 
 ioClient.on('connection', socket => {
 
@@ -45,6 +57,9 @@ ioClient.on('connection', socket => {
         socket.emit('load-map', {objects: objects});
 
         players.push(new Player(socket.id, data.name, pos.x, pos.y, data.team));
+        mysqlCon.query(`UPDATE players SET connected=1, dateLastConnect=NOW() WHERE name="${data.name}"`, function (error, results, fields) {
+            if (error) throw error;
+        });
         
         console.log(c.GREEN + 'Player ' + c.YELLOW + data.name + c.GREEN + ' joined ' + c.YELLOW + data.team + c.GREEN + ' team' + c.RESET);
 
@@ -67,6 +82,11 @@ ioClient.on('connection', socket => {
         ioClient.emit('remPlayer', socket.id);
         //ioSpectator.emit('remPlayer', socket.id);
         console.log(c.RED + 'Player ' + c.YELLOW + players[removeIndex].name + c.RED + ' leaves the game' + c.RESET);
+        
+        mysqlCon.query(`UPDATE players SET connected=0, minutesPlayed=minutesPlayed+TIMESTAMPDIFF(MINUTE ,dateLastConnect, NOW()), dateLastConnect=NOW() WHERE name="${players[removeIndex].name}"`, function (error, results, fields) {
+            if (error) throw error;
+        });
+
         players.splice(removeIndex, 1);
 
         const teams = countTeams();

@@ -21,7 +21,7 @@ ioAdmin.on('connection', socket => {
     });
     socket.on('set_constants', receivedTables => {
 
-        console.log(CYAN+'Admin set constants:'+RESET);
+        console.log(c.CYAN + 'Admin set constants:'+ c.RESET);
 
         for(var i = 0; i < receivedTables.length; i++) {
 

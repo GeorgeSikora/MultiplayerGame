@@ -16,7 +16,6 @@ socket.on('constants', loadConstants);
 socket.emit('get_constants');
 
 function loadConstants(constants) {
-    
     var html = '';
 
     for (var i in constants) {
@@ -27,10 +26,7 @@ function loadConstants(constants) {
             html += '</div>';
         }
     }
-
     //constants = constants.PLAYER;
-
-
     /*
     html += '<table id="settings-table">';
     for (var i in constants) {
@@ -40,18 +36,19 @@ function loadConstants(constants) {
     }
     html += '</table>';
     */
-
     document.getElementById("settings").innerHTML = html;
 }
 
 function addTable(constants){
     var html = '';
     html += '<table class="settings-table">';
+
     for (var i in constants) {
         if (constants.hasOwnProperty(i)) {
             html += addConstant(i, constants[i]);
         }
     }
+
     html += '</table>';
     return html;
 }
@@ -64,26 +61,19 @@ function addConstant(name, value){
 }
 
 function uploadSettings(){
-
-
     const tables = document.getElementsByClassName("constants-table");
-
     var constants = [];
 
     for(var i = 0; i < tables.length; i++) {
         const name = tables[i].getAttribute("name");
         constants.push({name: name, array: uploadTable(tables[i])});
     }
-
     console.log(constants);
-
     socket.emit('set_constants', constants);
 }
 
 function uploadTable(documentos) {
-    
     var constants = [];
-
     var rows = documentos.getElementsByClassName("settings-table")[0].rows;
 
     for(var i = 0; i < rows.length; i++){
@@ -103,6 +93,5 @@ function uploadTable(documentos) {
 
         }*/
     }
-
     return constants;
 }

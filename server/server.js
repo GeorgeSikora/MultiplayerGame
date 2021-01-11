@@ -14,6 +14,12 @@ io = require('socket.io')(server, {pingInterval: PING_INTERVAL});
 console.log('Socket.io server started port: ' + process.env.PORT || SERVER_PORT);
 
 mysql = require('mysql');
+mysqlCon = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : '',
+    database : 'multiplayergame'
+});
 require('./mysql/main.js');
 
 /********* SERVICE HTML PAGE *********/

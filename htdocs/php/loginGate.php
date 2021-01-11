@@ -9,6 +9,15 @@ if (!isset($_POST['hashpswrd'])) sendError('login', 'Password is not set!');
 $name = $_POST['nickname'];
 $password = $_POST['hashpswrd'];
 
+// nickname check
+if (strlen($name) < 3) sendError('login', 'nickname obsahuje nepovolené znaky');
+if (strlen($name) > 25) sendError('login', 'nickname obsahuje nepovolené znaky');
+if (!preg_match('/^[a-zA-Z0-9_\s]*$/', $name)) sendError('login', 'nickname obsahuje nepovolené znaky');
+
+// password check
+if (strlen($password) != 64 && strlen($password) != 32) sendError('login', 'heslo nemá určitou délku pro hash');
+if (!preg_match('/^[a-zA-Z0-9_\s]*$/', $password)) sendError('login', 'heslo obsahuje nepovolené znaky');
+
 session_start();
 
 if (!isUserExists($name)) exitError('Name is not existing!');

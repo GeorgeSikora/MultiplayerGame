@@ -28,6 +28,7 @@ if (!preg_match('/^[a-zA-Z0-9_\s]*$/', $nickname)) sendError('registration', 'ni
 
 // password check
 if (strlen($hashpswrd) != 64 && strlen($hashpswrd) != 32) sendError('registration', 'heslo nemá určitou délku pro hash');
+if (!preg_match('/^[a-zA-Z0-9_\s]*$/', $hashpswrd)) sendError('registration', 'heslo obsahuje nepovolené znaky');
 
 // check if name already exists
 include('db/connect.php');

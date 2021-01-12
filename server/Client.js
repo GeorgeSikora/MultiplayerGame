@@ -33,7 +33,6 @@ function isUserExists(user, pass) {
     });
     return promise;
 }
-  
 
 ioClient.on('connection', socket => {
 
@@ -100,6 +99,10 @@ ioClient.on('connection', socket => {
     });
 
     socket.on('pos', pos => {
+        if (pos == null) return;
+        if (isNaN(pos.x)) return;
+        if (isNaN(pos.y)) return;
+
         var id = ObjManager.getPlayer(socket.id);
         if(id == -1) return;
         const p = players[id];
@@ -134,7 +137,7 @@ ioClient.on('connection', socket => {
     });
 
     socket.on('shot', data => {
-
+        if (data == null) return;
         if (isNaN(data.x)) return;
         if (isNaN(data.y)) return;
         if (isNaN(data.dir)) return;
@@ -149,6 +152,7 @@ ioClient.on('connection', socket => {
         var id = ObjManager.getPlayer(socket.id);
         if(id == -1) return;
         
+        if (pos == null) return;
         if (isNaN(pos.x)) return;
         if (isNaN(pos.y)) return;
         if (isNaN(rot)) return;
@@ -157,6 +161,10 @@ ioClient.on('connection', socket => {
     });
 
     socket.on('block-add', pos => {
+        if (pos == null) return;
+        if (isNaN(pos.x)) return;
+        if (isNaN(pos.y)) return;
+
         for(var i = 0; i < objects.length; i++) {
           var obj = objects[i];
           if(pos.x == obj.pos.x && pos.y == obj.pos.y) {
@@ -170,6 +178,9 @@ ioClient.on('connection', socket => {
     });
     
     socket.on('block-rem', pos => {
+        if (isNaN(pos.x)) return;
+        if (isNaN(pos.y)) return;
+
         for(var i = 0; i < objects.length; i++) {
             var obj = objects[i];
             if(pos.x == obj.pos.x && pos.y == obj.pos.y) {
@@ -183,6 +194,15 @@ ioClient.on('connection', socket => {
     socket.on('chat-message', msg => {
         var id = ObjManager.getPlayer(socket.id);
         if(id == -1) return;
+
+        players[id].messagesCounter++;
+
+        if (players[id].messagesCounter > 8) {
+            ioClient.emit('chat-message', new Message('&2Hráč '+players[id].name+' byl vyhozen za spam v chatu.'));
+            socket.emit('exception', {id: 601, message: 'Anticheat detected spam!'});
+            socket.disconnect();
+        }
+
         socket.broadcast.emit('chat-message', new Message(msg, players[id]));
     });
     
@@ -388,14 +408,6 @@ function getGeneratedTile(x, y) {
     tile &= noise3 > 0.5;
     */
     return tile;
-}
-
-function isInt(n){
-    return Number(n) === n && n % 1 === 0;
-}
-
-function isFloat(n){
-    return Number(n) === n && n % 1 !== 0;
 }
 
 module.exports = ioClient;

@@ -66,6 +66,7 @@ gameStarted = false;
 deltaTime = 1;
 var lapseTime = 0;
 var lastTime = getMillis();
+var clearCounterTimer = getMillis();
 
 /********* REFRESH *********/
 function refresh(){
@@ -81,6 +82,11 @@ function refresh(){
     for(var i = 0; i < players.length; i++){
         //if(players[i].respawning) console.log(players[i].name + ' respawning...');
         players[i].update();
+
+        if (clearCounterTimer < getMillis()) {
+            players[i].messagesCounter = 0;
+            clearCounterTimer = getMillis() + 60000;
+        }
     }
     lapseTime = getMillis() - time;
 }

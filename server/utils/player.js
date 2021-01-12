@@ -24,6 +24,7 @@ class Player {
 
     /* Only server variables */
     this.hackingCounter = 0;
+    this.messagesCounter = 0;
     this.respawning = false;
   }
   update() {

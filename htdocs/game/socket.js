@@ -261,8 +261,8 @@ function setMyPos(pos) {
 }
 
 function exception(err) {
-  console.error('ERROR ' + err.id + ' ' + err.message);
-  window.location.replace("/?error="+err.id+"&message="+err.message);
+  //console.error('ERROR ' + err.id + ' ' + err.message);
+  window.location.replace("/exception?err=" + err.id + "&msg=" + err.message);
 }
 
 function addBlock(pos) {

@@ -134,6 +134,11 @@ ioClient.on('connection', socket => {
     });
 
     socket.on('shot', data => {
+
+        if (isNaN(data.x)) return;
+        if (isNaN(data.y)) return;
+        if (isNaN(data.dir)) return;
+
         //const ZONE = constants.GAME.SAFE_ZONE;
         //if(data.x < -ZONE || data.x > ZONE || data.y < -ZONE || data.y > ZONE) {
         objects.push(new Bullet(socket.id, data.x, data.y, data.dir));
@@ -143,6 +148,10 @@ ioClient.on('connection', socket => {
     socket.on('smoke-granate', (pos, rot) => {
         var id = ObjManager.getPlayer(socket.id);
         if(id == -1) return;
+        
+        if (isNaN(pos.x)) return;
+        if (isNaN(pos.y)) return;
+        if (isNaN(rot)) return;
         
         ioClient.emit('smoke-granate', pos, rot);
     });
@@ -379,6 +388,14 @@ function getGeneratedTile(x, y) {
     tile &= noise3 > 0.5;
     */
     return tile;
+}
+
+function isInt(n){
+    return Number(n) === n && n % 1 === 0;
+}
+
+function isFloat(n){
+    return Number(n) === n && n % 1 !== 0;
 }
 
 module.exports = ioClient;

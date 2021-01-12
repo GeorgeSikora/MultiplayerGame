@@ -32,6 +32,10 @@ Route::add('/error/registration',function(){
 Route::add('/error/db/([0-9]*)',function($error){
     include('php/errors/db.php');
 });
+Route::add('/exception',function(){
+    include('php/exception.php');
+});
+
 
 
 

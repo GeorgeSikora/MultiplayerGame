@@ -20,7 +20,8 @@ class Rifle extends Equipment {
             var id = sound_rifle.play();
             sound_rifle.pos(map(mouseX,0,width,-0.2, 0.2),map(mouseY,0,height,-0.2,0.2), -1-random(1), id);
 
-            socket.emit('shot', {x: pos.x, y: pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2)});
+            //socket.emit('shot', {x: pos.x, y: pos.y, dir: atan2(mouseY - height / 2, mouseX - width / 2)});
+            socket.emit('shot');
             this.shootInterval = millis() + this.SHOTS_INTERVAL;
           }
     }

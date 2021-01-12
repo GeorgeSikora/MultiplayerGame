@@ -25,7 +25,9 @@ class Shotgun extends Equipment {
 
             player.speed.x = cos(obj.rotation + PI) * 22.0;
             player.speed.y = sin(obj.rotation + PI) * 22.0;
-
+            
+            socket.emit('shot');
+            /*
             for(var i = 0; i < this.SHOTS; i++) {
                 socket.emit('shot', {
                     x: pos.x,
@@ -33,6 +35,7 @@ class Shotgun extends Equipment {
                     dir: atan2(mouseY - height / 2, mouseX - width / 2) + (i-this.SHOTS/2) * this.SPREAD/this.SHOTS
                 });
             }
+            */
             this.shootInterval = millis() + this.SHOTS_INTERVAL;
         }
     }

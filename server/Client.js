@@ -136,15 +136,13 @@ ioClient.on('connection', socket => {
         players[id].respawning = false;
     });
 
-    socket.on('shot', data => {
-        if (data == null) return;
-        if (isNaN(data.x)) return;
-        if (isNaN(data.y)) return;
-        if (isNaN(data.dir)) return;
+    socket.on('shot', () => {
+        var id = ObjManager.getPlayer(socket.id);
+        if(id == -1) return;
 
         //const ZONE = constants.GAME.SAFE_ZONE;
         //if(data.x < -ZONE || data.x > ZONE || data.y < -ZONE || data.y > ZONE) {
-        objects.push(new Bullet(socket.id, data.x, data.y, data.dir));
+        objects.push(new Bullet(socket.id, players[id].pos.x, players[id].pos.y, players[id].rotation));
         //}
     });
 
